@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Brain Teaser</string>
+    <string name="login_success_message">Login successful! This concludes an example.</string>
+    <string name="login_text">Sign in</string>
+    <string name="logout_text">Log out</string>
+
+    <string name="facebook_button_text">Facebook</string>
+
+    <string name="google_button_text">Google+</string>
+
+    <string name="register_text">Register</string>
+    <string name="restore_link">Restore</string>
+    <string name="password_recovered_message">We sent an email to your email address with a link to a password change page. Please check your email and follow the link for further instructions.</string>
+    <string name="restore_password_page_name">Password Restoration</string>
+    <string name="registration_page_name">Registration</string>
+    <string name="login_prompt">Login:</string>
+    <string name="password_prompt">Password:</string>
+    <string name="password_recovery_page_name">Password Recovery</string>
+    <string name="warning_icon_description">warning icon</string>
+    <string name="remember_login_text">Remember me</string>
+
+    <string name="email_field_prompt">Email:</string>
+
+    <string name="firstname_field_prompt">Firstname:</string>
+
+    <string name="lastname_field_prompt">Lastname:</string>
+
+    <string name="name_field_prompt">Name:</string>
+
+    <string name="password_field_prompt">Password:</string>
+
+    <string name="default_registered_text">Registered successfully!</string>
+
+    <string name="registration_success_message">Thank you for registering with the %1$s. Click the button below to proceed to the login.</string>
+
+    <string name="closeDrawer">Navigation View</string>
+    <string name="openDrawer">Navigation View Closed</string>
+</resources>

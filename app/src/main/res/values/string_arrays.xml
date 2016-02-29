@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="booleans">
+        <item></item>
+        <item>true</item>
+        <item>false</item>
+    </string-array>
+</resources>
