@@ -67,6 +67,15 @@ public class OptionItemAdapter extends BaseAdapter {
         OptionsItems optionsItems = (OptionsItems) getItem(position);
         myholder.number.setText(optionsItems.getNumber());
         myholder.option.setText(optionsItems.getOption());
+        myholder.right.setImageResource(optionsItems.getRight());
+
+        final Myholder finalMyholder = myholder;
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalMyholder.right.setImageResource(R.drawable.check_right_animator);
+            }
+        });
 
         return row;
     }
