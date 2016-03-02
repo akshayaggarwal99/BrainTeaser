@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/check_wrong_1"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/check_wrong_2"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/check_wrong_3"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/check_wrong_4"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/check_wrong_5"
+        android:duration="80" />
+    <item
+        android:drawable="@drawable/check_wrong_6"
+        android:duration="80" />
+</animation-list>
