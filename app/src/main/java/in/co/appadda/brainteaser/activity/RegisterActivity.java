@@ -1,4 +1,4 @@
-package in.co.appadda.brainteaser;
+package in.co.appadda.brainteaser.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.widget.*;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+
+import in.co.appadda.brainteaser.data.api.model.BrainTeaserUser;
+import in.co.appadda.brainteaser.utils.DefaultCallback;
+import in.co.appadda.brainteaser.R;
 
 public class RegisterActivity extends AppCompatActivity {
     private final static java.text.SimpleDateFormat SIMPLE_DATE_FORMAT = new java.text.SimpleDateFormat("yyyy/MM/dd");

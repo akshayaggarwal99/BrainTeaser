@@ -1,4 +1,4 @@
-package in.co.appadda.brainteaser;
+package in.co.appadda.brainteaser.utils;
 
 public class Defaults
 {

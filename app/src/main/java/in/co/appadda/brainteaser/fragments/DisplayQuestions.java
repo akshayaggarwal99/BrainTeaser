@@ -1,4 +1,4 @@
-package in.co.appadda.brainteaser;
+package in.co.appadda.brainteaser.fragments;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.OptionItemAdapter;
 import in.co.appadda.brainteaser.adapter.OptionsItems;
 

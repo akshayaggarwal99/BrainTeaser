@@ -1,4 +1,4 @@
-package in.co.appadda.brainteaser;
+package in.co.appadda.brainteaser.activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import in.co.appadda.brainteaser.R;
 
 public class RegistrationSuccessActivity extends AppCompatActivity
 {

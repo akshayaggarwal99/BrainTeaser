@@ -1,11 +1,13 @@
-package in.co.appadda.brainteaser;
+package in.co.appadda.brainteaser.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.activity.LoginActivity;
 
 public class PasswordRecoveryRequestedActivity extends AppCompatActivity
 {

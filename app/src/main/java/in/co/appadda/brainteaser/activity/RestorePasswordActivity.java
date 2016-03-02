@@ -1,4 +1,4 @@
-package in.co.appadda.brainteaser;
+package in.co.appadda.brainteaser.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.backendless.Backendless;
+
+import in.co.appadda.brainteaser.utils.DefaultCallback;
+import in.co.appadda.brainteaser.R;
 
 public class RestorePasswordActivity extends AppCompatActivity
 {
