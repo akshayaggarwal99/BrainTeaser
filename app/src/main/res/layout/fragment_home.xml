@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEEEEE"
     android:orientation="vertical">
 
-    <!--<Button-->
-        <!--android:id="@+id/logoutButton"-->
-        <!--android:layout_width="@dimen/dp144"-->
-        <!--android:layout_height="@dimen/dp48"-->
-        <!--android:layout_marginTop="@dimen/dp16"-->
-        <!--android:text="@string/logout_text"-->
-        <!--android:textSize="@dimen/text_medium" />-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical" />
 
 </LinearLayout>

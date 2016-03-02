@@ -23,10 +23,19 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
     public HomeItemAdapter() {
         super();
         mItems = new ArrayList<HomeItems>();
-        HomeItems state = new HomeItems();
-        state.setName("Quiz");
-        state.setThumbnail(R.drawable.ic_motorcycle_black_24dp);
-        mItems.add(state);
+        HomeItems homeItems = new HomeItems();
+        homeItems.setName("Logical Questions");
+        homeItems.setThumbnail(R.drawable.think);
+        homeItems.setnColor(R.color.colorAccent);
+        homeItems.settColor(R.color.colorAccent);
+        mItems.add(homeItems);
+
+        homeItems = new HomeItems();
+        homeItems.setName("Aptitude Questions");
+        homeItems.setThumbnail(R.drawable.think);
+        homeItems.setnColor(R.color.colorAccent);
+        homeItems.settColor(R.color.colorAccent);
+        mItems.add(homeItems);
     }
 
     @Override
@@ -39,9 +48,12 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        HomeItems nature = mItems.get(i);
-        viewHolder.stateName.setText(nature.getName());
-        viewHolder.imgThumbnail.setImageResource(nature.getThumbnail());
+        HomeItems homeItems = mItems.get(i);
+        viewHolder.stateName.setText(homeItems.getName());
+        viewHolder.imgThumbnail.setImageResource(homeItems.getThumbnail());
+        viewHolder.stateName.setBackgroundColor(homeItems.getnColor());
+        viewHolder.imgThumbnail.setBackgroundColor(homeItems.gettColor());
+
     }
 
     @Override
@@ -57,10 +69,9 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
             imgThumbnail = (ImageView) itemView.findViewById(R.id.img_thumbnail);
-            stateName = (TextView) itemView.findViewById(R.id.tv_state);
+            stateName = (TextView) itemView.findViewById(R.id.tv_cardview);
         }
     }
-
 
 
 }

@@ -33,6 +33,6 @@
 
     <string name="registration_success_message">Thank you for registering with the %1$s. Click the button below to proceed to the login.</string>
 
-    <string name="closeDrawer">Navigation View</string>
-    <string name="openDrawer">Navigation View Closed</string>
+    <string name="closeDrawer">Closed</string>
+    <string name="openDrawer">Open</string>
 </resources>

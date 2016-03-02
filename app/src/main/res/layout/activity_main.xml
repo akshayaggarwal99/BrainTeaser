@@ -18,10 +18,8 @@
             android:id="@+id/nav_contentframe"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:background="@android:color/background_light"
-            android:padding="@dimen/activity_horizontal_margin">
-
+            android:layout_marginTop="?attr/actionBarSize">
+            <!--android:background="@android:color/background_light"-->
 
         </FrameLayout>
     </RelativeLayout>
@@ -34,6 +32,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"
         app:menu="@menu/drawer"
-        app:theme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:theme="@style/ThemeOverlay.AppCompat.Light" />
 
 </android.support.v4.widget.DrawerLayout>

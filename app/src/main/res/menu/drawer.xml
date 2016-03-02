@@ -9,25 +9,9 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Home" />
         <item
-            android:id="@+id/aptitude"
-            android:icon="@drawable/ic_question_answer_black_24dp"
-            android:title="Aptitude Questions" />
-        <item
-            android:id="@+id/reasoning"
-            android:icon="@drawable/think"
-            android:title="Reasoning Questions" />
-        <item
-            android:id="@+id/quiz"
-            android:icon="@drawable/ic_motorcycle_black_24dp"
-            android:title="Quiz" />
-        <item
             android:id="@+id/favourite"
             android:icon="@drawable/ic_favorite_black_24dp"
             android:title="Favourite" />
-    </group>
-    <group
-        android:id="@+id/grp_two"
-        android:checkableBehavior="single">
         <item
             android:id="@+id/share"
             android:icon="@drawable/ic_share_black_24dp"

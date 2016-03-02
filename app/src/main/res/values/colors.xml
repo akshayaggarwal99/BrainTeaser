@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F44336</color>
-    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FFF</color>
+
+    <color name="n_one">#F0B434</color>
+    <color name="t_one">#F6BC3B</color>
+    <color name="n_two">#8DBECE</color>
+    <color name="t_two">#7DC0A1</color>
+    <color name="n_three">#BB413A</color>
+    <color name="t_three">#CC4941</color>
+    <color name="n_four">#145BD7</color>
+    <color name="t_four">#2F73E4</color>
+    <color name="n_five">#61B891</color>
+    <color name="t_five">#ACCBD5</color>
 </resources>

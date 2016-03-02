@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         //Initializing NavigationView
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
+
+        HomeFragment fragment = new HomeFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.nav_contentframe, fragment);
+        fragmentTransaction.commit();
+
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -52,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Replacing the main content with HomeFragment Which is our Inbox View;
                     case R.id.home:
-                        Toast.makeText(getApplicationContext(), "Inbox Selected", Toast.LENGTH_SHORT).show();
-                        HomeFragment fragment = new HomeFragment();
+                        DisplayQuestions fragment = new DisplayQuestions();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.nav_contentframe, fragment);
                         fragmentTransaction.commit();
