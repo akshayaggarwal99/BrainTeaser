@@ -36,12 +36,7 @@
 
 
             </View>
-            <com.github.lzyzsd.circleprogress.DonutProgress
-                android:layout_marginLeft="28dp"
-                android:id="@+id/donut_progress_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                custom:donut_progress="40"/>
+
 
         </LinearLayout>
 
@@ -80,13 +75,7 @@
 
 
             </View>
-            <com.github.lzyzsd.circleprogress.DonutProgress
-                android:layout_marginLeft="28dp"
-                android:id="@+id/donut_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                custom:donut_progress="70"/>
-
+    
         </LinearLayout>
 
 

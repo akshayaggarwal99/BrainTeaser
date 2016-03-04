@@ -1,6 +1,5 @@
 package in.co.appadda.brainteaser.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -11,10 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.backendless.Backendless;
-import com.backendless.exceptions.BackendlessFault;
-
-import in.co.appadda.brainteaser.utils.DefaultCallback;
+import in.co.appadda.brainteaser.fragments.PuzzleFragment;
 import in.co.appadda.brainteaser.fragments.DisplayQuestions;
 import in.co.appadda.brainteaser.fragments.HomeFragment;
 import in.co.appadda.brainteaser.R;
@@ -71,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.favourite:
+                        PuzzleFragment puzzleFragment = new PuzzleFragment();
+                        android.support.v4.app.FragmentTransaction puzzlefragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        puzzlefragmentTransaction.replace(R.id.nav_contentframe, puzzleFragment);
+                        puzzlefragmentTransaction.commit();
                         return true;
                     case R.id.share:
                         return true;
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.logoutButton:
-                        onLogoutButtonClicked();
                         return true;
                     default:
                         Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
@@ -132,23 +131,5 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-    private void onLogoutButtonClicked() {
-        Backendless.UserService.logout(new DefaultCallback<Void>(this) {
-            @Override
-            public void handleResponse(Void response) {
-                super.handleResponse(response);
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
-            }
 
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                if (fault.getCode().equals("3023")) // Unable to logout: not logged in (session expired, etc.)
-                    handleResponse(null);
-                else
-                    super.handleFault(fault);
-            }
-        });
-
-    }
 }
