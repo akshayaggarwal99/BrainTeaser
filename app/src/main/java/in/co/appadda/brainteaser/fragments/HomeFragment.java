@@ -12,15 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import in.co.appadda.brainteaser.R;
-import in.co.appadda.brainteaser.adapter.HomeItemAdapter;
 
 /**
  * Created by dewangankisslove on 29-02-2016.
  */
 public class HomeFragment extends Fragment {
-    private RecyclerView mRecyclerView;
-    private HomeItemAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,12 +28,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.home_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 2);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new HomeItemAdapter();
-        mRecyclerView.setAdapter(mAdapter);
 
 //        final GestureDetector mGestureDetector = new GestureDetector(getActivity().getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
 //
