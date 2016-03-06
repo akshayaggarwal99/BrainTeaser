@@ -2,17 +2,16 @@
 <resources>
     <color name="colorPrimary">#35ADCF</color>
     <color name="colorPrimaryDark">#0E7E91</color>
-    <color name="colorAccent">#FFF</color>
+    <color name="colorAccent">#EEE</color>
     <color name="background">#D0F1F6</color>
 
     <color name="n_one">#F0B434</color>
-    <color name="t_one">#F6BC3B</color>
-    <color name="n_two">#8DBECE</color>
+    <color name="card_two">#8DBECE</color>
     <color name="t_two">#7DC0A1</color>
     <color name="n_three">#BB413A</color>
     <color name="t_three">#CC4941</color>
     <color name="n_four">#145BD7</color>
     <color name="t_four">#2F73E4</color>
-    <color name="n_five">#61B891</color>
+    <color name="card_one">#61B891</color>
     <color name="t_five">#ACCBD5</color>
 </resources>

@@ -1,30 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/display_que_bg"
-    android:orientation="vertical">
+    android:background="@drawable/display_que_bg">
+
+    <ImageView
+        android:id="@+id/iv_backward"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"
+        android:src="@drawable/backward" />
+
+    <ImageView
+        android:id="@+id/iv_forward"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignEnd="@+id/tv_question"
+        android:layout_alignRight="@+id/tv_question"
+        android:layout_alignTop="@+id/iv_backward"
+        android:padding="12dp"
+        android:src="@drawable/forward" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        card_view:cardCornerRadius="20dp"
-        card_view:cardElevation="4dp">
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="2dp">
 
         <TextView
             android:id="@+id/tv_question_number"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Q.1"
+            android:text="1000"
             android:textColor="#72CEE7"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </android.support.v7.widget.CardView>
@@ -33,23 +52,43 @@
         android:id="@+id/tv_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:layout_below="@id/card_view"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
         android:gravity="center_horizontal"
-        android:text="Here's my debut shot on Dribbble. This is a concept of the quiz app where you can explore the universe and check your knowledge in the game?"
+        android:text="A and B invest in a business in the ratio 3 : 2. If 5% of the total profit goes to charity and A's share is Rs. 855, the total profit is:"
         android:textColor="#FFF"
         android:textSize="16sp" />
+
 
     <ListView
         android:id="@+id/lv_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_below="@id/tv_question"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp16"
         android:layout_marginLeft="@dimen/dp16"
         android:layout_marginRight="@dimen/dp16"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="36dp"
         android:elevation="1dp"
         android:padding="@dimen/dp4" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/b_explanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lv_options"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:background="#FFF"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        android:text="Explanation"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp" />
+
+</RelativeLayout>

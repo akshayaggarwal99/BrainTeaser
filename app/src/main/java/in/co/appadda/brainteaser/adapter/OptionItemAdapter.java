@@ -72,7 +72,7 @@ public class OptionItemAdapter extends BaseAdapter {
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finalMyholder.right.setImageResource(R.drawable.check_wrong_animator);
+                finalMyholder.right.setImageResource(R.drawable.check_right_animator);
                 ((Animatable) finalMyholder.right.getDrawable()).start();
 
             }

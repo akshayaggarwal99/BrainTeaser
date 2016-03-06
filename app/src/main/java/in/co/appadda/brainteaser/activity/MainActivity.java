@@ -1,5 +1,6 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -9,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.backendless.Backendless;
 
 import in.co.appadda.brainteaser.fragments.PuzzleFragment;
 import in.co.appadda.brainteaser.fragments.DisplayQuestions;
@@ -34,11 +37,6 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
 
-        HomeFragment fragment = new HomeFragment();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.nav_contentframe, fragment);
-        fragmentTransaction.commit();
-
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -60,10 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
                     //Replacing the main content with HomeFragment Which is our Inbox View;
                     case R.id.home:
-                        DisplayQuestions fragment = new DisplayQuestions();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.nav_contentframe, fragment);
-                        fragmentTransaction.commit();
+                        HomeFragment homeFragment = new HomeFragment();
+                        android.support.v4.app.FragmentTransaction homefragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        homefragmentTransaction.replace(R.id.nav_contentframe, homeFragment);
+                        homefragmentTransaction.commit();
+
+
                         return true;
 
                     case R.id.favourite:
@@ -117,6 +117,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void cardClickHandler(View view) {
+        int i = view.getId();
+        switch (i) {
+            case R.id.card_aptitude:
+                Intent openAptitude = new Intent(MainActivity.this, DisplayQue.class);
+                openAptitude.putExtra("openFragment", "openAptitude");
+                startActivity(openAptitude);
+                break;
+            case R.id.card_logical:
+                break;
+            case R.id.card_puzzle:
+                Intent openPuzzle = new Intent(MainActivity.this, DisplayQue.class);
+                openPuzzle.putExtra("openFragment", "openPuzzle");
+                startActivity(openPuzzle);
+                break;
+        }
+    }
+
 //    @Override
 //    protected void onPostCreate(Bundle savedInstanceState) {
 //        super.onPostCreate(savedInstanceState);
@@ -129,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
 //        super.onConfigurationChanged(newConfig);
 //        actionBarDrawerToggle.onConfigurationChanged(newConfig);
 //    }
-
 
 
 }
