@@ -28,9 +28,6 @@
             android:name=".activity.DisplayQue"
             android:label="@string/app_name"></activity>
 
-        <activity android:name=".activity.ShowByPropertyActivity" />
-        <activity android:name=".activity.RetrieveRecordActivity" />
-
 
         <service android:name="com.backendless.AndroidService" />
     </application>

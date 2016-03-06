@@ -2,7 +2,6 @@ package in.co.appadda.brainteaser.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +10,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
-import com.backendless.property.ObjectProperty;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import in.co.appadda.brainteaser.R;
-import in.co.appadda.brainteaser.activity.RetrieveRecordActivity;
 import in.co.appadda.brainteaser.activity.Splash;
 import in.co.appadda.brainteaser.adapter.OptionItemAdapter;
 import in.co.appadda.brainteaser.adapter.OptionsItems;
-import in.co.appadda.brainteaser.data.api.model.DataApplication;
 import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
 import in.co.appadda.brainteaser.data.api.model.aptitude;
 
