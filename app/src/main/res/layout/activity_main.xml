@@ -14,14 +14,14 @@
 
             layout="@layout/toolbar" />
 
-        <FrameLayout
-            android:id="@+id/nav_contentframe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize">
-            <!--android:background="@android:color/background_light"-->
+            <FrameLayout
+                android:id="@+id/nav_contentframe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="?attr/actionBarSize">
+                <!--android:background="@android:color/background_light"-->
 
-        </FrameLayout>
+            </FrameLayout>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

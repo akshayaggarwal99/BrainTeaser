@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.backendless.Backendless;
 
+import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.fragments.PuzzleFragment;
 import in.co.appadda.brainteaser.fragments.DisplayQuestions;
 import in.co.appadda.brainteaser.fragments.HomeFragment;
@@ -35,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
         //Initializing NavigationView
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        DatabaseHandler db = new DatabaseHandler(this);
+        db.addAptitude();
+
+        HomeFragment homeFragment = new HomeFragment();
+        android.support.v4.app.FragmentTransaction homefragmentTransaction = getSupportFragmentManager().beginTransaction();
+        homefragmentTransaction.replace(R.id.nav_contentframe, homeFragment);
+        homefragmentTransaction.commit();
 
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
@@ -131,6 +140,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent openPuzzle = new Intent(MainActivity.this, DisplayQue.class);
                 openPuzzle.putExtra("openFragment", "openPuzzle");
                 startActivity(openPuzzle);
+                break;
+            case R.id.card_riddle:
+                Intent openRiddle = new Intent(MainActivity.this, DisplayQue.class);
+                openRiddle.putExtra("openFragment", "openRiddle");
+                startActivity(openRiddle);
                 break;
         }
     }

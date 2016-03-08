@@ -1,5 +1,6 @@
 package in.co.appadda.brainteaser.fragments;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,34 +11,31 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.backendless.BackendlessCollection;
-
 import java.util.ArrayList;
 
 import in.co.appadda.brainteaser.R;
-import in.co.appadda.brainteaser.activity.Splash;
+import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.adapter.OptionItemAdapter;
 import in.co.appadda.brainteaser.adapter.OptionsItems;
-import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
-import in.co.appadda.brainteaser.data.api.model.aptitude;
 
 /**
  * Created by dewangankisslove on 02-03-2016.
  */
 public class DisplayQuestions extends Fragment {
 
-    private BackendlessCollection collection;
-
-    private int currentPage;
-    private int totalPages;
+//    private BackendlessCollection collection;
+//
+//    private int currentPage;
+//    private int totalPages;
+//    private String[] items;
 
     private ArrayList<OptionsItems> optionsItemsArrayList = new ArrayList<OptionsItems>();
     private OptionItemAdapter adapter;
     ListView optionListView;
-    TextView question;
+    TextView question, questionNo;
     ImageView forward, backward;
     Button explanation;
-    private String[] items;
+    int que_no = 1;
 
 
     @Override
@@ -50,9 +48,9 @@ public class DisplayQuestions extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        collection = Splash.getResultCollection();
-        currentPage = 1;
-        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
+//        collection = Splash.getResultCollection();
+//        currentPage = 1;
+//        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
 
         initUI();
         initViews();
@@ -63,6 +61,7 @@ public class DisplayQuestions extends Fragment {
     private void initUI() {
         optionListView = (ListView) getActivity().findViewById(R.id.lv_options);
         question = (TextView) getActivity().findViewById(R.id.tv_question);
+        questionNo = (TextView) getActivity().findViewById(R.id.tv_question_number);
         forward = (ImageView) getActivity().findViewById(R.id.iv_forward);
         backward = (ImageView) getActivity().findViewById(R.id.iv_backward);
         explanation = (Button) getActivity().findViewById(R.id.b_explanation);
@@ -70,49 +69,46 @@ public class DisplayQuestions extends Fragment {
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                collection.nextPage(new DefaultCallback<BackendlessCollection>(getActivity().getApplicationContext()) {
-                    @Override
-                    public void handleResponse(BackendlessCollection response) {
-                        currentPage++;
-                        collection = response;
-                        initViews();
-                        initButtons();
-                        super.handleResponse(response);
-                    }
-                });
+                que_no++;
+                initViews();
+                initButtons();
             }
         });
 
         backward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                collection.previousPage(new DefaultCallback<BackendlessCollection>(getActivity().getApplicationContext()) {
-                    @Override
-                    public void handleResponse(BackendlessCollection response) {
-                        currentPage--;
-                        collection = response;
-                        initViews();
-                        initButtons();
-                        super.handleResponse(response);
-                    }
-                });
+                que_no--;
+                initViews();
+                initButtons();
             }
         });
     }
 
     private void initViews() {
-        items = new String[5];
+        DatabaseHandler db = new DatabaseHandler(getActivity().getApplicationContext());
 
-        items[0] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getQuestions());
-        items[1] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_one());
-        items[2] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_two());
-        items[3] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_three());
-        items[4] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_four());
 
-        question.setText(items[0]);
+        Cursor cursor = db.getAptitude(que_no);
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("");
+        sb.append(que_no);
+        questionNo.setText(sb.toString());
+
+        question.setText(cursor.getString(1));
+//        items = new String[5];
+//
+//        items[0] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getQuestions());
+//        items[1] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_one());
+//        items[2] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_two());
+//        items[3] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_three());
+//        items[4] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_four());
+
+//        question.setText(items[0]);
+//
         String[] numbering = {"A)", "B)", "C)", "D)"};
-        String[] options = {items[1], items[2], items[3], items[4]};
+        String[] options = {cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5)};
         for (int i = 0; i < 4; i++) {
             optionsItemsArrayList.add(new OptionsItems(numbering[i], options[i]));
         }
@@ -122,8 +118,9 @@ public class DisplayQuestions extends Fragment {
     }
 
     private void initButtons() {
-        forward.setEnabled(currentPage != totalPages);
-        backward.setEnabled(currentPage != 1);
+//        forward.setEnabled(currentPage != totalPages);
+        backward.setEnabled(questionNo.getText().toString() != "1");
+        forward.setEnabled(questionNo.getText().toString() != "10");
     }
 
     @Override

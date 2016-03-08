@@ -30,8 +30,8 @@
             android:title="About us" />
         <item
             android:id="@+id/logoutButton"
-            android:icon="@drawable/ic_logout_variant"
-            android:title="Log out" />
+            android:icon="@drawable/ic_update_black_24dp"
+            android:title="Update Questions" />
     </group>
 
 
