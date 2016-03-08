@@ -11,6 +11,7 @@ import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 
 import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.DataApplication;
 import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
 import in.co.appadda.brainteaser.data.api.model.Defaults;
@@ -67,6 +68,9 @@ public class Splash extends AppCompatActivity {
                 super.handleResponse(response);
 
                 resultCollection = response;
+
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                db.addAptitude();
 
                 Intent mainActivity = new Intent(Splash.this, MainActivity.class);
                 startActivity(mainActivity);

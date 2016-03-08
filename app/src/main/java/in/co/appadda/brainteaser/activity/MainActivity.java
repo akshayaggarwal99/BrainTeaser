@@ -1,6 +1,7 @@
 package in.co.appadda.brainteaser.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -37,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         //Initializing NavigationView
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        DatabaseHandler db = new DatabaseHandler(this);
-        db.addAptitude();
 
         HomeFragment homeFragment = new HomeFragment();
         android.support.v4.app.FragmentTransaction homefragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -135,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(openAptitude);
                 break;
             case R.id.card_logical:
+                Intent openLogical = new Intent(MainActivity.this, DisplayQue.class);
+                openLogical.putExtra("openFragment", "openRiddle");
+                startActivity(openLogical);
                 break;
             case R.id.card_puzzle:
                 Intent openPuzzle = new Intent(MainActivity.this, DisplayQue.class);
@@ -149,18 +151,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onPostCreate(Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        // Sync the toggle state after onRestoreInstanceState has occurred.
-//        actionBarDrawerToggle.syncState();
-//    }
-//
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        actionBarDrawerToggle.onConfigurationChanged(newConfig);
-//    }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        actionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
 
 
 }
