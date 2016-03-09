@@ -40,7 +40,7 @@ public class DisplayQuestions extends Fragment {
     ImageView forward, backward;
     Button explanation;
     int que_no = 0;
-    Cursor cursor;
+    private Cursor cursor;
 
 
     @Override

@@ -35,10 +35,7 @@ public class DisplayQueSets extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new QueSetAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
-        RecyclerView.ItemDecoration itemDecoration =
-                new DividerItemDecoration(this, LinearLayoutManager.VERTICAL) {
-                };
-        mRecyclerView.addItemDecoration(itemDecoration);
+
     }
 
     @Override
