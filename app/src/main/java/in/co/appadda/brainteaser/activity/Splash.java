@@ -16,17 +16,30 @@ import in.co.appadda.brainteaser.data.api.model.DataApplication;
 import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
 import in.co.appadda.brainteaser.data.api.model.Defaults;
 import in.co.appadda.brainteaser.data.api.model.aptitude;
+import in.co.appadda.brainteaser.data.api.model.puzzles;
 
 /**
  * Created by dewangankisslove on 05-03-2016.
  */
 public class Splash extends AppCompatActivity {
 
-    private static BackendlessCollection resultCollection;
+    private static BackendlessCollection aptitudeCollection;
+    private static BackendlessCollection LogicalCollection;
+    private static BackendlessCollection PuzzleCollection;
+    private static BackendlessCollection RiddleCollection;
     Button clickToContinue, just;
 
-    public static BackendlessCollection getResultCollection() {
-        return resultCollection;
+    public static BackendlessCollection getAptitudeCollection() {
+        return aptitudeCollection;
+    }
+    public static BackendlessCollection getLogicalCollection() {
+        return LogicalCollection;
+    }
+    public static BackendlessCollection getPuzzleCollection() {
+        return PuzzleCollection;
+    }
+    public static BackendlessCollection getRiddleCollection() {
+        return RiddleCollection;
     }
 
     @Override
@@ -67,7 +80,7 @@ public class Splash extends AppCompatActivity {
             public void handleResponse(BackendlessCollection<aptitude> response) {
                 super.handleResponse(response);
 
-                resultCollection = response;
+                aptitudeCollection = response;
 
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.addAptitude();
@@ -78,30 +91,15 @@ public class Splash extends AppCompatActivity {
         });
     }
 
-//    private void retrieveBasicPuzzlesRecord() {
-//        BackendlessDataQuery query = new BackendlessDataQuery();
-//        puzzles.findAsync(query, new DefaultCallback<BackendlessCollection<puzzles>>(RetrieveRecordActivity.this) {
-//            @Override
-//            public void handleResponse(BackendlessCollection<puzzles> response) {
-//                super.handleResponse(response);
-//
-//                resultCollection = response;
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(RetrieveRecordActivity.this);
-//                builder.setTitle("Property to show:");
-//                final String[] properties = {"hint", "question", "ownerId", "answer", "_id", "objectId", "solution", "created", "updated"};
-//                builder.setItems(properties, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Intent nextIntent = new Intent(RetrieveRecordActivity.this, ShowByPropertyActivity.class);
-//                        nextIntent.putExtra("type", type);
-//                        nextIntent.putExtra("property", properties[i]);
-//                        startActivity(nextIntent);
-//                        dialogInterface.cancel();
-//                    }
-//                });
-//                builder.create().show();
-//            }
-//        });
-//    }
+    private void retrieveBasicPuzzlesRecord() {
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        puzzles.findAsync(query, new DefaultCallback<BackendlessCollection<puzzles>>(Splash.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<puzzles> response) {
+                super.handleResponse(response);
+
+                PuzzleCollection = response;
+            }
+        });
+    }
 }

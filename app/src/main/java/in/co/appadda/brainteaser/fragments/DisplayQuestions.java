@@ -93,22 +93,6 @@ public class DisplayQuestions extends Fragment {
             }
         });
 
-        explanation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getApplicationContext());
-                builder.setTitle("Property to show:");
-                final String[] properties = {cursor.getString(7)};
-                builder.setItems(properties, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.create().show();
-            }
-        });
-
     }
 
     private void initViews() {

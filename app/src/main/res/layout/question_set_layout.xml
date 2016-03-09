@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/display_que_set_bg">
+    android:background="@color/card_one">
 
     <TextView
         android:id="@+id/tv_pq"
@@ -15,8 +15,8 @@
         android:textSize="20sp" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/queSetList"
