@@ -3,6 +3,10 @@ package in.co.appadda.brainteaser.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.ViewPagerAdapter;
@@ -23,7 +27,7 @@ public class DisplayQue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_que);
 
-        viewPagerAdapter = new ViewPagerAdapter(this,getSupportFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(this, getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.activity_que_pager);
         viewPager.setAdapter(viewPagerAdapter);
 
@@ -46,4 +50,5 @@ public class DisplayQue extends AppCompatActivity {
 
 
     }
+
 }

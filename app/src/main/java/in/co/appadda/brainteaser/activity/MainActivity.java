@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         int i = view.getId();
         switch (i) {
             case R.id.card_aptitude:
-                Intent openAptitude = new Intent(MainActivity.this, DisplayQue.class);
+                Intent openAptitude = new Intent(MainActivity.this, DisplayQueSets.class);
                 openAptitude.putExtra("openFragment", "openAptitude");
                 startActivity(openAptitude);
                 break;

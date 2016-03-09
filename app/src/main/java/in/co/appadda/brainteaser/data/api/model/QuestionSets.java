@@ -4,21 +4,14 @@ package in.co.appadda.brainteaser.data.api.model;
  * Created by dewangankisslove on 09-03-2016.
  */
 public class QuestionSets {
-    private int setLogo;
     private String setNo;
     private String totalNoQue;
     private String UserStatus;
 
-    public QuestionSets() {
-        super();
-    }
-
-    public int getSetLogo() {
-        return setLogo;
-    }
-
-    public void setSetLogo(int setLogo) {
-        this.setLogo = setLogo;
+    public QuestionSets(String setNo, String totalNoQue, String UserStatus) {
+        this.setNo = setNo;
+        this.totalNoQue = totalNoQue;
+        this.UserStatus = UserStatus;
     }
 
     public String getSetNo() {

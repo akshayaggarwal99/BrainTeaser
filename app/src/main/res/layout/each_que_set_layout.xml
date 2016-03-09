@@ -2,46 +2,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFF"
-    android:padding="12dp">
+    android:background="#FFF">
 
     <ImageView
         android:id="@+id/iv_setLogo"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:src="#F5F5F5" />
+        android:layout_margin="12dp"
+        android:padding="12dp"
+        android:src="@drawable/study" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="76dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_setLogo"
+        android:background="@color/card_one"></View>
 
     <TextView
         android:id="@+id/tv_setNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
         android:layout_toRightOf="@id/iv_setLogo"
         android:fontFamily="sans-serif"
         android:text="Set 1"
-        android:textColor="#212121"
-        android:textSize="20sp"
+        android:textColor="@color/card_one"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/user_set_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/iv_setLogo"
         android:layout_alignLeft="@+id/tv_setNo"
         android:layout_alignStart="@+id/tv_setNo"
         android:fontFamily="sans-serif"
-        android:text="You have Completed!"
-        android:textColor="#212121"
-        android:textSize="16sp" />
+        android:text="You have Completed !"
+        android:textColor="@color/card_one"
+        android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/total_que_set"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_alignParentRight="true"
+        android:layout_margin="12dp"
+        android:layout_marginLeft="16dp"
         android:fontFamily="sans-serif"
         android:text="Total Questions - 10"
-        android:textColor="#212121"
-        android:textSize="18sp" />
+        android:textColor="@color/card_one"
+        android:textSize="12sp" />
 
 </RelativeLayout>
