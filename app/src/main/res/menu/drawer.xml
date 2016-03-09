@@ -9,9 +9,9 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Home" />
         <item
-            android:id="@+id/favourite"
-            android:icon="@drawable/ic_favorite_black_24dp"
-            android:title="Favourite" />
+            android:id="@+id/logoutButton"
+            android:icon="@drawable/ic_update_black_24dp"
+            android:title="Update Questions" />
         <item
             android:id="@+id/share"
             android:icon="@drawable/ic_share_black_24dp"
@@ -28,10 +28,6 @@
             android:id="@+id/about_us"
             android:icon="@drawable/ic_info_black_24dp"
             android:title="About us" />
-        <item
-            android:id="@+id/logoutButton"
-            android:icon="@drawable/ic_update_black_24dp"
-            android:title="Update Questions" />
     </group>
 
 

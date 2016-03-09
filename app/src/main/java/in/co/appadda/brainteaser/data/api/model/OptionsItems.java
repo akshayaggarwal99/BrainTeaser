@@ -1,4 +1,4 @@
-package in.co.appadda.brainteaser.adapter;
+package in.co.appadda.brainteaser.data.api.model;
 
 /**
  * Created by dewangankisslove on 01-03-2016.

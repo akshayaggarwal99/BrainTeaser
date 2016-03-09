@@ -62,23 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
-
-
-                    //Replacing the main content with HomeFragment Which is our Inbox View;
                     case R.id.home:
                         HomeFragment homeFragment = new HomeFragment();
                         android.support.v4.app.FragmentTransaction homefragmentTransaction = getSupportFragmentManager().beginTransaction();
                         homefragmentTransaction.replace(R.id.nav_contentframe, homeFragment);
                         homefragmentTransaction.commit();
-
-
-                        return true;
-
-                    case R.id.favourite:
-                        PuzzleFragment puzzleFragment = new PuzzleFragment();
-                        android.support.v4.app.FragmentTransaction puzzlefragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        puzzlefragmentTransaction.replace(R.id.nav_contentframe, puzzleFragment);
-                        puzzlefragmentTransaction.commit();
                         return true;
                     case R.id.share:
                         return true;

@@ -1,10 +1,12 @@
 package in.co.appadda.brainteaser.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
-import in.co.appadda.brainteaser.adapter.OptionsItems;
+import in.co.appadda.brainteaser.data.api.model.OptionsItems;
 
 /**
  * Created by dewangankisslove on 02-03-2016.
@@ -51,8 +53,6 @@ public class DisplayQuestions extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        collection = Splash.getResultCollection();
-//        currentPage = 1;
 //        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
 
         initUI();
@@ -73,6 +73,8 @@ public class DisplayQuestions extends Fragment {
             @Override
             public void onClick(View v) {
                 que_no++;
+                explanation.setAlpha(0);
+                explanation.setEnabled(false);
                 optionsItemsArrayList.clear();
                 initViews();
                 initButtons();
@@ -82,10 +84,28 @@ public class DisplayQuestions extends Fragment {
         backward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                explanation.setAlpha(0);
+                explanation.setEnabled(false);
                 optionsItemsArrayList.clear();
                 que_no--;
                 initViews();
                 initButtons();
+            }
+        });
+
+        explanation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getApplicationContext());
+                builder.setTitle("Property to show:");
+                final String[] properties = {cursor.getString(7)};
+                builder.setItems(properties, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
             }
         });
 
@@ -103,16 +123,7 @@ public class DisplayQuestions extends Fragment {
         questionNo.setText(sb.toString());
 
         question.setText(cursor.getString(1));
-//        items = new String[5];
-//
-//        items[0] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getQuestions());
-//        items[1] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_one());
-//        items[2] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_two());
-//        items[3] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_three());
-//        items[4] = String.valueOf(((aptitude) collection.getCurrentPage().get(0)).getOption_four());
 
-//        question.setText(items[0]);
-//
         String[] numbering = {"A)", "B)", "C)", "D)"};
         String[] options = {cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5)};
         for (int i = 0; i < 4; i++) {
@@ -125,7 +136,6 @@ public class DisplayQuestions extends Fragment {
     }
 
     private void initButtons() {
-//        forward.setEnabled(currentPage != totalPages);
         backward.setEnabled(que_no != 0);
         forward.setEnabled(que_no != 9);
     }
@@ -175,6 +185,7 @@ public class DisplayQuestions extends Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View row = convertView;
+            final int[] j = {0};
             Myholder myholder = null;
             if (row == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -190,19 +201,33 @@ public class DisplayQuestions extends Fragment {
             myholder.right.setImageResource(optionsItems.getRight());
 
             final Myholder finalMyholder = myholder;
+            final View finalRow = row;
+
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (finalMyholder.option.getText().toString().contentEquals(cursor.getString(6))) {
                         finalMyholder.right.setImageResource(R.drawable.check_right_animator);
                         ((Animatable) finalMyholder.right.getDrawable()).start();
-                    }else {
+                    } else {
                         finalMyholder.right.setImageResource(R.drawable.check_wrong_animator);
                         ((Animatable) finalMyholder.right.getDrawable()).start();
+                        j[0]++;
+
                     }
+                    finalRow.setClickable(false);
+                    explanation.setEnabled(true);
+                    explanation.setAlpha(1);
 
                 }
             });
+            if (j[0] == 1) {
+                for (int i = 0; i < 4; i++) {
+                    if (optionList.get(i).getOption().toString().contentEquals(cursor.getString(6))) {
+                        int l = (optionList.get(i).getRight());
+                    }
+                }
+            }
 
             return row;
         }

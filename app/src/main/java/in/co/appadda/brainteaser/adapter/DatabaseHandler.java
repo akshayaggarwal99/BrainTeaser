@@ -90,7 +90,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //Adding new aptitude
     public void addAptitude() {
-        String INSERT_APTITUDE;
         String[] aptitude_id , aptitude_que, aptitude_option_one , aptitude_option_two , aptitude_option_three , aptitude_option_four , aptitude_answer , aptitude_explanation;
 
         collection = Splash.getResultCollection();
@@ -109,7 +108,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        for (int k = 0;k<collection.getCurrentPage().size();k++){
+        for (int k = 0;k < collection.getCurrentPage().size();k++){
             aptitude_id[k] = String.valueOf(((aptitude) collection.getCurrentPage().get(k)).get_id());
             aptitude_que[k] = String.valueOf(((aptitude) collection.getCurrentPage().get(k)).getQuestions());
             aptitude_option_one[k] = String.valueOf(((aptitude) collection.getCurrentPage().get(k)).getOption_one());
