@@ -24,10 +24,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private Context _context;
 
-    public ViewPagerAdapter(Context context,int slideCount, FragmentManager fm) {
+    public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         _context = context;
-        this.slideCount = slideCount;
 
     }
 
