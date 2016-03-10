@@ -12,11 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.backendless.Backendless;
-
-import in.co.appadda.brainteaser.adapter.DatabaseHandler;
-import in.co.appadda.brainteaser.fragments.PuzzleFragment;
-import in.co.appadda.brainteaser.fragments.DisplayQuestions;
 import in.co.appadda.brainteaser.fragments.HomeFragment;
 import in.co.appadda.brainteaser.R;
 
@@ -117,13 +112,11 @@ public class MainActivity extends AppCompatActivity {
         int i = view.getId();
         switch (i) {
             case R.id.card_aptitude:
-                Intent openAptitude = new Intent(MainActivity.this, DisplayQueSets.class);
-                openAptitude.putExtra("openFragment", "openAptitude");
+                Intent openAptitude = new Intent(MainActivity.this, DisplayAptitudeSets.class);
                 startActivity(openAptitude);
                 break;
             case R.id.card_logical:
-                Intent openLogical = new Intent(MainActivity.this, DisplayQue.class);
-                openLogical.putExtra("openFragment", "openRiddle");
+                Intent openLogical = new Intent(MainActivity.this, DisplayLogicalSets.class);
                 startActivity(openLogical);
                 break;
             case R.id.card_puzzle:

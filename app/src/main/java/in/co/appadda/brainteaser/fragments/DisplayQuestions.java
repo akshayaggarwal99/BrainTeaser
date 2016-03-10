@@ -132,7 +132,7 @@ public class DisplayQuestions extends Fragment {
 
     private void initButtons() {
         backward.setEnabled(que_no != 0);
-        forward.setEnabled(que_no != 9);
+        forward.setEnabled(que_no != 10);
     }
 
     @Override
