@@ -151,6 +151,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:text="For the crazy ones"
+            android:fontFamily="sans-serif"
             android:textColor="#BDBDBD"
             android:textSize="18sp" />
 
