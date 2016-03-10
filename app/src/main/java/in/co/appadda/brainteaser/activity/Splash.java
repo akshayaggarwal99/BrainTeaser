@@ -1,7 +1,10 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +12,7 @@ import android.widget.Button;
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.QueryOptions;
 
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
@@ -28,16 +32,20 @@ public class Splash extends AppCompatActivity {
     private static BackendlessCollection PuzzleCollection;
     private static BackendlessCollection RiddleCollection;
     Button clickToContinue, just;
+    int id = 0;
 
     public static BackendlessCollection getAptitudeCollection() {
         return aptitudeCollection;
     }
+
     public static BackendlessCollection getLogicalCollection() {
         return LogicalCollection;
     }
+
     public static BackendlessCollection getPuzzleCollection() {
         return PuzzleCollection;
     }
+
     public static BackendlessCollection getRiddleCollection() {
         return RiddleCollection;
     }
@@ -73,12 +81,21 @@ public class Splash extends AppCompatActivity {
     }
 
     private void retrieveBasicAptitudeRecord() {
+        id = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getInt("_id", 0);
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption( "_id ASC" );
         BackendlessDataQuery query = new BackendlessDataQuery();
-        query.setPageSize(10);
+        query.setQueryOptions( queryOptions );
+        query.setPageSize(5);
+        query.setWhereClause("_id > " + id);
         aptitude.findAsync(query, new DefaultCallback<BackendlessCollection<aptitude>>(Splash.this) {
             @Override
             public void handleResponse(BackendlessCollection<aptitude> response) {
                 super.handleResponse(response);
+                id = id + 5;
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                editor.putInt("_id", id);
+                editor.commit();
 
                 aptitudeCollection = response;
 

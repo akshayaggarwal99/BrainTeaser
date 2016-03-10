@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,17 +21,20 @@ public class QueSetAdapter extends RecyclerView
         .DataObjectHolder> {
     private ArrayList<QuestionSets> mDataset;
     private static MyClickListener myClickListener;
+    private int layoutR;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
-        TextView setNo , setTotalQue , userSetStatus;
+        ImageView setIcon;
+        TextView setNo, setTotalQue, userSetStatus;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             setNo = (TextView) itemView.findViewById(R.id.tv_setNo);
             setTotalQue = (TextView) itemView.findViewById(R.id.total_que_set);
             userSetStatus = (TextView) itemView.findViewById(R.id.user_set_status);
+            setIcon = (ImageView) itemView.findViewById(R.id.iv_setLogo);
             itemView.setOnClickListener(this);
         }
 
@@ -44,13 +48,14 @@ public class QueSetAdapter extends RecyclerView
         this.myClickListener = myClickListener;
     }
 
-    public QueSetAdapter(ArrayList<QuestionSets> myDataset) {
+    public QueSetAdapter(ArrayList<QuestionSets> myDataset, int layoutR) {
         mDataset = myDataset;
+        this.layoutR = layoutR;
     }
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.each_que_set_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutR, parent, false);
 
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
@@ -61,17 +66,18 @@ public class QueSetAdapter extends RecyclerView
         holder.setNo.setText(mDataset.get(position).getSetNo());
         holder.setTotalQue.setText(mDataset.get(position).getTotalNoQue());
         holder.userSetStatus.setText(mDataset.get(position).getUserStatus());
+        holder.setIcon.setImageResource(mDataset.get(position).getImg());
     }
 
-    public void addItem(QuestionSets dataObj, int index) {
-        mDataset.add(dataObj);
-        notifyItemInserted(index);
-    }
-
-    public void deleteItem(int index) {
-        mDataset.remove(index);
-        notifyItemRemoved(index);
-    }
+//    public void addItem(QuestionSets dataObj, int index) {
+//        mDataset.add(dataObj);
+//        notifyItemInserted(index);
+//    }
+//
+//    public void deleteItem(int index) {
+//        mDataset.remove(index);
+//        notifyItemRemoved(index);
+//    }
 
     @Override
     public int getItemCount() {

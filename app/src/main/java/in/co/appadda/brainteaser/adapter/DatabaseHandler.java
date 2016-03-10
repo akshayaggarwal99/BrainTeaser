@@ -46,7 +46,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String APTITUDE_ANSWER = "answer";
     private static final String APTITUDE_EXPLANATION = "explanation";
 
-    // APTITUDE Table Columns names
+    // LOGICAL Table Columns names
     private static final String LOGICAL_ID = "_id";
     private static final String LOGICAL_QUESTIONS = "questions";
     private static final String LOGICAL_OPTION_ONE = "option_one";
@@ -67,7 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String RIDDLE_QUESTIONS = "questions";
     private static final String RIDDLE_ANSWER = "answer";
 
-    private static final String CREATE_TABLE_APTITUDE = "CREATE TABLE " + TABLE_APTITUDE + "(" + APTITUDE_ID + " INTEGER PRIMARY KEY," + APTITUDE_QUESTIONS + " TEXT," + APTITUDE_OPTION_ONE + " TEXT," + APTITUDE_OPTION_TWO + " TEXT," + APTITUDE_OPTION_THREE + " TEXT," + APTITUDE_OPTION_FOUR + " TEXT," + APTITUDE_ANSWER + " TEXT," + APTITUDE_EXPLANATION + " TEXT" + ")";
+    private static final String CREATE_TABLE_APTITUDE = "CREATE TABLE " + TABLE_APTITUDE + "(" + APTITUDE_ID + " INTEGER PRIMARY KEY," + APTITUDE_QUESTIONS + " TEXT," + APTITUDE_OPTION_ONE + " TEXT," + APTITUDE_OPTION_TWO + " TEXT," + APTITUDE_OPTION_THREE + " TEXT," + APTITUDE_OPTION_FOUR + " TEXT," + APTITUDE_ANSWER + " TEXT," + APTITUDE_EXPLANATION + " TEXT, status" + " BOOLEAN" + ")";
     private static final String CREATE_TABLE_LOGICAL = "CREATE TABLE " + TABLE_LOGICAL + "(" + LOGICAL_ID + " INTEGER PRIMARY KEY," + LOGICAL_QUESTIONS + " TEXT," + LOGICAL_OPTION_ONE + " TEXT," + LOGICAL_OPTION_TWO + " TEXT," + LOGICAL_OPTION_THREE + " TEXT," + LOGICAL_OPTION_FOUR + " TEXT," + LOGICAL_ANSWER + " TEXT," + LOGICAL_EXPLANATION + " TEXT" + ")";
     private static final String CREATE_TABLE_PUZZLE = "CREATE TABLE " + TABLE_PUZZLE + "(" + PUZZLE_ID + " INTEGER PRIMARY KEY," + PUZZLE_QUESTIONS + " TEXT," + PUZZLE_ANSWER + " TEXT," + PUZZLE_EXPLANATION + " TEXT" + ")";
     private static final String CREATE_TABLE_RIDDLE = "CREATE TABLE " + TABLE_RIDDLE + "(" + RIDDLE_ID + " INTEGER PRIMARY KEY," + RIDDLE_QUESTIONS + " TEXT," + RIDDLE_ANSWER + " TEXT" + ")";
@@ -149,6 +149,51 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+    //Adding new aptitude
+    public void addLogical() {
+        String[] logical_id, logical_que, logical_option_one, logical_option_two, logical_option_three, logical_option_four, logical_answer, logical_explanation;
+
+        logicalcollection = Splash.getLogicalCollection();
+        currentPage = 1;
+
+        logical_id = new String[logicalcollection.getCurrentPage().size()];
+        logical_que = new String[logicalcollection.getCurrentPage().size()];
+        logical_option_one = new String[logicalcollection.getCurrentPage().size()];
+        logical_option_two = new String[logicalcollection.getCurrentPage().size()];
+        logical_option_three = new String[logicalcollection.getCurrentPage().size()];
+        logical_option_four = new String[logicalcollection.getCurrentPage().size()];
+        logical_answer = new String[logicalcollection.getCurrentPage().size()];
+        logical_explanation = new String[logicalcollection.getCurrentPage().size()];
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        for (int k = 0; k < logicalcollection.getCurrentPage().size(); k++) {
+            logical_id[k] = String.valueOf(((aptitude) logicalcollection.getCurrentPage().get(k)).get_id());
+            logical_que[k] = String.valueOf(((aptitude) logicalcollection.getCurrentPage().get(k)).getQuestions());
+            logical_option_one[k] = String.valueOf(((aptitude) logicalcollection.getCurrentPage().get(k)).getOption_one());
+            logical_option_two[k] = String.valueOf(((aptitude) logicalcollection.getCurrentPage().get(k)).getOption_two());
+            logical_option_three[k] = String.valueOf(((aptitude) logicalcollection.getCurrentPage().get(k)).getOption_three());
+            logical_option_four[k] = String.valueOf(((aptitude) logicalcollection.getCurrentPage().get(k)).getOption_four());
+            logical_answer[k] = String.valueOf(((aptitude) logicalcollection.getCurrentPage().get(k)).getAnswer());
+            logical_explanation[k] = String.valueOf(((aptitude) logicalcollection.getCurrentPage().get(k)).getExplanation());
+
+            values.put(LOGICAL_QUESTIONS, logical_que[k]);
+            values.put(LOGICAL_OPTION_ONE, logical_option_one[k]);
+            values.put(LOGICAL_OPTION_TWO, logical_option_two[k]);
+            values.put(LOGICAL_OPTION_THREE, logical_option_three[k]);
+            values.put(LOGICAL_OPTION_FOUR, logical_option_four[k]);
+            values.put(LOGICAL_ANSWER, logical_answer[k]);
+            values.put(LOGICAL_EXPLANATION, logical_explanation[k]);
+            values.put(LOGICAL_ID, logical_id[k]);
+            db.insert(TABLE_LOGICAL, null, values);
+        }
+
+        // Inserting Row
+
+        db.close(); // Closing database connection
+    }
+
     //Adding new puzzle
     public void addPuzzles() {
         String[] puzzle_id, puzzle_que, puzzle_answer, puzzle_explanation;
@@ -182,7 +227,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    //Adding new puzzle
+    //Adding new riddle
     public void addRiddle() {
         String[] riddle_id, riddle_que, riddle_answer;
 
@@ -273,6 +318,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Getting aptitude Count
     public int getAptitudeCount() {
         String countQuery = "SELECT  * FROM " + TABLE_APTITUDE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+
+        // return count
+        return cursor.getCount();
+    }
+    public int getAptitudeStatusCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_APTITUDE + " WHERE status = TRUE";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
