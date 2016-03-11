@@ -26,7 +26,9 @@ public class QueSetAdapter extends RecyclerView
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
+
         ImageView setIcon;
+
         TextView setNo, setTotalQue, userSetStatus;
 
         public DataObjectHolder(View itemView) {

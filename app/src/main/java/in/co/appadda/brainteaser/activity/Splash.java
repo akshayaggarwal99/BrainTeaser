@@ -114,8 +114,10 @@ public class Splash extends AppCompatActivity {
             @Override
             public void handleResponse(BackendlessCollection<puzzles> response) {
                 super.handleResponse(response);
-
                 PuzzleCollection = response;
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                db.addPuzzles();
+
             }
         });
     }

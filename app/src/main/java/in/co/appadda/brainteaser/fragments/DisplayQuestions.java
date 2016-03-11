@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.activity.DisplayQue;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.OptionsItems;
 
@@ -40,6 +44,15 @@ public class DisplayQuestions extends Fragment {
     Button explanation;
     int que_no = 0;
     private Cursor cursor;
+
+    public static DisplayQuestions newInstance(String param) {
+
+        Log.e("Lifecycle " + param, "newInstance");
+
+        DisplayQuestions displayQuestions = new DisplayQuestions();
+
+        return displayQuestions;
+    }
 
 
     @Override

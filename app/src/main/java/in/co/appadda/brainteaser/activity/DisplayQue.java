@@ -27,7 +27,7 @@ public class DisplayQue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_que);
 
-        viewPagerAdapter = new ViewPagerAdapter(this,10, getSupportFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(this, getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.activity_que_pager);
         viewPager.setAdapter(viewPagerAdapter);
 
