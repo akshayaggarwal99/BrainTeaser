@@ -3,7 +3,6 @@ package in.co.appadda.brainteaser.adapter;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import in.co.appadda.brainteaser.fragments.DisplayQuestions;
@@ -13,22 +12,26 @@ import in.co.appadda.brainteaser.fragments.DisplayQuestions;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private int slideCount;
-    private Context _context;
+    private Context context;
 
-    public ViewPagerAdapter(Context context, int slideCount, FragmentManager fm) {
+    public ViewPagerAdapter(Context context ,int slideCount, FragmentManager fm) {
         super(fm);
-        _context = context;
         this.slideCount = slideCount;
+        this.context = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment f = new DisplayQuestions();
-        return f;
+        return DisplayQuestions.newInstance(position-1);
     }
 
     @Override
     public int getCount() {
         return slideCount;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return super.getItemPosition(object);
     }
 }

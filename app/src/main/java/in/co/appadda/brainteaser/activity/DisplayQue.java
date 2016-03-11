@@ -27,26 +27,11 @@ public class DisplayQue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_que);
 
-        viewPagerAdapter = new ViewPagerAdapter(this, getSupportFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(this ,10, getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.activity_que_pager);
         viewPager.setAdapter(viewPagerAdapter);
 
         String frag = getIntent().getStringExtra("openFragment");
-
-        switch (frag) {
-            case "openAptitude":
-//                DisplayQuestions displayQuestions = new DisplayQuestions();
-//                android.support.v4.app.FragmentTransaction aptitudefragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                aptitudefragmentTransaction.replace(R.id.activity_display_question, displayQuestions);
-//                aptitudefragmentTransaction.commit();
-                break;
-            case "openPuzzle":
-//                PuzzleFragment puzzleFragment = new PuzzleFragment();
-//                android.support.v4.app.FragmentTransaction puzzlefragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                puzzlefragmentTransaction.replace(R.id.activity_display_question, puzzleFragment);
-//                puzzlefragmentTransaction.commit();
-                break;
-        }
 
 
     }

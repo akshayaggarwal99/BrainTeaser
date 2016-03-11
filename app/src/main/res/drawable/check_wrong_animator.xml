@@ -3,20 +3,20 @@
     android:oneshot="true">
     <item
         android:drawable="@drawable/check_wrong_1"
-        android:duration="80" />
+        android:duration="65" />
     <item
         android:drawable="@drawable/check_wrong_2"
-        android:duration="80" />
+        android:duration="65" />
     <item
         android:drawable="@drawable/check_wrong_3"
-        android:duration="80" />
+        android:duration="65" />
     <item
         android:drawable="@drawable/check_wrong_4"
-        android:duration="80" />
+        android:duration="65" />
     <item
         android:drawable="@drawable/check_wrong_5"
-        android:duration="80" />
+        android:duration="65" />
     <item
         android:drawable="@drawable/check_wrong_6"
-        android:duration="80" />
+        android:duration="65" />
 </animation-list>

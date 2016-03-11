@@ -3,17 +3,17 @@
     android:oneshot="true">
     <item
         android:drawable="@drawable/check_mark_one"
-        android:duration="100" />
+        android:duration="80" />
     <item
         android:drawable="@drawable/check_mark_two"
-        android:duration="100" />
+        android:duration="80" />
     <item
         android:drawable="@drawable/check_mark_three"
-        android:duration="100" />
+        android:duration="80" />
     <item
         android:drawable="@drawable/check_mark_four"
-        android:duration="100" />
+        android:duration="80" />
     <item
         android:drawable="@drawable/check_mark_five"
-        android:duration="100" />
+        android:duration="80" />
 </animation-list>

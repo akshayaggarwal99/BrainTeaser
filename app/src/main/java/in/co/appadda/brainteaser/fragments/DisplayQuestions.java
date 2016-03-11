@@ -5,13 +5,9 @@ import android.database.Cursor;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,7 +17,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import in.co.appadda.brainteaser.R;
-import in.co.appadda.brainteaser.activity.DisplayQue;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.OptionsItems;
 
@@ -42,22 +37,30 @@ public class DisplayQuestions extends Fragment {
     TextView question, questionNo;
     ImageView forward, backward;
     Button explanation;
-    int que_no = 0;
+    int que_no;
     private Cursor cursor;
 
-    public static DisplayQuestions newInstance(String param) {
-
-        Log.e("Lifecycle " + param, "newInstance");
-
+    public static DisplayQuestions newInstance(int que_no) {
         DisplayQuestions displayQuestions = new DisplayQuestions();
+        Bundle b = new Bundle();
+        b.putInt("someInt", que_no);
+        displayQuestions.setArguments(b);
 
         return displayQuestions;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        que_no = getArguments().getInt("someInt");
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.questions_layout, container, false);
+
+
         return v;
     }
 
@@ -66,10 +69,16 @@ public class DisplayQuestions extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
-
         initUI();
         initViews();
         initButtons();
+
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
     }
 
