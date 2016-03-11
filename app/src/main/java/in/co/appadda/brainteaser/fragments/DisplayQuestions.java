@@ -1,15 +1,14 @@
 package in.co.appadda.brainteaser.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -169,7 +168,6 @@ public class DisplayQuestions extends Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View row = convertView;
-            final int[] j = {0};
             Myholder myholder = null;
             if (row == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -196,7 +194,6 @@ public class DisplayQuestions extends Fragment {
                     } else {
                         finalMyholder.right.setImageResource(R.drawable.check_wrong_animator);
                         ((Animatable) finalMyholder.right.getDrawable()).start();
-                        j[0]++;
 
                     }
                     finalRow.setClickable(false);
@@ -205,13 +202,6 @@ public class DisplayQuestions extends Fragment {
 
                 }
             });
-            if (j[0] == 1) {
-                for (int i = 0; i < 4; i++) {
-                    if (optionList.get(i).getOption().toString().contentEquals(cursor.getString(6))) {
-                        int l = (optionList.get(i).getRight());
-                    }
-                }
-            }
 
             return row;
         }
