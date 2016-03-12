@@ -9,60 +9,15 @@ import com.backendless.persistence.BackendlessDataQuery;
 
 public class puzzles
 {
-  private String hint;
-  private String question;
-  private String ownerId;
-  private String answer;
-  private Integer _id;
   private String objectId;
   private String solution;
-  private java.util.Date created;
+  private String ownerId;
   private java.util.Date updated;
-  public String getHint()
-  {
-    return hint;
-  }
-
-  public void setHint( String hint )
-  {
-    this.hint = hint;
-  }
-
-  public String getQuestion()
-  {
-    return question;
-  }
-
-  public void setQuestion( String question )
-  {
-    this.question = question;
-  }
-
-  public String getOwnerId()
-  {
-    return ownerId;
-  }
-
-  public String getAnswer()
-  {
-    return answer;
-  }
-
-  public void setAnswer( String answer )
-  {
-    this.answer = answer;
-  }
-
-  public Integer get_id()
-  {
-    return _id;
-  }
-
-  public void set_id( Integer _id )
-  {
-    this._id = _id;
-  }
-
+  private java.util.Date created;
+  private String question;
+  private Integer _id;
+  private String answer;
+  private String hint;
   public String getObjectId()
   {
     return objectId;
@@ -78,14 +33,59 @@ public class puzzles
     this.solution = solution;
   }
 
-  public java.util.Date getCreated()
+  public String getOwnerId()
   {
-    return created;
+    return ownerId;
   }
 
   public java.util.Date getUpdated()
   {
     return updated;
+  }
+
+  public java.util.Date getCreated()
+  {
+    return created;
+  }
+
+  public String getQuestion()
+  {
+    return question;
+  }
+
+  public void setQuestion( String question )
+  {
+    this.question = question;
+  }
+
+  public Integer get_id()
+  {
+    return _id;
+  }
+
+  public void set_id( Integer _id )
+  {
+    this._id = _id;
+  }
+
+  public String getAnswer()
+  {
+    return answer;
+  }
+
+  public void setAnswer( String answer )
+  {
+    this.answer = answer;
+  }
+
+  public String getHint()
+  {
+    return hint;
+  }
+
+  public void setHint( String hint )
+  {
+    this.hint = hint;
   }
 
                                                     

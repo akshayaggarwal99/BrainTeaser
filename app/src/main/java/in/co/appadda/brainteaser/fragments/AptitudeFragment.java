@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import in.co.appadda.brainteaser.data.api.model.OptionsItems;
 /**
  * Created by dewangankisslove on 02-03-2016.
  */
-public class DisplayQuestions extends Fragment {
+public class AptitudeFragment extends Fragment {
 
 //    private BackendlessCollection collection;
 //
@@ -37,28 +38,30 @@ public class DisplayQuestions extends Fragment {
     TextView question, questionNo;
     ImageView forward, backward;
     Button explanation;
-    int que_no;
+    int que_no = 0;
     private Cursor cursor;
+    int set_no;
 
-    public static DisplayQuestions newInstance(int que_no) {
-        DisplayQuestions displayQuestions = new DisplayQuestions();
+    public static AptitudeFragment newInstance(int set_no) {
+        AptitudeFragment aptitudeFragment = new AptitudeFragment();
         Bundle b = new Bundle();
-        b.putInt("someInt", que_no);
-        displayQuestions.setArguments(b);
+        b.putInt("someInt", set_no);
+        aptitudeFragment.setArguments(b);
 
-        return displayQuestions;
+        return aptitudeFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        que_no = getArguments().getInt("someInt");
+        set_no = getArguments().getInt("someInt");
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.questions_layout, container, false);
+        initUI(v);
 
 
         return v;
@@ -69,7 +72,6 @@ public class DisplayQuestions extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
-        initUI();
         initViews();
         initButtons();
 
@@ -82,13 +84,13 @@ public class DisplayQuestions extends Fragment {
 
     }
 
-    private void initUI() {
-        optionListView = (ListView) getActivity().findViewById(R.id.lv_options);
-        question = (TextView) getActivity().findViewById(R.id.tv_question);
-        questionNo = (TextView) getActivity().findViewById(R.id.tv_question_number);
-        forward = (ImageView) getActivity().findViewById(R.id.iv_forward);
-        backward = (ImageView) getActivity().findViewById(R.id.iv_backward);
-        explanation = (Button) getActivity().findViewById(R.id.b_explanation);
+    private void initUI(View v) {
+        optionListView = (ListView) v.findViewById(R.id.lv_options);
+        question = (TextView) v.findViewById(R.id.tv_question);
+        questionNo = (TextView) v.findViewById(R.id.tv_question_number);
+        forward = (ImageView) v.findViewById(R.id.iv_forward);
+        backward = (ImageView) v.findViewById(R.id.iv_backward);
+        explanation = (Button) v.findViewById(R.id.b_explanation);
 
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,10 +119,17 @@ public class DisplayQuestions extends Fragment {
     }
 
     private void initViews() {
-        DatabaseHandler db = new DatabaseHandler(getActivity().getApplicationContext());
+        DatabaseHandler db = new DatabaseHandler(getActivity());
+        int totalnoofAptitudeSets;
+        totalnoofAptitudeSets = db.getAptitudeCount()/20;
+        int set_que_no = 0;
+        for (int i = 1;i<= totalnoofAptitudeSets;i++){
+            if (set_no == i){
+                set_que_no = set_que_no+ (20*(i-1));
+            }
+        }
 
-
-        cursor = db.getAptitude(que_no);
+        cursor = db.getAptitude(set_no,set_que_no+1);
 
         StringBuilder sb = new StringBuilder();
         sb.append("");
@@ -137,12 +146,24 @@ public class DisplayQuestions extends Fragment {
         adapter = new OptionItemAdapter(getActivity().getApplicationContext(), optionsItemsArrayList);
         optionListView.setAdapter(adapter);
 
+//        explanation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getApplicationContext(), R.style.AppCompatAlertDialogStyle);
+//                builder.setTitle("Dialog");
+//                builder.setMessage(cursor.getString(7));
+//                builder.setPositiveButton("OK", null);
+//                builder.setNegativeButton("Cancel", null);
+//                builder.show();
+//            }
+//        });
+
 
     }
 
     private void initButtons() {
         backward.setEnabled(que_no != 0);
-        forward.setEnabled(que_no != 10);
+        forward.setEnabled(que_no != 19);
     }
 
     @Override

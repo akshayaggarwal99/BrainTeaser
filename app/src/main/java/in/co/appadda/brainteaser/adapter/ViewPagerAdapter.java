@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import in.co.appadda.brainteaser.fragments.DisplayQuestions;
+import in.co.appadda.brainteaser.fragments.AptitudeFragment;
 
 /**
  * Created by dewangankisslove on 08-03-2016.
@@ -22,7 +22,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return DisplayQuestions.newInstance(position-1);
+        return new AptitudeFragment();
     }
 
     @Override

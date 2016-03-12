@@ -2,31 +2,31 @@ package in.co.appadda.brainteaser.data.api.model;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
+
 import com.backendless.async.callback.BackendlessCallback;
 import com.backendless.exceptions.BackendlessFault;
 
-public class DefaultCallback<T> extends BackendlessCallback<T>
-{
-  private Context context;
-  private ProgressDialog progressDialog;
+import in.co.appadda.brainteaser.activity.MainActivity;
 
-  public DefaultCallback( Context context )
-  {
-    this.context = context;
-    progressDialog = ProgressDialog.show( context, "", "Loading...", true );
-  }
+public class DefaultCallback<T> extends BackendlessCallback<T> {
+    private Context context;
+    private ProgressDialog progressDialog;
 
-  @Override
-  public void handleResponse( T response )
-  {
-    progressDialog.cancel();
-  }
+    public DefaultCallback(Context context) {
+        this.context = context;
+        progressDialog = ProgressDialog.show(context, "", "Loading...", true);
+    }
 
-  @Override
-  public void handleFault( BackendlessFault fault )
-  {
-    progressDialog.cancel();
-    Toast.makeText( context, fault.getMessage(), Toast.LENGTH_LONG ).show();
-  }
+    @Override
+    public void handleResponse(T response) {
+        progressDialog.cancel();
+    }
+
+    @Override
+    public void handleFault(BackendlessFault fault) {
+        progressDialog.cancel();
+        Toast.makeText(context, "Network Problem", Toast.LENGTH_LONG).show();
+    }
 }

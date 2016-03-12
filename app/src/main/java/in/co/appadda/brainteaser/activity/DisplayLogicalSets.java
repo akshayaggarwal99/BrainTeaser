@@ -47,7 +47,7 @@ public class DisplayLogicalSets extends AppCompatActivity {
             public void onItemClick(int position, View v) {
                 TextView textView = (TextView) v.findViewById(R.id.tv_setNo);
                 Intent openAptitude = new Intent(DisplayLogicalSets.this, DisplayQue.class);
-                openAptitude.putExtra("openFragment", "openRiddle");
+                openAptitude.putExtra("openFragment", "openLogical");
                 switch (textView.getText().toString()) {
                     case "Set 1":
 
