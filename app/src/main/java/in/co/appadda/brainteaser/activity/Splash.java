@@ -86,6 +86,12 @@ public class Splash extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     retrieveBasicAptitudeRecord();
+                    retrieveBasicLogicalRecord();
+                    retrieveBasicRiddleRecord();
+                    retrieveBasicPuzzlesRecord();
+
+
+
 
 
                 }
@@ -118,7 +124,6 @@ public class Splash extends AppCompatActivity {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.addAptitude();
 
-                retrieveBasicLogicalRecord();
             }
         });
     }
@@ -145,7 +150,6 @@ public class Splash extends AppCompatActivity {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.addPuzzles();
 
-                retrieveBasicRiddleRecord();
 
             }
         });
@@ -173,7 +177,6 @@ public class Splash extends AppCompatActivity {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.addLogical();
 
-                retrieveBasicPuzzlesRecord();
 
             }
         });

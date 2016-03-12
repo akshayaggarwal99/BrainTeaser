@@ -62,13 +62,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // PUZZLE Table Columns names
     private static final String PUZZLE_ID = "_id";
-    private static final String PUZZLE_QUESTIONS = "questions";
+    private static final String PUZZLE_QUESTIONS = "question";
     private static final String PUZZLE_ANSWER = "answer";
     private static final String PUZZLE_EXPLANATION = "solution";
 
     // RIDDLE Table Columns names
     private static final String RIDDLE_ID = "_id";
-    private static final String RIDDLE_QUESTIONS = "questions";
+    private static final String RIDDLE_QUESTIONS = "question";
     private static final String RIDDLE_ANSWER = "answer";
 
     private static final String CREATE_TABLE_APTITUDE = "CREATE TABLE " + TABLE_APTITUDE + "(" + APTITUDE_ID + " INTEGER PRIMARY KEY," + APTITUDE_QUESTIONS + " TEXT," + APTITUDE_OPTION_ONE + " TEXT," + APTITUDE_OPTION_TWO + " TEXT," + APTITUDE_OPTION_THREE + " TEXT," + APTITUDE_OPTION_FOUR + " TEXT," + APTITUDE_ANSWER + " TEXT," + APTITUDE_EXPLANATION + " TEXT, " + APTITUDE_SET_NO + " INT," + " status" + " INT" + ")";
@@ -177,6 +177,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+
         for (int k = 0; k < logicalcollection.getCurrentPage().size(); k++) {
             logical_id[k] = String.valueOf(((logical) logicalcollection.getCurrentPage().get(k)).get_id());
             logical_que[k] = String.valueOf(((logical) logicalcollection.getCurrentPage().get(k)).getQuestions());
@@ -217,7 +218,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        Log.d("puzzle",puzzle_que[2]);
 
         for (int k = 0; k < puzzlecollection.getCurrentPage().size(); k++) {
             puzzle_id[k] = String.valueOf(((puzzles) puzzlecollection.getCurrentPage().get(k)).get_id());
@@ -250,6 +250,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+
 
         for (int k = 0; k < riddlecollection.getCurrentPage().size(); k++) {
             riddle_id[k] = String.valueOf(((riddles) riddlecollection.getCurrentPage().get(k)).get_id());

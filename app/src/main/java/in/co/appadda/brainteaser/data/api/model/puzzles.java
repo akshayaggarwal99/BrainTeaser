@@ -17,7 +17,6 @@ public class puzzles
   private String question;
   private Integer _id;
   private String answer;
-  private String hint;
   public String getObjectId()
   {
     return objectId;
@@ -76,16 +75,6 @@ public class puzzles
   public void setAnswer( String answer )
   {
     this.answer = answer;
-  }
-
-  public String getHint()
-  {
-    return hint;
-  }
-
-  public void setHint( String hint )
-  {
-    this.hint = hint;
   }
 
                                                     
