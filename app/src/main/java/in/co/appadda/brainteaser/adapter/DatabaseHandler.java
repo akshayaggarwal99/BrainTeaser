@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.backendless.BackendlessCollection;
 
@@ -216,6 +217,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        Log.d("puzzle",puzzle_que[2]);
 
         for (int k = 0; k < puzzlecollection.getCurrentPage().size(); k++) {
             puzzle_id[k] = String.valueOf(((puzzles) puzzlecollection.getCurrentPage().get(k)).get_id());
@@ -296,11 +298,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Getting single puzzle
     public Cursor getPuzzle(int i) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String select = "SELECT * FROM " + TABLE_PUZZLE + " LIMIT " + i + ",1";
+        String select = "SELECT * FROM " + TABLE_PUZZLE + " WHERE _id = " +i;
 
         Cursor cursor = db.rawQuery(select, null);
-        if (cursor != null)
-            cursor.moveToFirst();
+        if (cursor != null){
+            cursor.moveToFirst();}
 
         return cursor;
     }

@@ -86,15 +86,8 @@ public class Splash extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     retrieveBasicAptitudeRecord();
-                    PrefUtils.saveToPrefs(Splash.this, "skip_update", "TRUE");
-//                    retrieveBasicLogicalRecord();
-//                    retrieveBasicPuzzlesRecord();
-//                    retrieveBasicRiddleRecord();
-//                    if (aptitudeCollection.getCurrentPage().size() == 40 && LogicalCollection.getCurrentPage().size() == 40 && PuzzleCollection.getCurrentPage().size() == 10 && RiddleCollection.getCurrentPage().size() == 10) {
-//                        PrefUtils.saveToPrefs(Splash.this, "skip_update", "TRUE");
-//                        Intent mainActivity = new Intent(Splash.this, MainActivity.class);
-//                        startActivity(mainActivity);
-//                    }
+
+
                 }
             });
         }
@@ -134,11 +127,11 @@ public class Splash extends AppCompatActivity {
         id_puzzle = Integer.parseInt(PrefUtils.getFromPrefs(Splash.this, "_id_puzzle", "0"));
         QueryOptions queryOptions = new QueryOptions();
         queryOptions.addSortByOption("_id ASC");
-        BackendlessDataQuery query = new BackendlessDataQuery();
-        query.setQueryOptions(queryOptions);
-        query.setPageSize(10);
-        query.setWhereClause("_id > " + id_puzzle);
-        puzzles.findAsync(query, new DefaultCallback<BackendlessCollection<puzzles>>(Splash.this) {
+        BackendlessDataQuery queryPuzzle = new BackendlessDataQuery();
+        queryPuzzle.setQueryOptions(queryOptions);
+        queryPuzzle.setPageSize(10);
+        queryPuzzle.setWhereClause("_id > " + id_puzzle);
+        puzzles.findAsync(queryPuzzle, new DefaultCallback<BackendlessCollection<puzzles>>(Splash.this) {
             @Override
             public void handleResponse(BackendlessCollection<puzzles> response) {
                 super.handleResponse(response);
@@ -207,6 +200,10 @@ public class Splash extends AppCompatActivity {
                 RiddleCollection = response;
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.addRiddle();
+
+                PrefUtils.saveToPrefs(Splash.this, "skip_update", "TRUE");
+                Intent mainActivity = new Intent(Splash.this, MainActivity.class);
+                startActivity(mainActivity);
 
             }
         });

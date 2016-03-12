@@ -125,7 +125,7 @@ public class AptitudeFragment extends Fragment {
         int set_que_no = 0;
         for (int i = 1;i<= totalnoofAptitudeSets;i++){
             if (set_no == i){
-                set_que_no = set_que_no+ (20*(i-1));
+                set_que_no = que_no+ (20*(i-1));
             }
         }
 

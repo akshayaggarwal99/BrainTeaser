@@ -36,6 +36,7 @@ public class PuzzleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.puzzle_layout, container, false);
+        initUI(v);
         return v;
     }
 
@@ -44,7 +45,7 @@ public class PuzzleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
-        initUI();
+
         initViews();
         initButtons();
 
@@ -56,11 +57,11 @@ public class PuzzleFragment extends Fragment {
         super.onAttach(context);
     }
 
-    private void initUI() {
-        question = (TextView) getActivity().findViewById(R.id.tv_question);
-        questionNo = (TextView) getActivity().findViewById(R.id.tv_question_number);
-        forward = (ImageView) getActivity().findViewById(R.id.iv_forward);
-        backward = (ImageView) getActivity().findViewById(R.id.iv_backward);
+    private void initUI(View v) {
+        question = (TextView) v.findViewById(R.id.tv_puzzle_que);
+        questionNo = (TextView) v.findViewById(R.id.tv_question_number_puzzle);
+        forward = (ImageView) v.findViewById(R.id.iv_forward);
+        backward = (ImageView) v.findViewById(R.id.iv_backward);
 
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +88,10 @@ public class PuzzleFragment extends Fragment {
     }
 
     private void initViews() {
-        DatabaseHandler db = new DatabaseHandler(getActivity().getApplicationContext());
+        DatabaseHandler db = new DatabaseHandler(getActivity());
 
 
-        cursor = db.getPuzzle(que_no);
+        cursor = db.getPuzzle(que_no+1);
 
         StringBuilder sb = new StringBuilder();
 
