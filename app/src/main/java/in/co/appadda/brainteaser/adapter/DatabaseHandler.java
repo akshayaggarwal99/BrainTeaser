@@ -72,8 +72,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String RIDDLE_ANSWER = "answer";
 
     private static final String CREATE_TABLE_APTITUDE = "CREATE TABLE " + TABLE_APTITUDE + "(" + APTITUDE_ID + " INTEGER PRIMARY KEY," + APTITUDE_QUESTIONS + " TEXT," + APTITUDE_OPTION_ONE + " TEXT," + APTITUDE_OPTION_TWO + " TEXT," + APTITUDE_OPTION_THREE + " TEXT," + APTITUDE_OPTION_FOUR + " TEXT," + APTITUDE_ANSWER + " TEXT," + APTITUDE_EXPLANATION + " TEXT, " + APTITUDE_SET_NO + " INT," + " status" + " INT" + ")";
-    private static final String CREATE_TABLE_LOGICAL = "CREATE TABLE " + TABLE_LOGICAL + "(" + LOGICAL_ID + " INTEGER PRIMARY KEY," + LOGICAL_QUESTIONS + " TEXT," + LOGICAL_OPTION_ONE + " TEXT," + LOGICAL_OPTION_TWO + " TEXT," + LOGICAL_OPTION_THREE + " TEXT," + LOGICAL_OPTION_FOUR + " TEXT," + LOGICAL_ANSWER + " TEXT," + LOGICAL_EXPLANATION + " TEXT, " + LOGICAL_SET_NO + " INT" + "status" + " INT" + ")";
-    private static final String CREATE_TABLE_PUZZLE = "CREATE TABLE " + TABLE_PUZZLE + "(" + PUZZLE_ID + " INTEGER PRIMARY KEY," + PUZZLE_QUESTIONS + " TEXT," + PUZZLE_ANSWER + " TEXT," + PUZZLE_EXPLANATION + " TEXT, status" + " INT" + ")";
+    private static final String CREATE_TABLE_LOGICAL = "CREATE TABLE " + TABLE_LOGICAL + "(" + LOGICAL_ID + " INTEGER PRIMARY KEY," + LOGICAL_QUESTIONS + " TEXT," + LOGICAL_OPTION_ONE + " TEXT," + LOGICAL_OPTION_TWO + " TEXT," + LOGICAL_OPTION_THREE + " TEXT," + LOGICAL_OPTION_FOUR + " TEXT," + LOGICAL_ANSWER + " TEXT," + LOGICAL_EXPLANATION + " TEXT, " + LOGICAL_SET_NO + " INT," + " status" + " INT" + ")";
+    private static final String CREATE_TABLE_PUZZLE = "CREATE TABLE " + TABLE_PUZZLE + "(" + PUZZLE_ID + " INTEGER PRIMARY KEY," + PUZZLE_QUESTIONS + " TEXT," + PUZZLE_ANSWER + " STRING," + PUZZLE_EXPLANATION + " TEXT, status" + " INT" + ")";
     private static final String CREATE_TABLE_RIDDLE = "CREATE TABLE " + TABLE_RIDDLE + "(" + RIDDLE_ID + " INTEGER PRIMARY KEY," + RIDDLE_QUESTIONS + " TEXT," + RIDDLE_ANSWER + " TEXT, status" + " INT" + ")";
 
     public DatabaseHandler(Context context) {
@@ -158,9 +158,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    //Adding new aptitude
+    //Adding new logical
     public void addLogical() {
-        String[] logical_id, logical_que, logical_option_one, logical_option_two, logical_option_three, logical_option_four, logical_answer, logical_explanation;
+        String[] logical_id, logical_que, logical_option_one, logical_option_two, logical_option_three, logical_option_four, logical_answer, logical_explanation, logical_set_no;
 
         logicalcollection = Splash.getLogicalCollection();
         currentPage = 1;
@@ -173,6 +173,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         logical_option_four = new String[logicalcollection.getCurrentPage().size()];
         logical_answer = new String[logicalcollection.getCurrentPage().size()];
         logical_explanation = new String[logicalcollection.getCurrentPage().size()];
+        logical_set_no = new String[logicalcollection.getCurrentPage().size()];
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -187,6 +188,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             logical_option_four[k] = String.valueOf(((logical) logicalcollection.getCurrentPage().get(k)).getOption_four());
             logical_answer[k] = String.valueOf(((logical) logicalcollection.getCurrentPage().get(k)).getAnswer());
             logical_explanation[k] = String.valueOf(((logical) logicalcollection.getCurrentPage().get(k)).getExplanation());
+            logical_set_no[k] = String.valueOf(((logical) logicalcollection.getCurrentPage().get(k)).getSet_no());
 
             values.put(LOGICAL_QUESTIONS, logical_que[k]);
             values.put(LOGICAL_OPTION_ONE, logical_option_one[k]);
@@ -196,6 +198,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             values.put(LOGICAL_ANSWER, logical_answer[k]);
             values.put(LOGICAL_EXPLANATION, logical_explanation[k]);
             values.put(LOGICAL_ID, logical_id[k]);
+            values.put(LOGICAL_SET_NO, logical_set_no[k]);
             db.insert(TABLE_LOGICAL, null, values);
         }
 
@@ -285,9 +288,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single logical
-    public Cursor getLogical(int i) {
+    public Cursor getLogical(int i, int j) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String select = "SELECT * FROM " + TABLE_LOGICAL + " LIMIT " + i + ",1";
+        String select = "SELECT * FROM " + TABLE_LOGICAL + " WHERE set_no = " + i + " AND _id = " + j;
 
         Cursor cursor = db.rawQuery(select, null);
         if (cursor != null)
@@ -299,18 +302,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Getting single puzzle
     public Cursor getPuzzle(int i) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String select = "SELECT * FROM " + TABLE_PUZZLE + " WHERE _id = " +i;
+        String select = "SELECT * FROM " + TABLE_PUZZLE + " WHERE _id = " + i;
 
         Cursor cursor = db.rawQuery(select, null);
-        if (cursor != null){
-            cursor.moveToFirst();}
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
 
         return cursor;
     }
 
     public Cursor getRiddle(int i) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String select = "SELECT * FROM " + TABLE_RIDDLE + " LIMIT " + i + ",1";
+        String select = "SELECT * FROM " + TABLE_RIDDLE + " WHERE _id = " + i;
 
         Cursor cursor = db.rawQuery(select, null);
         if (cursor != null)
@@ -372,17 +376,62 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public int getAptitudeStatusCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_APTITUDE + " WHERE status = null";
+        String countQuery = "SELECT  * FROM " + TABLE_APTITUDE + " WHERE status != 0";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
         cursor.close();
 
         // return count
-        return cursor.getCount();
+        return count;
     }
 
     public int getAptitudeSetStatusCount(int j) {
         String countQuery = "SELECT  * FROM " + TABLE_APTITUDE + " WHERE status != 0 AND set_no = " + j;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+
+        // return count
+        return count;
+    }
+
+    public int getLogicalStatusCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_LOGICAL + " WHERE status != 0";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+
+        // return count
+        return count;
+    }
+
+    public int getLogicalSetStatusCount(int j) {
+        String countQuery = "SELECT  * FROM " + TABLE_LOGICAL + " WHERE status != 0 AND set_no = " + j;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+
+        // return count
+        return count;
+    }
+
+    public int getPuzzleStatusCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_PUZZLE + " WHERE status != 0";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+
+        // return count
+        return count;
+    }
+
+    public int getRiddleStatusCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_RIDDLE + " WHERE status != 0";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         int count = cursor.getCount();
@@ -397,10 +446,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_PUZZLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
         cursor.close();
 
         // return count
-        return cursor.getCount();
+        return count;
     }
 
     // Getting logical Count
@@ -408,10 +458,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_LOGICAL;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
         cursor.close();
 
         // return count
-        return cursor.getCount();
+        return count;
     }
 
     // Getting riddle Count
@@ -419,10 +470,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_RIDDLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
         cursor.close();
 
         // return count
-        return cursor.getCount();
+        return count;
     }
 
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.OptionsItems;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 
 /**
  * Created by dewangankisslove on 04-03-2016.
@@ -26,6 +27,7 @@ public class PuzzleFragment extends Fragment {
     ImageView forward, backward;
     int que_no = 0;
     private Cursor cursor;
+    int totalPuzzleQue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,8 @@ public class PuzzleFragment extends Fragment {
         questionNo = (TextView) v.findViewById(R.id.tv_question_number_puzzle);
         forward = (ImageView) v.findViewById(R.id.iv_forward);
         backward = (ImageView) v.findViewById(R.id.iv_backward);
+
+        totalPuzzleQue = Integer.parseInt(PrefUtils.getFromPrefs(getActivity(), "_id_puzzle", "0"));
 
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +110,7 @@ public class PuzzleFragment extends Fragment {
 
     private void initButtons() {
         backward.setEnabled(que_no != 0);
-        forward.setEnabled(que_no != 10);
+        forward.setEnabled(que_no != totalPuzzleQue-1);
     }
 
 }

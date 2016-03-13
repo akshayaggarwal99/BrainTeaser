@@ -35,7 +35,7 @@ public class DisplayAptitudeSets extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aptitude_set_layout);
 
-        totalAptitudeQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayAptitudeSets.this, "_id_aptitude", "20"));
+        totalAptitudeQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayAptitudeSets.this, "_id_aptitude", "0"));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.queSetList);
         mRecyclerView.setHasFixedSize(true);

@@ -1,19 +1,32 @@
 package in.co.appadda.brainteaser.fragments;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.adapter.DatabaseHandler;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 
 /**
  * Created by dewangankisslove on 12-03-2016.
  */
 public class RiddleFragment extends Fragment {
+
+    TextView question, questionNo;
+    ImageView forward, backward;
+    Button answer;
+    int que_no = 0;
+    private Cursor cursor;
+    int totalRiddleQue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,12 +37,80 @@ public class RiddleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.riddle_layout, container, false);
+        initUI(v);
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+//        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
+
+        initViews();
+        initButtons();
+
+
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+    }
+
+    private void initUI(View v) {
+        question = (TextView) v.findViewById(R.id.tv_que_riddle);
+        questionNo = (TextView) v.findViewById(R.id.tv_question_number_riddle);
+        forward = (ImageView) v.findViewById(R.id.iv_forward);
+        backward = (ImageView) v.findViewById(R.id.iv_backward);
+        answer = (Button) v.findViewById(R.id.b_answer_riddle);
+
+        totalRiddleQue = Integer.parseInt(PrefUtils.getFromPrefs(getActivity(), "_id_riddle", "0"));
+
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                que_no++;
+//                explanation.setAlpha(0);
+//                explanation.setEnabled(false);
+                initViews();
+                initButtons();
+            }
+        });
+
+        backward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                explanation.setAlpha(0);
+//                explanation.setEnabled(false);
+                que_no--;
+                initViews();
+                initButtons();
+            }
+        });
+
+    }
+
+    private void initViews() {
+        DatabaseHandler db = new DatabaseHandler(getActivity());
+
+
+        cursor = db.getRiddle(que_no + 1);
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("");
+        sb.append(que_no + 1);
+        questionNo.setText(sb.toString());
+
+        question.setText(cursor.getString(1));
+
+
+    }
+
+    private void initButtons() {
+        backward.setEnabled(que_no != 0);
+        forward.setEnabled(que_no != totalRiddleQue-1);
     }
 
 }

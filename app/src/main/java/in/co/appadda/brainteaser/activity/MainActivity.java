@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.fragments.HomeFragment;
 import in.co.appadda.brainteaser.R;
 
@@ -19,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
+
+
+    DatabaseHandler db;
 
     ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        db = new DatabaseHandler(this);
 
 
         //Initializing NavigationView
@@ -112,22 +118,30 @@ public class MainActivity extends AppCompatActivity {
         int i = view.getId();
         switch (i) {
             case R.id.card_aptitude:
-                Intent openAptitude = new Intent(MainActivity.this, DisplayAptitudeSets.class);
-                startActivity(openAptitude);
+                if (db.getAptitudeCount() >= 20){
+                    Intent openAptitude = new Intent(MainActivity.this, DisplayAptitudeSets.class);
+                    startActivity(openAptitude);
+                }
                 break;
             case R.id.card_logical:
-                Intent openLogical = new Intent(MainActivity.this, DisplayLogicalSets.class);
-                startActivity(openLogical);
+                if (db.getLogicalCount() >= 20){
+                    Intent openLogical = new Intent(MainActivity.this, DisplayLogicalSets.class);
+                    startActivity(openLogical);
+                }
                 break;
             case R.id.card_puzzle:
-                Intent openPuzzle = new Intent(MainActivity.this, DisplayQue.class);
-                openPuzzle.putExtra("openFragment", "openPuzzle");
-                startActivity(openPuzzle);
+                if (db.getPuzzleCount() > 0){
+                    Intent openPuzzle = new Intent(MainActivity.this, DisplayQue.class);
+                    openPuzzle.putExtra("openFragment", "openPuzzle");
+                    startActivity(openPuzzle);
+                }
                 break;
             case R.id.card_riddle:
-                Intent openRiddle = new Intent(MainActivity.this, DisplayQue.class);
-                openRiddle.putExtra("openFragment", "openRiddle");
-                startActivity(openRiddle);
+                if (db.getRiddleCount() > 0){
+                    Intent openRiddle = new Intent(MainActivity.this, DisplayQue.class);
+                    openRiddle.putExtra("openFragment", "openRiddle");
+                    startActivity(openRiddle);
+                }
                 break;
         }
     }

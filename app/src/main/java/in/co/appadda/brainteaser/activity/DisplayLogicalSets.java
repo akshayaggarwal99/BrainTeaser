@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.adapter.QueSetAdapter;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import in.co.appadda.brainteaser.data.api.model.QuestionSets;
 
 /**
@@ -24,11 +27,14 @@ public class DisplayLogicalSets extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     int layoutR = R.layout.each_logical_set_layout;
+    private int totalLogicalQue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logical_set_layout);
+
+        totalLogicalQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayLogicalSets.this, "_id_logical", "0"));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.queSetList);
         mRecyclerView.setHasFixedSize(true);
@@ -48,16 +54,10 @@ public class DisplayLogicalSets extends AppCompatActivity {
                 TextView textView = (TextView) v.findViewById(R.id.tv_setNo);
                 Intent openAptitude = new Intent(DisplayLogicalSets.this, DisplayQue.class);
                 openAptitude.putExtra("openFragment", "openLogical");
-                switch (textView.getText().toString()) {
-                    case "Set 1":
-
-                        break;
-                    case "Set 2":
-
-                        break;
-                    case "Set 3":
-
-                        break;
+                for (int i = 1; i <= totalLogicalQue / 20; i++) {
+                    if (textView.getText().toString().contentEquals("Set " + i)) {
+                        openAptitude.putExtra("showLogicalQue", i);
+                    }
                 }
                 startActivity(openAptitude);
             }
@@ -65,11 +65,21 @@ public class DisplayLogicalSets extends AppCompatActivity {
     }
 
     private ArrayList<QuestionSets> getDataSet() {
+        DatabaseHandler db = new DatabaseHandler(this);
+        int totalLogicalQueDone;
+        String exact;
         ArrayList results = new ArrayList<QuestionSets>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < (totalLogicalQue / 20); i++) {
             int j = i + 1;
-            QuestionSets obj = new QuestionSets(R.drawable.studyz,"Set " + j,
-                    "Total Questions 20", "You have Completed !");
+            totalLogicalQueDone = db.getLogicalSetStatusCount(j);
+            if (totalLogicalQueDone == 20) {
+                exact = "You have completed this set";
+            } else {
+                exact = totalLogicalQueDone + " questions done";
+            }
+
+            QuestionSets obj = new QuestionSets(R.drawable.studyz, "Set " + j,
+                    "Total Questions 20", exact);
             results.add(i, obj);
         }
         return results;
