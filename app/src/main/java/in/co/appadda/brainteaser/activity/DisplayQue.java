@@ -1,12 +1,15 @@
 package in.co.appadda.brainteaser.activity;
 
 import android.os.Bundle;
+import android.support.annotation.BoolRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.ViewPagerAdapter;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import in.co.appadda.brainteaser.fragments.AptitudeFragment;
 import in.co.appadda.brainteaser.fragments.LogicalFragment;
 import in.co.appadda.brainteaser.fragments.PuzzleFragment;
@@ -16,22 +19,24 @@ import in.co.appadda.brainteaser.fragments.RiddleFragment;
  * Created by dewangankisslove on 05-03-2016.
  */
 public class DisplayQue extends AppCompatActivity {
-//    private ViewPagerAdapter viewPagerAdapter;
+    //    private ViewPagerAdapter viewPagerAdapter;
 //    private ViewPager viewPager;
-
+    String frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_que);
 
-        String frag = getIntent().getStringExtra("openFragment");
+        frag = getIntent().getStringExtra("openFragment");
         int set_no_aptitude = getIntent().getIntExtra("showAptitudeQue", 1);
         int set_no_logical = getIntent().getIntExtra("showLogicalQue", 1);
+        int que_no_puzzle = getIntent().getIntExtra("que-no", 0);
+
 
         switch (frag) {
             case "openPuzzle":
-                PuzzleFragment puzzlefragment = new PuzzleFragment();
+                Fragment puzzlefragment = PuzzleFragment.newInstance(que_no_puzzle);
                 android.support.v4.app.FragmentTransaction puzzlefragmentTransaction = getSupportFragmentManager().beginTransaction();
                 puzzlefragmentTransaction.replace(R.id.activity_display_questions, puzzlefragment);
                 puzzlefragmentTransaction.commit();
@@ -64,4 +69,38 @@ public class DisplayQue extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        String destroy = PrefUtils.getFromPrefs(this, "DESTROY", "D");
+
+
+        if ((frag.contentEquals("openPuzzle")&&destroy.contentEquals("destroy")) || (frag.contentEquals("openRiddle")&&destroy.contentEquals("destroy"))){
+
+                finish();
+        }
+
+
+    }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        PrefUtils.saveToPrefs(this,"DESTROY","D");
+//
+//    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        PrefUtils.saveToPrefs(this,"DESTROY","D");
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        PrefUtils.saveToPrefs(this,"DESTROY","D");
+    }
 }

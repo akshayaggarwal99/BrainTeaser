@@ -33,17 +33,17 @@
             android:label="@string/app_name" />
         <activity
             android:name=".activity.AboutUsActivity"
-            android:label="About Us"
-            />
-
+            android:label="About Us" />
         <activity
             android:name=".activity.QuestionExplanation"
-            android:label="Explanation"></activity>
-
+            android:label="Explanation" />
 
         <service android:name="com.backendless.AndroidService" />
 
-        <activity android:name=".activity.PuzzleQuesGridActivity"></activity>
+        <activity android:name=".activity.PuzzleQuesGridActivity" />
+        <activity android:name=".activity.CheckAnswer"
+            android:label="Puzzle"
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
     </application>
 
 </manifest>

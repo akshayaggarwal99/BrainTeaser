@@ -100,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.share:
                         return true;
                     case R.id.rate:
-                        Intent intent = new Intent(MainActivity.this,PuzzleQuesGridActivity.class);
-                        startActivity(intent);
+
                         return true;
                     case R.id.feedback:
                         return true;
@@ -219,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+                .addTestDevice("CD23BA7D9F6BC822032F55C89322D663")
                 .build();
 
         mInterstitialAd.loadAd(adRequest);

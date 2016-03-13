@@ -65,15 +65,16 @@ public class QueSetGridAdapter extends RecyclerView.Adapter<QueSetGridAdapter.Vi
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.que_no.setText(String.valueOf(mDataset.get(position)));
-        holder.que_no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, DisplayQue.class);
-                i.putExtra("que-no",position);
-                context.startActivity(i);
-
-            }
-        });
+//        holder.que_no.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(context, DisplayQue.class);
+//                i.putExtra("openFragment","openPuzzle");
+//                i.putExtra("que-no",position);
+//                context.startActivity(i);
+//
+//            }
+//        });
 
 
     }

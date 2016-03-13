@@ -1,15 +1,18 @@
 package in.co.appadda.brainteaser.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +22,8 @@ import com.google.android.gms.analytics.Tracker;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.activity.CheckAnswer;
+import in.co.appadda.brainteaser.activity.PuzzleQuesGridActivity;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.OptionsItems;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
@@ -36,6 +41,19 @@ public class PuzzleFragment extends Fragment {
     private static final String TAG = "PuzzleFragment";
 
     int totalPuzzleQue;
+    CardView queNoContainer;
+    EditText userAns;
+    Button submitPuzzle;
+    DatabaseHandler db;
+
+    public static PuzzleFragment newInstance(int set_no) {
+        PuzzleFragment puzzleFragment = new PuzzleFragment();
+        Bundle b = new Bundle();
+        b.putInt("someInt", set_no);
+        puzzleFragment.setArguments(b);
+
+        return puzzleFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +61,7 @@ public class PuzzleFragment extends Fragment {
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
         // Enable Advertising Features.
+        que_no = getArguments().getInt("someInt");
     }
 
     @Nullable
@@ -58,7 +77,6 @@ public class PuzzleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
-
         initViews();
         initButtons();
 
@@ -87,6 +105,28 @@ public class PuzzleFragment extends Fragment {
         questionNo = (TextView) v.findViewById(R.id.tv_question_number_puzzle);
         forward = (ImageView) v.findViewById(R.id.iv_forward);
         backward = (ImageView) v.findViewById(R.id.iv_backward);
+        queNoContainer = (CardView) v.findViewById(R.id.que_no_puzzle);
+        userAns = (EditText) v.findViewById(R.id.user_ans_puzzle);
+        submitPuzzle = (Button) v.findViewById(R.id.submit_puzzle);
+
+        submitPuzzle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CheckAnswer.class);
+
+
+                if (userAns.getText().toString().contentEquals(db.getPuzzle(que_no + 1).getString(2))) {
+                    intent.putExtra("userCheckStatus", "Bravo ! Right Answer");
+
+                } else {
+                    intent.putExtra("userCheckStatus", "Oops ! Wrong Answer");
+                }
+                intent.putExtra("queNo", que_no + 1);
+                startActivity(intent);
+
+            }
+
+        });
 
         totalPuzzleQue = Integer.parseInt(PrefUtils.getFromPrefs(getActivity(), "_id_puzzle", "0"));
 
@@ -112,10 +152,19 @@ public class PuzzleFragment extends Fragment {
             }
         });
 
+        queNoContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrefUtils.saveToPrefs(getActivity(),"DESTROY","destroy");
+                Intent intent = new Intent(getActivity().getApplicationContext(), PuzzleQuesGridActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initViews() {
-        DatabaseHandler db = new DatabaseHandler(getActivity());
+        db = new DatabaseHandler(getActivity());
 
 
         cursor = db.getPuzzle(que_no + 1);
@@ -136,4 +185,6 @@ public class PuzzleFragment extends Fragment {
         forward.setEnabled(que_no != totalPuzzleQue - 1);
     }
 
+
 }
+

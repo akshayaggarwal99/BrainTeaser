@@ -7,6 +7,7 @@
     app:cardCornerRadius="@dimen/dp4"
     app:cardElevation="2dp"
     android:padding="@dimen/dp8"
+    android:onClick="onPuzzleQueClick"
     >
 
     <TextView
