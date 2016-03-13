@@ -9,8 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.adapter.QueSetAdapter;
@@ -25,6 +29,8 @@ public class DisplayLogicalSets extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private static final String TAG = "DisplayLogicalSets";
+    private Tracker mTracker;
 
     int layoutR = R.layout.each_logical_set_layout;
     private int totalLogicalQue;
@@ -33,6 +39,9 @@ public class DisplayLogicalSets extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logical_set_layout);
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        // Enable Advertising Features.
 
         totalLogicalQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayLogicalSets.this, "_id_logical", "0"));
 
@@ -49,6 +58,9 @@ public class DisplayLogicalSets extends AppCompatActivity {
         mAdapter = new QueSetAdapter(getDataSet(), layoutR);
         mRecyclerView.setAdapter(mAdapter);
 
+        Log.i(TAG, "Setting screen name: " );
+        mTracker.setScreenName("Que-Sets"  );
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         ((QueSetAdapter) mAdapter).setOnItemClickListener(new QueSetAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {

@@ -9,11 +9,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.fragments.HomeFragment;
 import in.co.appadda.brainteaser.R;
@@ -22,16 +29,33 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
+    private Tracker mTracker;
 
 
     DatabaseHandler db;
 
     ActionBarDrawerToggle actionBarDrawerToggle;
+    private static final String TAG = "MainActivity";
+    InterstitialAd mInterstitialAd;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-5317774062113347/4580027719");
+        requestNewInterstitial();
 
+//        mInterstitialAd.setAdListener(new AdListener() {
+//            @Override
+//            public void onAdClosed() {
+//                requestNewInterstitial();
+//            }
+//        });
+//
+//
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -76,10 +100,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.share:
                         return true;
                     case R.id.rate:
+                        Intent intent = new Intent(MainActivity.this,PuzzleQuesGridActivity.class);
+                        startActivity(intent);
                         return true;
                     case R.id.feedback:
                         return true;
                     case R.id.about_us:
+                        Intent i = new Intent(MainActivity.this,AboutUsActivity.class);
+                        startActivity(i);
                         return true;
 
                     case R.id.logoutButton:
@@ -122,31 +150,58 @@ public class MainActivity extends AppCompatActivity {
         int i = view.getId();
         switch (i) {
             case R.id.card_aptitude:
-                if (db.getAptitudeCount() >= 20){
-                    Intent openAptitude = new Intent(MainActivity.this, DisplayAptitudeSets.class);
-                    startActivity(openAptitude);
-                }
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Aptitude_card")
+                        .build());
+
+                Intent openAptitude = new Intent(MainActivity.this, DisplayAptitudeSets.class);
+                startActivity(openAptitude);
                 break;
             case R.id.card_logical:
-                if (db.getLogicalCount() >= 20){
-                    Intent openLogical = new Intent(MainActivity.this, DisplayLogicalSets.class);
-                    startActivity(openLogical);
-                }
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Logical_card")
+                        .build());
+
+                Intent openLogical = new Intent(MainActivity.this, DisplayLogicalSets.class);
+                startActivity(openLogical);
                 break;
             case R.id.card_puzzle:
-                if (db.getPuzzleCount() > 0){
-                    Intent openPuzzle = new Intent(MainActivity.this, DisplayQue.class);
-                    openPuzzle.putExtra("openFragment", "openPuzzle");
-                    startActivity(openPuzzle);
-                }
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Puzzle_card")
+                        .build());
+
+                Intent openPuzzle = new Intent(MainActivity.this, DisplayQue.class);
+                openPuzzle.putExtra("openFragment", "openPuzzle");
+                startActivity(openPuzzle);
                 break;
             case R.id.card_riddle:
-                if (db.getRiddleCount() > 0){
-                    Intent openRiddle = new Intent(MainActivity.this, DisplayQue.class);
-                    openRiddle.putExtra("openFragment", "openRiddle");
-                    startActivity(openRiddle);
-                }
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Riddle_card")
+                        .build());
+
+                Intent openRiddle = new Intent(MainActivity.this, DisplayQue.class);
+                openRiddle.putExtra("openFragment", "openRiddle");
+                startActivity(openRiddle);
+
                 break;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
     }
 
@@ -162,6 +217,12 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+                .build();
 
+        mInterstitialAd.loadAd(adRequest);
+    }
 
 }

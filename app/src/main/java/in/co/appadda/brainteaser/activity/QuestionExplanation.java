@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import in.co.appadda.brainteaser.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * Created by dewangankisslove on 13-03-2016.
@@ -21,6 +23,9 @@ public class QuestionExplanation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_que_explanation);
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         explain = getIntent().getStringExtra("explain");
 

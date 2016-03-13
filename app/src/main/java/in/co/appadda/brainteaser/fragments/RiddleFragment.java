@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
@@ -20,6 +25,8 @@ import in.co.appadda.brainteaser.data.api.model.PrefUtils;
  * Created by dewangankisslove on 12-03-2016.
  */
 public class RiddleFragment extends Fragment {
+    private Tracker mTracker;
+    private static final String TAG = "RiddleFragment";
 
     TextView question, questionNo;
     ImageView forward, backward;
@@ -31,6 +38,8 @@ public class RiddleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Nullable
@@ -56,6 +65,18 @@ public class RiddleFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // [START screen_view_hit]
+        Log.i(TAG, "Setting screen name: " );
+        mTracker.setScreenName("riddle_fragment" );
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
     }
 
     private void initUI(View v) {
@@ -114,3 +135,5 @@ public class RiddleFragment extends Fragment {
     }
 
 }
+
+

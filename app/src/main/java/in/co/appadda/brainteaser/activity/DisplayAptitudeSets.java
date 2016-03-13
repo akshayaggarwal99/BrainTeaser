@@ -10,13 +10,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.adapter.QueSetAdapter;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import in.co.appadda.brainteaser.data.api.model.QuestionSets;
+
 
 /**
  * Created by dewangankisslove on 09-03-2016.
@@ -26,6 +31,9 @@ public class DisplayAptitudeSets extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private static final String TAG = "DisplayAptitudeSets";
+    private Tracker mTracker;
+
 
     int layoutR = R.layout.each_aptitude_set_layout;
     private int totalAptitudeQue;
@@ -34,6 +42,10 @@ public class DisplayAptitudeSets extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aptitude_set_layout);
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
+
 
         totalAptitudeQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayAptitudeSets.this, "_id_aptitude", "0"));
 
@@ -53,6 +65,11 @@ public class DisplayAptitudeSets extends AppCompatActivity {
         mAdapter = new QueSetAdapter(getDataSet(), layoutR);
         mRecyclerView.setAdapter(mAdapter);
 
+        // [START screen_view_hit]
+        Log.i(TAG, "Setting screen name: " );
+        mTracker.setScreenName("Que-Sets"  );
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
         ((QueSetAdapter) mAdapter).setOnItemClickListener(new QueSetAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
