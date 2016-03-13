@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.QueSetAdapter;
 import in.co.appadda.brainteaser.data.api.model.QuestionSets;
@@ -22,6 +27,8 @@ public class DisplayLogicalSets extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private static final String TAG = "DisplayLogicalSets";
+    private Tracker mTracker;
 
     int layoutR = R.layout.each_logical_set_layout;
 
@@ -29,6 +36,9 @@ public class DisplayLogicalSets extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logical_set_layout);
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        // Enable Advertising Features.
 
         mRecyclerView = (RecyclerView) findViewById(R.id.queSetList);
         mRecyclerView.setHasFixedSize(true);
@@ -42,6 +52,9 @@ public class DisplayLogicalSets extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(TAG, "Setting screen name: " );
+        mTracker.setScreenName("Que-Sets"  );
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         ((QueSetAdapter) mAdapter).setOnItemClickListener(new QueSetAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {

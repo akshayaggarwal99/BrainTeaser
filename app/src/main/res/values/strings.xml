@@ -35,4 +35,6 @@
 
     <string name="closeDrawer">Closed</string>
     <string name="openDrawer">Open</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-5317774062113347/2324565310</string>
 </resources>

@@ -10,13 +10,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.adapter.QueSetAdapter;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import in.co.appadda.brainteaser.data.api.model.QuestionSets;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * Created by dewangankisslove on 09-03-2016.
@@ -26,6 +32,9 @@ public class DisplayAptitudeSets extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private static final String TAG = "DisplayAptitudeSets";
+    private Tracker mTracker;
+
 
     int layoutR = R.layout.each_aptitude_set_layout;
     private int totalAptitudeQue;
@@ -34,6 +43,12 @@ public class DisplayAptitudeSets extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aptitude_set_layout);
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
 
         totalAptitudeQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayAptitudeSets.this, "_id_aptitude", "20"));
 
@@ -51,6 +66,12 @@ public class DisplayAptitudeSets extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // [START screen_view_hit]
+        Log.i(TAG, "Setting screen name: " );
+        mTracker.setScreenName("Que-Sets"  );
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
         ((QueSetAdapter) mAdapter).setOnItemClickListener(new QueSetAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
