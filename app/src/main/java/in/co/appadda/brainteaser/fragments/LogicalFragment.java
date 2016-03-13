@@ -1,6 +1,7 @@
 package in.co.appadda.brainteaser.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
@@ -17,8 +18,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.activity.QuestionExplanation;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.OptionsItems;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 
 /**
  * Created by dewangankisslove on 12-03-2016.
@@ -34,6 +37,8 @@ public class LogicalFragment extends Fragment{
     int que_no = 0;
     private Cursor cursor;
     int set_no;
+    DatabaseHandler db;
+    int set_que_no = 0;
 
     public static LogicalFragment newInstance(int set_no) {
         LogicalFragment logicalFragment = new LogicalFragment();
@@ -65,6 +70,7 @@ public class LogicalFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
 //        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
+        que_no = Integer.parseInt(PrefUtils.getFromPrefs(getActivity().getApplicationContext(), "logical_no_" + set_no + "_que", "0"));
         initViews();
         initButtons();
 
@@ -112,10 +118,9 @@ public class LogicalFragment extends Fragment{
     }
 
     private void initViews() {
-        DatabaseHandler db = new DatabaseHandler(getActivity());
+        db = new DatabaseHandler(getActivity());
         int totalnoofLogicalSets;
         totalnoofLogicalSets = db.getLogicalCount()/20;
-        int set_que_no = 0;
         for (int i = 1;i<= totalnoofLogicalSets;i++){
             if (set_no == i){
                 set_que_no = que_no+ (20*(i-1));
@@ -139,17 +144,15 @@ public class LogicalFragment extends Fragment{
         adapter = new OptionItemAdapter(getActivity().getApplicationContext(), optionsItemsArrayList);
         optionListView.setAdapter(adapter);
 
-//        explanation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getApplicationContext(), R.style.AppCompatAlertDialogStyle);
-//                builder.setTitle("Dialog");
-//                builder.setMessage(cursor.getString(7));
-//                builder.setPositiveButton("OK", null);
-//                builder.setNegativeButton("Cancel", null);
-//                builder.show();
-//            }
-//        });
+        explanation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = cursor.getString(7);
+                Intent explanation = new Intent(getActivity(), QuestionExplanation.class);
+                explanation.putExtra("explain", msg);
+                startActivity(explanation);
+            }
+        });
 
 
     }
@@ -232,6 +235,13 @@ public class LogicalFragment extends Fragment{
                         ((Animatable) finalMyholder.right.getDrawable()).start();
 
                     }
+                    if (que_no < 19) {
+                        PrefUtils.saveToPrefs(getActivity().getApplicationContext(), "logical_no_" + set_no + "_que", String.valueOf(que_no + 1));
+                    }
+                    if (que_no == 19) {
+                        PrefUtils.saveToPrefs(getActivity().getApplicationContext(), "logical_no_" + set_no + "_que", "0");
+                    }
+                    db.addLogicalStatusCount(set_que_no + 1);
                     finalRow.setClickable(false);
                     explanation.setEnabled(true);
                     explanation.setAlpha(1);

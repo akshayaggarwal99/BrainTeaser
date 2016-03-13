@@ -40,14 +40,15 @@ public class DisplayLogicalSets extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new QueSetAdapter(getDataSet(), layoutR);
-        mRecyclerView.setAdapter(mAdapter);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        mAdapter = new QueSetAdapter(getDataSet(), layoutR);
+        mRecyclerView.setAdapter(mAdapter);
+
         ((QueSetAdapter) mAdapter).setOnItemClickListener(new QueSetAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -73,7 +74,7 @@ public class DisplayLogicalSets extends AppCompatActivity {
             int j = i + 1;
             totalLogicalQueDone = db.getLogicalSetStatusCount(j);
             if (totalLogicalQueDone == 20) {
-                exact = "You have completed this set";
+                exact = "You have completed !";
             } else {
                 exact = totalLogicalQueDone + " questions done";
             }

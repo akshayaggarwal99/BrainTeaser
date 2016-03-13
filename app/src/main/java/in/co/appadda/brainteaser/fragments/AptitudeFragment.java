@@ -22,6 +22,7 @@ import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.activity.QuestionExplanation;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.OptionsItems;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 
 /**
  * Created by dewangankisslove on 02-03-2016.
@@ -43,6 +44,8 @@ public class AptitudeFragment extends Fragment {
     int que_no = 0;
     private Cursor cursor;
     int set_no;
+    DatabaseHandler db;
+    int set_que_no = 0;
 
     public static AptitudeFragment newInstance(int set_no) {
         AptitudeFragment aptitudeFragment = new AptitudeFragment();
@@ -74,6 +77,7 @@ public class AptitudeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        totalPages = (int) Math.ceil(((double) collection.getTotalObjects()) / collection.getCurrentPage().size());
+        que_no = Integer.parseInt(PrefUtils.getFromPrefs(getActivity().getApplicationContext(), "aptitude_no_" + set_no + "_que", "0"));
         initViews();
         initButtons();
 
@@ -121,10 +125,9 @@ public class AptitudeFragment extends Fragment {
     }
 
     private void initViews() {
-        DatabaseHandler db = new DatabaseHandler(getActivity());
+        db = new DatabaseHandler(getActivity());
         int totalnoofAptitudeSets;
         totalnoofAptitudeSets = db.getAptitudeCount() / 20;
-        int set_que_no = 0;
         for (int i = 1; i <= totalnoofAptitudeSets; i++) {
             if (set_no == i) {
                 set_que_no = que_no + (20 * (i - 1));
@@ -239,6 +242,13 @@ public class AptitudeFragment extends Fragment {
                         ((Animatable) finalMyholder.right.getDrawable()).start();
 
                     }
+                    if (que_no < 19) {
+                        PrefUtils.saveToPrefs(getActivity().getApplicationContext(), "aptitude_no_" + set_no + "_que", String.valueOf(que_no+1));
+                    }
+                    if (que_no == 19) {
+                        PrefUtils.saveToPrefs(getActivity().getApplicationContext(), "aptitude_no_" + set_no + "_que", "0");
+                    }
+                    db.addAptitudeStatusCount(set_que_no + 1);
                     finalRow.setClickable(false);
                     explanation.setEnabled(true);
                     explanation.setAlpha(1);
@@ -248,5 +258,11 @@ public class AptitudeFragment extends Fragment {
 
             return row;
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
     }
 }

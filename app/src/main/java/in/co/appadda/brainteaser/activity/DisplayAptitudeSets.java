@@ -41,8 +41,7 @@ public class DisplayAptitudeSets extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new QueSetAdapter(getDataSet(), layoutR);
-        mRecyclerView.setAdapter(mAdapter);
+
 
 
 
@@ -51,6 +50,9 @@ public class DisplayAptitudeSets extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mAdapter = new QueSetAdapter(getDataSet(), layoutR);
+        mRecyclerView.setAdapter(mAdapter);
+
         ((QueSetAdapter) mAdapter).setOnItemClickListener(new QueSetAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -65,6 +67,7 @@ public class DisplayAptitudeSets extends AppCompatActivity {
                 startActivity(openAptitude);
             }
         });
+
     }
 
     private ArrayList<QuestionSets> getDataSet() {
@@ -75,9 +78,8 @@ public class DisplayAptitudeSets extends AppCompatActivity {
         for (int i = 0; i < (totalAptitudeQue / 20); i++) {
             int j = i + 1;
             totalAptitudeQueDone = db.getAptitudeSetStatusCount(j);
-            Log.d("quesdone",String.valueOf(totalAptitudeQueDone));
             if (totalAptitudeQueDone == 20) {
-                exact = "You have completed this set";
+                exact = "You have completed !";
             } else {
                 exact = totalAptitudeQueDone + " questions done";
             }

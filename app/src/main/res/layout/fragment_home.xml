@@ -49,6 +49,7 @@
                         android:src="@drawable/aptitude" />
 
                     <TextView
+                        android:id="@+id/tv_aptitude_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/progress_bar_aptitude"
@@ -59,6 +60,7 @@
 
                     <android.support.v4.widget.ContentLoadingProgressBar
                         android:id="@+id/progress_bar_aptitude"
+                        style="?android:attr/android:progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
                         android:layout_alignParentBottom="true"
@@ -110,6 +112,7 @@
                         android:src="@drawable/lightbulb" />
 
                     <TextView
+                        android:id="@+id/tv_logical_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/progress_bar_logical"
@@ -120,6 +123,7 @@
 
                     <android.support.v4.widget.ContentLoadingProgressBar
                         android:id="@+id/progress_bar_logical"
+                        style="?android:attr/android:progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
                         android:layout_alignParentBottom="true"
@@ -150,8 +154,8 @@
             android:layout_below="@id/card_aptitude"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text="For the crazy ones"
             android:fontFamily="sans-serif"
+            android:text="For The Crazy Ones"
             android:textColor="#BDBDBD"
             android:textSize="18sp" />
 
@@ -186,16 +190,18 @@
                         android:src="@drawable/puzzles" />
 
                     <TextView
+                        android:id="@+id/tv_puzzle_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/pb_aptitude"
+                        android:layout_above="@+id/progress_bar_puzzle"
                         android:layout_marginLeft="@dimen/dp4"
                         android:text="Completed: 25%"
                         android:textColor="#FFF"
                         android:textSize="10dp" />
 
                     <android.support.v4.widget.ContentLoadingProgressBar
-                        android:id="@+id/pb_aptitude"
+                        android:id="@+id/progress_bar_puzzle"
+                        style="?android:attr/android:progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
                         android:layout_alignParentBottom="true"
@@ -247,6 +253,7 @@
                         android:src="@drawable/riddle" />
 
                     <TextView
+                        android:id="@+id/tv_riddle_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_above="@+id/progress_bar_riddle"
@@ -257,6 +264,7 @@
 
                     <android.support.v4.widget.ContentLoadingProgressBar
                         android:id="@+id/progress_bar_riddle"
+                        style="?android:attr/android:progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
                         android:layout_alignParentBottom="true"
