@@ -50,7 +50,7 @@ public class DisplayAptitudeSets extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
 
-        totalAptitudeQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayAptitudeSets.this, "_id_aptitude", "20"));
+        totalAptitudeQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayAptitudeSets.this, "_id_aptitude", "0"));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.queSetList);
         mRecyclerView.setHasFixedSize(true);

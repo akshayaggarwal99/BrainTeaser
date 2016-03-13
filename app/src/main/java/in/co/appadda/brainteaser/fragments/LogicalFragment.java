@@ -1,13 +1,10 @@
 package in.co.appadda.brainteaser.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,27 +14,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
 import java.util.ArrayList;
 
-import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
-import in.co.appadda.brainteaser.activity.QuestionExplanation;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.OptionsItems;
 
 /**
- * Created by dewangankisslove on 02-03-2016.
+ * Created by dewangankisslove on 12-03-2016.
  */
-public class AptitudeFragment extends Fragment {
-
-//    private BackendlessCollection collection;
-//
-//    private int currentPage;
-//    private int totalPages;
-//    private String[] items;
+public class LogicalFragment extends Fragment{
 
     private ArrayList<OptionsItems> optionsItemsArrayList = new ArrayList<OptionsItems>();
     private OptionItemAdapter adapter;
@@ -48,24 +34,19 @@ public class AptitudeFragment extends Fragment {
     int que_no = 0;
     private Cursor cursor;
     int set_no;
-    private Tracker mTracker;
-    private static final String TAG = "RiddleFragment";
 
-    public static AptitudeFragment newInstance(int set_no) {
-        AptitudeFragment aptitudeFragment = new AptitudeFragment();
+    public static LogicalFragment newInstance(int set_no) {
+        LogicalFragment logicalFragment = new LogicalFragment();
         Bundle b = new Bundle();
         b.putInt("someInt", set_no);
-        aptitudeFragment.setArguments(b);
+        logicalFragment.setArguments(b);
 
-        return aptitudeFragment;
+        return logicalFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        // Enable Advertising Features.
         set_no = getArguments().getInt("someInt");
 
     }
@@ -132,16 +113,16 @@ public class AptitudeFragment extends Fragment {
 
     private void initViews() {
         DatabaseHandler db = new DatabaseHandler(getActivity());
-        int totalnoofAptitudeSets;
-        totalnoofAptitudeSets = db.getAptitudeCount() / 20;
+        int totalnoofLogicalSets;
+        totalnoofLogicalSets = db.getLogicalCount()/20;
         int set_que_no = 0;
-        for (int i = 1; i <= totalnoofAptitudeSets; i++) {
-            if (set_no == i) {
-                set_que_no = que_no + (20 * (i - 1));
+        for (int i = 1;i<= totalnoofLogicalSets;i++){
+            if (set_no == i){
+                set_que_no = que_no+ (20*(i-1));
             }
         }
 
-        cursor = db.getAptitude(set_no, set_que_no + 1);
+        cursor = db.getLogical(set_no,set_que_no+1);
 
         StringBuilder sb = new StringBuilder();
         sb.append("");
@@ -158,15 +139,17 @@ public class AptitudeFragment extends Fragment {
         adapter = new OptionItemAdapter(getActivity().getApplicationContext(), optionsItemsArrayList);
         optionListView.setAdapter(adapter);
 
-        explanation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String msg = cursor.getString(7);
-                Intent explanation = new Intent(getActivity(), QuestionExplanation.class);
-                explanation.putExtra("explain", msg);
-                startActivity(explanation);
-            }
-        });
+//        explanation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity().getApplicationContext(), R.style.AppCompatAlertDialogStyle);
+//                builder.setTitle("Dialog");
+//                builder.setMessage(cursor.getString(7));
+//                builder.setPositiveButton("OK", null);
+//                builder.setNegativeButton("Cancel", null);
+//                builder.show();
+//            }
+//        });
 
 
     }
@@ -179,11 +162,6 @@ public class AptitudeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // [START screen_view_hit]
-        Log.i(TAG, "Setting screen name: " );
-        mTracker.setScreenName("aptitude_fragment" );
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        // [END screen_view_hit]
         adapter.notifyDataSetChanged();
     }
 

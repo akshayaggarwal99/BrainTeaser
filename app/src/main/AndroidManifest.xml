@@ -33,7 +33,13 @@
             android:label="@string/app_name" />
         <activity
             android:name=".activity.AboutUsActivity"
-            android:label="About Us" />
+            android:label="About Us"
+            />
+
+        <activity
+            android:name=".activity.QuestionExplanation"
+            android:label="Explanation"></activity>
+
 
         <service android:name="com.backendless.AndroidService" />
 

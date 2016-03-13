@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -86,13 +87,9 @@ public class Splash extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     retrieveBasicAptitudeRecord();
-                    retrieveBasicLogicalRecord();
-                    retrieveBasicRiddleRecord();
-                    retrieveBasicPuzzlesRecord();
 
-
-
-
+//                    retrieveBasicPuzzlesRecord();
+//                    retrieveBasicLogicalRecord();
 
                 }
             });
@@ -111,8 +108,7 @@ public class Splash extends AppCompatActivity {
         aptitude.findAsync(query, new DefaultCallback<BackendlessCollection<aptitude>>(Splash.this) {
             @Override
             public void handleResponse(BackendlessCollection<aptitude> response) {
-                super.handleResponse(response);
-                id_aptitude = id_aptitude + 40;
+                id_aptitude = id_aptitude + response.getData().size();
                 StringBuilder sb = new StringBuilder();
                 sb.append("");
                 sb.append(id_aptitude);
@@ -123,6 +119,9 @@ public class Splash extends AppCompatActivity {
 
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.addAptitude();
+
+                retrieveBasicPuzzlesRecord();
+
 
             }
         });
@@ -140,7 +139,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void handleResponse(BackendlessCollection<puzzles> response) {
                 super.handleResponse(response);
-                id_puzzle = id_puzzle + 10;
+                id_puzzle = id_puzzle + response.getData().size();
                 StringBuilder sb = new StringBuilder();
                 sb.append("");
                 sb.append(id_puzzle);
@@ -150,7 +149,7 @@ public class Splash extends AppCompatActivity {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.addPuzzles();
 
-
+                retrieveBasicLogicalRecord();
             }
         });
     }
@@ -167,17 +166,19 @@ public class Splash extends AppCompatActivity {
             @Override
             public void handleResponse(BackendlessCollection<logical> response) {
                 super.handleResponse(response);
-                id_logical = id_logical + 40;
+                id_logical = id_logical + response.getData().size();
+                Log.d("logical", "" + id_logical);
                 StringBuilder sb = new StringBuilder();
                 sb.append("");
                 sb.append(id_logical);
                 String ID = sb.toString();
-                PrefUtils.saveToPrefs(Splash.this, "_id_puzzle", ID);
+                PrefUtils.saveToPrefs(Splash.this, "_id_logical", ID);
                 LogicalCollection = response;
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 db.addLogical();
 
-
+//                PrefUtils.saveToPrefs(Splash.this, "skip_update", "TRUE");
+                retrieveBasicRiddleRecord();
             }
         });
     }
@@ -194,7 +195,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void handleResponse(BackendlessCollection<riddles> response) {
                 super.handleResponse(response);
-                id_riddle = id_riddle + 10;
+                id_riddle = id_riddle + response.getData().size();
                 StringBuilder sb = new StringBuilder();
                 sb.append("");
                 sb.append(id_riddle);
@@ -205,10 +206,17 @@ public class Splash extends AppCompatActivity {
                 db.addRiddle();
 
                 PrefUtils.saveToPrefs(Splash.this, "skip_update", "TRUE");
+
                 Intent mainActivity = new Intent(Splash.this, MainActivity.class);
                 startActivity(mainActivity);
 
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
 }

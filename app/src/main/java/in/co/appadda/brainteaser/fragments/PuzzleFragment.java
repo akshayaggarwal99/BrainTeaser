@@ -21,6 +21,7 @@ import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.OptionsItems;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 
 /**
  * Created by dewangankisslove on 04-03-2016.
@@ -34,6 +35,7 @@ public class PuzzleFragment extends Fragment {
     Tracker mTracker;
     private static final String TAG = "PuzzleFragment";
 
+    int totalPuzzleQue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,8 +75,8 @@ public class PuzzleFragment extends Fragment {
         super.onResume();
 
         // [START screen_view_hit]
-        Log.i(TAG, "Setting screen name: " );
-        mTracker.setScreenName("puzzle_fragment" );
+        Log.i(TAG, "Setting screen name: ");
+        mTracker.setScreenName("puzzle_fragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         // [END screen_view_hit]
 
@@ -85,6 +87,8 @@ public class PuzzleFragment extends Fragment {
         questionNo = (TextView) v.findViewById(R.id.tv_question_number_puzzle);
         forward = (ImageView) v.findViewById(R.id.iv_forward);
         backward = (ImageView) v.findViewById(R.id.iv_backward);
+
+        totalPuzzleQue = Integer.parseInt(PrefUtils.getFromPrefs(getActivity(), "_id_puzzle", "0"));
 
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +118,7 @@ public class PuzzleFragment extends Fragment {
         DatabaseHandler db = new DatabaseHandler(getActivity());
 
 
-        cursor = db.getPuzzle(que_no+1);
+        cursor = db.getPuzzle(que_no + 1);
 
         StringBuilder sb = new StringBuilder();
 
@@ -129,7 +133,7 @@ public class PuzzleFragment extends Fragment {
 
     private void initButtons() {
         backward.setEnabled(que_no != 0);
-        forward.setEnabled(que_no != 10);
+        forward.setEnabled(que_no != totalPuzzleQue - 1);
     }
 
 }

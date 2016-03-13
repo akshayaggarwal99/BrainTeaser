@@ -13,13 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
+import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.fragments.HomeFragment;
 import in.co.appadda.brainteaser.R;
 
@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     private Tracker mTracker;
+
+
+    DatabaseHandler db;
+
     ActionBarDrawerToggle actionBarDrawerToggle;
     private static final String TAG = "MainActivity";
     InterstitialAd mInterstitialAd;
@@ -52,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 //
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        db = new DatabaseHandler(this);
 
 
         //Initializing NavigationView
@@ -176,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent openRiddle = new Intent(MainActivity.this, DisplayQue.class);
                 openRiddle.putExtra("openFragment", "openRiddle");
                 startActivity(openRiddle);
+
                 break;
         }
     }
