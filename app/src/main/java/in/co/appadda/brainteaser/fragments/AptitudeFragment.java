@@ -177,6 +177,17 @@ public class AptitudeFragment extends Fragment {
     private void initButtons() {
         backward.setEnabled(que_no != 0);
         forward.setEnabled(que_no != 19);
+        if (que_no == 0){
+            backward.setVisibility(View.INVISIBLE);
+        }else {
+            backward.setVisibility(View.VISIBLE);
+        }
+        if (que_no == 19){
+            forward.setVisibility(View.INVISIBLE);
+        }else {
+            forward.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override

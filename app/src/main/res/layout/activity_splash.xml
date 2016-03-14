@@ -10,7 +10,7 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="84dp"
         android:src="@drawable/mind" />
 
     <TextView
@@ -34,8 +34,24 @@
         android:background="#FFF"
         android:fontFamily="sans-serif"
         android:padding="8dp"
-        android:text="CLICK TO CONTINUE"
+        android:text="UPDATE QUESTIONS"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/splash_skip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/splash_button"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:background="#FFF"
+        android:fontFamily="sans-serif"
+        android:padding="8dp"
+        android:text="SKIP"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
 </RelativeLayout>

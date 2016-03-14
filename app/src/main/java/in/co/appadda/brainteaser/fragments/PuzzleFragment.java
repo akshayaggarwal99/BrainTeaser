@@ -123,7 +123,7 @@ public class PuzzleFragment extends Fragment {
                     userAns.setText("");
                     startActivity(intent);
 
-                }else if(userAns.getText().toString().contentEquals("")) {
+                } else if (userAns.getText().toString().contentEquals("")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Answer can't be blank", Toast.LENGTH_SHORT).show();
                 } else {
                     intent.putExtra("userCheckStatus", "Oops ! Wrong Answer");
@@ -168,8 +168,8 @@ public class PuzzleFragment extends Fragment {
             public void onClick(View v) {
                 PrefUtils.saveToPrefs(getActivity(), "DESTROY", "destroy");
                 Intent intent = new Intent(getActivity().getApplicationContext(), PuzzleQuesGridActivity.class);
-                intent.putExtra("FragName","Puzzle");
-                intent.putExtra("cancel",que_no);
+                intent.putExtra("FragName", "Puzzle");
+                intent.putExtra("cancel", que_no);
                 startActivity(intent);
             }
         });
@@ -196,6 +196,17 @@ public class PuzzleFragment extends Fragment {
     private void initButtons() {
         backward.setEnabled(que_no != 0);
         forward.setEnabled(que_no != totalPuzzleQue - 1);
+
+        if (que_no == 0) {
+            backward.setVisibility(View.INVISIBLE);
+        } else {
+            backward.setVisibility(View.VISIBLE);
+        }
+        if (que_no == totalPuzzleQue - 1) {
+            forward.setVisibility(View.INVISIBLE);
+        } else {
+            forward.setVisibility(View.VISIBLE);
+        }
     }
 
 

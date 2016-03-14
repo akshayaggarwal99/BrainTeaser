@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
@@ -16,6 +17,7 @@ import com.backendless.persistence.QueryOptions;
 
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
+import in.co.appadda.brainteaser.data.api.model.ConnectionDetector;
 import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
 import in.co.appadda.brainteaser.data.api.model.Defaults;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
@@ -33,7 +35,7 @@ public class Splash extends AppCompatActivity {
     private static BackendlessCollection LogicalCollection;
     private static BackendlessCollection PuzzleCollection;
     private static BackendlessCollection RiddleCollection;
-    Button clickToContinue;
+    Button clickToContinue, skipUpdate;
     int id_aptitude = 0;
     int id_logical = 0;
     int id_puzzle = 0;
@@ -64,36 +66,33 @@ public class Splash extends AppCompatActivity {
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
+        skipUpdate = (Button) findViewById(R.id.splash_skip);
         clickToContinue = (Button) findViewById(R.id.splash_button);
         skip_update = PrefUtils.getFromPrefs(Splash.this, "skip_update", "FALSE");
         if (skip_update.contentEquals("TRUE")) {
-            clickToContinue.setClickable(false);
-            clickToContinue.setAlpha(0);
-            Thread thread = new Thread() {
-                public void run() {
-                    try {
-                        sleep(1500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } finally {
-                        Intent mainActivity = new Intent(Splash.this, MainActivity.class);
-                        startActivity(mainActivity);
-                    }
-                }
-            };
-            thread.start();
-        } else {
-            clickToContinue.setOnClickListener(new View.OnClickListener() {
+            skipUpdate.setVisibility(View.VISIBLE);
+            skipUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    retrieveBasicAptitudeRecord();
-
-//                    retrieveBasicPuzzlesRecord();
-//                    retrieveBasicLogicalRecord();
-
+                    Intent mainActivity = new Intent(Splash.this, MainActivity.class);
+                    startActivity(mainActivity);
                 }
             });
         }
+        clickToContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+
+                Boolean isInternetPresent = cd.isConnectingToInternet();
+                if (isInternetPresent) {
+                    retrieveBasicAptitudeRecord();
+                } else {
+                    Toast.makeText(getBaseContext(), "Check Internet Connection !", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
     }
 
@@ -121,7 +120,6 @@ public class Splash extends AppCompatActivity {
                 db.addAptitude();
 
                 retrieveBasicPuzzlesRecord();
-
 
 
             }
@@ -208,11 +206,8 @@ public class Splash extends AppCompatActivity {
 
                 PrefUtils.saveToPrefs(Splash.this, "skip_update", "TRUE");
 
-                PrefUtils.saveToPrefs(Splash.this, "downloadOption", "1");
-
                 Intent mainActivity = new Intent(Splash.this, MainActivity.class);
                 startActivity(mainActivity);
-
 
 
             }

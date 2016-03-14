@@ -144,7 +144,7 @@ public class RiddleFragment extends Fragment {
                 PrefUtils.saveToPrefs(getActivity(), "DESTROY", "destroy");
                 Intent intent = new Intent(getActivity().getApplicationContext(), PuzzleQuesGridActivity.class);
                 intent.putExtra("FragName", "Riddle");
-                intent.putExtra("cancel",que_no);
+                intent.putExtra("cancel", que_no);
                 startActivity(intent);
             }
         });
@@ -171,6 +171,16 @@ public class RiddleFragment extends Fragment {
     private void initButtons() {
         backward.setEnabled(que_no != 0);
         forward.setEnabled(que_no != totalRiddleQue - 1);
+        if (que_no == 0) {
+            backward.setVisibility(View.INVISIBLE);
+        } else {
+            backward.setVisibility(View.VISIBLE);
+        }
+        if (que_no == totalRiddleQue - 1) {
+            forward.setVisibility(View.INVISIBLE);
+        } else {
+            forward.setVisibility(View.VISIBLE);
+        }
     }
 
 }

@@ -42,7 +42,7 @@
         android:layout_margin="@dimen/dp8"
         android:textColor="#708090"
 
-        android:text="OpenSoftLabs is an educational application venture whcih beleives in making world more open to education.Brain Teaser is made for those who challenge things."
+        android:text="OpenSoftLabs is an educational application venture which believes in making world more open towards education.Brain Teaser is made for those who love to challenge things."
         android:textSize="16sp"
 
         ></TextView>

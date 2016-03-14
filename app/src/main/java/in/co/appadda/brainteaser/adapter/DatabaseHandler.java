@@ -117,12 +117,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addAptitude() {
         String[] aptitude_id, aptitude_que, aptitude_option_one, aptitude_option_two, aptitude_option_three, aptitude_option_four, aptitude_answer, aptitude_explanation, aptitude_set_no, aptitude_user_status;
 
-        i = Integer.parseInt(PrefUtils.getFromPrefs(context,"downloadOption","0"));
-        if(i == 0){
             aptitudecollection = Splash.getAptitudeCollection();
-        }else {
-            aptitudecollection = MainActivity.getAptitudeCollection();
-        }
 
         currentPage = 1;
 
@@ -174,12 +169,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addLogical() {
         String[] logical_id, logical_que, logical_option_one, logical_option_two, logical_option_three, logical_option_four, logical_answer, logical_explanation, logical_set_no;
 
-        i = Integer.parseInt(PrefUtils.getFromPrefs(context,"downloadOption","0"));
-        if (i==0){
             logicalcollection = Splash.getLogicalCollection();
-        }else {
-            logicalcollection = MainActivity.getLogicalCollection();
-        }
 
         currentPage = 1;
 
@@ -230,12 +220,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addPuzzles() {
         String[] puzzle_id, puzzle_que, puzzle_answer, puzzle_explanation;
 
-        i = Integer.parseInt(PrefUtils.getFromPrefs(context,"downloadOption","0"));
-        if(i==0){
             puzzlecollection = Splash.getPuzzleCollection();
-        }else {
-            puzzlecollection = MainActivity.getPuzzleCollection();
-        }
 
         currentPage = 1;
 
@@ -270,12 +255,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addRiddle() {
         String[] riddle_id, riddle_que, riddle_answer;
 
-        i = Integer.parseInt(PrefUtils.getFromPrefs(context,"downloadOption","0"));
-        if (i==0){
             riddlecollection = Splash.getRiddleCollection();
-        }else {
-            riddlecollection =MainActivity.getRiddleCollection();
-        }
 
         currentPage = 1;
 

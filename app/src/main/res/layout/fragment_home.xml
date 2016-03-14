@@ -75,7 +75,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="Aptitude Questions"
+                    android:text="Aptitude"
                     android:textColor="@color/card_one"
                     android:textSize="16sp" />
 
@@ -138,7 +138,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="Logical Reasoning"
+                    android:text="Logical"
                     android:textColor="@color/card_two"
                     android:textSize="16sp" />
 
@@ -155,7 +155,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif"
-            android:text="For The Crazy Ones"
+            android:text="For The Crazy Ones !"
             android:textColor="#BDBDBD"
             android:textSize="18sp" />
 
@@ -216,7 +216,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="Puzzle Questions"
+                    android:text="Puzzle"
                     android:textColor="#6E8898"
                     android:textSize="16sp" />
 
@@ -279,7 +279,7 @@
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="Riddle Questions"
+                    android:text="Riddle"
                     android:textColor="#85756E"
                     android:textSize="16sp" />
 
