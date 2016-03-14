@@ -1,10 +1,12 @@
 package in.co.appadda.brainteaser.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.google.android.gms.analytics.Tracker;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.activity.PuzzleQuesGridActivity;
+import in.co.appadda.brainteaser.activity.QuestionExplanation;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 
@@ -30,16 +34,28 @@ public class RiddleFragment extends Fragment {
 
     TextView question, questionNo;
     ImageView forward, backward;
+    CardView queNoContainer;
     Button answer;
     int que_no = 0;
+    DatabaseHandler db;
     private Cursor cursor;
     int totalRiddleQue;
+
+    public static RiddleFragment newInstance(int set_no) {
+        RiddleFragment riddleFragment = new RiddleFragment();
+        Bundle b = new Bundle();
+        b.putInt("someInt", set_no);
+        riddleFragment.setArguments(b);
+
+        return riddleFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
+        que_no = getArguments().getInt("someInt");
     }
 
     @Nullable
@@ -73,8 +89,8 @@ public class RiddleFragment extends Fragment {
         super.onResume();
 
         // [START screen_view_hit]
-        Log.i(TAG, "Setting screen name: " );
-        mTracker.setScreenName("riddle_fragment" );
+        Log.i(TAG, "Setting screen name: ");
+        mTracker.setScreenName("riddle_fragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         // [END screen_view_hit]
     }
@@ -85,8 +101,20 @@ public class RiddleFragment extends Fragment {
         forward = (ImageView) v.findViewById(R.id.iv_forward);
         backward = (ImageView) v.findViewById(R.id.iv_backward);
         answer = (Button) v.findViewById(R.id.b_answer_riddle);
+        queNoContainer = (CardView) v.findViewById(R.id.que_no_riddle);
 
         totalRiddleQue = Integer.parseInt(PrefUtils.getFromPrefs(getActivity(), "_id_riddle", "0"));
+
+        answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String msg = cursor.getString(2);
+                db.addRiddleStatusCount(que_no + 1);
+                Intent explanation = new Intent(getActivity(), QuestionExplanation.class);
+                explanation.putExtra("explain", msg);
+                startActivity(explanation);
+            }
+        });
 
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,10 +138,21 @@ public class RiddleFragment extends Fragment {
             }
         });
 
+        queNoContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrefUtils.saveToPrefs(getActivity(), "DESTROY", "destroy");
+                Intent intent = new Intent(getActivity().getApplicationContext(), PuzzleQuesGridActivity.class);
+                intent.putExtra("FragName", "Riddle");
+                intent.putExtra("cancel",que_no);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initViews() {
-        DatabaseHandler db = new DatabaseHandler(getActivity());
+        db = new DatabaseHandler(getActivity());
 
 
         cursor = db.getRiddle(que_no + 1);
@@ -131,7 +170,7 @@ public class RiddleFragment extends Fragment {
 
     private void initButtons() {
         backward.setEnabled(que_no != 0);
-        forward.setEnabled(que_no != totalRiddleQue-1);
+        forward.setEnabled(que_no != totalRiddleQue - 1);
     }
 
 }

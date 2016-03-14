@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -117,12 +118,22 @@ public class PuzzleFragment extends Fragment {
 
                 if (userAns.getText().toString().contentEquals(db.getPuzzle(que_no + 1).getString(2))) {
                     intent.putExtra("userCheckStatus", "Bravo ! Right Answer");
+                    db.addPuzzleStatusCount(que_no + 1);
+                    intent.putExtra("queNo", que_no + 1);
+                    userAns.setText("");
+                    startActivity(intent);
 
+                }else if(userAns.getText().toString().contentEquals("")) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Answer can't be blank", Toast.LENGTH_SHORT).show();
                 } else {
                     intent.putExtra("userCheckStatus", "Oops ! Wrong Answer");
+                    db.addPuzzleStatusCount(que_no + 1);
+                    intent.putExtra("queNo", que_no + 1);
+                    userAns.setText("");
+                    startActivity(intent);
+
                 }
-                intent.putExtra("queNo", que_no + 1);
-                startActivity(intent);
+
 
             }
 
@@ -155,8 +166,10 @@ public class PuzzleFragment extends Fragment {
         queNoContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PrefUtils.saveToPrefs(getActivity(),"DESTROY","destroy");
+                PrefUtils.saveToPrefs(getActivity(), "DESTROY", "destroy");
                 Intent intent = new Intent(getActivity().getApplicationContext(), PuzzleQuesGridActivity.class);
+                intent.putExtra("FragName","Puzzle");
+                intent.putExtra("cancel",que_no);
                 startActivity(intent);
             }
         });

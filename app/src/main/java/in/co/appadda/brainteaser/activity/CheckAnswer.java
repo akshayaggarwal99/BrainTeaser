@@ -33,13 +33,13 @@ public class CheckAnswer extends AppCompatActivity {
         db = new DatabaseHandler(this);
         cursor = db.getPuzzle(queNo);
 
-
-        user_check.setText(check);
         if (check.contentEquals("Bravo ! Right Answer")) {
             user_check.setTextColor(Color.parseColor("#0edd15"));
+            user_check.setText(check);
         } else {
             user_check.setTextColor(Color.parseColor("#ff291a"));
             okay.setText("Try Again");
+            user_check.setText(check);
         }
 
         okay.setOnClickListener(new View.OnClickListener() {

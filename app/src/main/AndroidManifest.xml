@@ -42,7 +42,7 @@
 
         <activity android:name=".activity.PuzzleQuesGridActivity" />
         <activity android:name=".activity.CheckAnswer"
-            android:label="Puzzle"
+            android:label="Alert"
             android:theme="@style/Theme.AppCompat.Dialog"></activity>
     </application>
 

@@ -25,11 +25,16 @@ public class PuzzleQuesGridActivity extends AppCompatActivity {
     int spacing = 50;
     boolean includeEdge = true;
     int totalPuzzleQue;
+    String fragName;
+    int cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle_ques_grid);
+
+        fragName = getIntent().getStringExtra("FragName");
+        cancel = getIntent().getIntExtra("cancel", 1);
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.queSetListPuzzle);
@@ -66,18 +71,41 @@ public class PuzzleQuesGridActivity extends AppCompatActivity {
         TextView textView = (TextView) view.findViewById(R.id.que_no);
 
 
-
         int i = Integer.parseInt(textView.getText().toString());
 
         Intent j = new Intent(PuzzleQuesGridActivity.this, DisplayQue.class);
-        j.putExtra("openFragment", "openPuzzle");
-        j.putExtra("que-no", i - 1);
-        startActivity(j);
+
+        if (fragName.contentEquals("Puzzle")) {
+            j.putExtra("openFragment", "openPuzzle");
+            j.putExtra("que-no", i - 1);
+            startActivity(j);
+        } else if (fragName.contentEquals("Riddle")) {
+            j.putExtra("openFragment", "openRiddle");
+            j.putExtra("que_no", i - 1);
+            startActivity(j);
+        }
+
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(PuzzleQuesGridActivity.this, DisplayQue.class);
+        if (fragName.contentEquals("Puzzle")) {
+            intent.putExtra("openFragment", "openPuzzle");
+            intent.putExtra("que-no", cancel);
+            startActivity(intent);
+        } else if (fragName.contentEquals("Riddle")) {
+            intent.putExtra("openFragment", "openRiddle");
+            intent.putExtra("que_no", cancel);
+            startActivity(intent);
+        }
     }
 }

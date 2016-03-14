@@ -12,9 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessCollection;
+import com.backendless.async.callback.BackendlessCallback;
+import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.HitBuilders;
@@ -22,6 +28,13 @@ import com.google.android.gms.analytics.Tracker;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
+import in.co.appadda.brainteaser.data.api.model.ConnectionDetector;
+import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
+import in.co.appadda.brainteaser.data.api.model.aptitude;
+import in.co.appadda.brainteaser.data.api.model.logical;
+import in.co.appadda.brainteaser.data.api.model.puzzles;
+import in.co.appadda.brainteaser.data.api.model.riddles;
 import in.co.appadda.brainteaser.fragments.HomeFragment;
 import in.co.appadda.brainteaser.R;
 
@@ -30,6 +43,31 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     private Tracker mTracker;
+
+    private static BackendlessCollection aptitudeCollection;
+    private static BackendlessCollection LogicalCollection;
+    private static BackendlessCollection PuzzleCollection;
+    private static BackendlessCollection RiddleCollection;
+    int id_aptitude;
+    int id_logical;
+    int id_puzzle;
+    int id_riddle;
+
+    public static BackendlessCollection getAptitudeCollection() {
+        return aptitudeCollection;
+    }
+
+    public static BackendlessCollection getLogicalCollection() {
+        return LogicalCollection;
+    }
+
+    public static BackendlessCollection getPuzzleCollection() {
+        return PuzzleCollection;
+    }
+
+    public static BackendlessCollection getRiddleCollection() {
+        return RiddleCollection;
+    }
 
 
     DatabaseHandler db;
@@ -60,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         db = new DatabaseHandler(this);
-
-
 
 
         //Initializing NavigationView
@@ -105,11 +141,19 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.feedback:
                         return true;
                     case R.id.about_us:
-                        Intent i = new Intent(MainActivity.this,AboutUsActivity.class);
+                        Intent i = new Intent(MainActivity.this, AboutUsActivity.class);
                         startActivity(i);
                         return true;
 
-                    case R.id.logoutButton:
+                    case R.id.updateButton:
+                        ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+
+                        Boolean isInternetPresent = cd.isConnectingToInternet();
+                        if (isInternetPresent){
+                            retrieveBasicAptitudeRecord();
+                        }
+
+
                         return true;
                     default:
                         Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
@@ -190,6 +234,113 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void retrieveBasicAptitudeRecord() {
+        id_aptitude = Integer.parseInt(PrefUtils.getFromPrefs(MainActivity.this, "_id_aptitude", "0"));
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption("_id ASC");
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        query.setQueryOptions(queryOptions);
+        query.setPageSize(40);
+        query.setWhereClause("_id > " + id_aptitude);
+        aptitude.findAsync(query, new DefaultCallback<BackendlessCollection<aptitude>>(MainActivity.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<aptitude> response) {
+                id_aptitude = id_aptitude + response.getData().size();
+                StringBuilder sb = new StringBuilder();
+                sb.append("");
+                sb.append(id_aptitude);
+                String ID = sb.toString();
+                PrefUtils.saveToPrefs(MainActivity.this, "_id_aptitude", ID);
+
+                aptitudeCollection = response;
+                db.addAptitude();
+
+//                retrieveBasicLogicalRecord();
+
+            }
+        });
+
+    }
+
+    private void retrieveBasicPuzzlesRecord() {
+        id_puzzle = Integer.parseInt(PrefUtils.getFromPrefs(MainActivity.this, "_id_puzzle", "0"));
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption("_id ASC");
+        BackendlessDataQuery queryPuzzle = new BackendlessDataQuery();
+        queryPuzzle.setQueryOptions(queryOptions);
+        queryPuzzle.setPageSize(10);
+        queryPuzzle.setWhereClause("_id > " + id_puzzle);
+        puzzles.findAsync(queryPuzzle, new DefaultCallback<BackendlessCollection<puzzles>>(MainActivity.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<puzzles> response) {
+                super.handleResponse(response);
+                id_puzzle = id_puzzle + response.getData().size();
+                StringBuilder sb = new StringBuilder();
+                sb.append("");
+                sb.append(id_puzzle);
+                String ID = sb.toString();
+                PrefUtils.saveToPrefs(MainActivity.this, "_id_puzzle", ID);
+                PuzzleCollection = response;
+
+                db.addPuzzles();
+
+//                retrieveBasicRiddleRecord();
+            }
+        });
+    }
+
+    private void retrieveBasicLogicalRecord() {
+        id_logical = Integer.parseInt(PrefUtils.getFromPrefs(MainActivity.this, "_id_logical", "0"));
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption("_id ASC");
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        query.setQueryOptions(queryOptions);
+        query.setPageSize(40);
+        query.setWhereClause("_id > " + id_logical);
+        logical.findAsync(query, new DefaultCallback<BackendlessCollection<logical>>(MainActivity.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<logical> response) {
+                super.handleResponse(response);
+                id_logical = id_logical + response.getData().size();
+                Log.d("logical", "" + id_logical);
+                StringBuilder sb = new StringBuilder();
+                sb.append("");
+                sb.append(id_logical);
+                String ID = sb.toString();
+                PrefUtils.saveToPrefs(MainActivity.this, "_id_logical", ID);
+                LogicalCollection = response;
+                db.addLogical();
+//                retrieveBasicPuzzlesRecord();
+
+            }
+        });
+    }
+
+    private void retrieveBasicRiddleRecord() {
+        id_riddle = Integer.parseInt(PrefUtils.getFromPrefs(MainActivity.this, "_id_riddle", "0"));
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption("_id ASC");
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        query.setQueryOptions(queryOptions);
+        query.setPageSize(10);
+        query.setWhereClause("_id > " + id_riddle);
+        riddles.findAsync(query, new DefaultCallback<BackendlessCollection<riddles>>(MainActivity.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<riddles> response) {
+                super.handleResponse(response);
+                id_riddle = id_riddle + response.getData().size();
+                StringBuilder sb = new StringBuilder();
+                sb.append("");
+                sb.append(id_riddle);
+                String ID = sb.toString();
+                PrefUtils.saveToPrefs(MainActivity.this, "_id_riddle", ID);
+                RiddleCollection = response;
+                db.addRiddle();
+
+            }
+        });
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -216,6 +367,7 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
+
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("CD23BA7D9F6BC822032F55C89322D663")
@@ -224,4 +376,9 @@ public class MainActivity extends AppCompatActivity {
         mInterstitialAd.loadAd(adRequest);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
 }

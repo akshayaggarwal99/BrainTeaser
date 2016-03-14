@@ -123,6 +123,7 @@ public class Splash extends AppCompatActivity {
                 retrieveBasicPuzzlesRecord();
 
 
+
             }
         });
     }
@@ -133,7 +134,7 @@ public class Splash extends AppCompatActivity {
         queryOptions.addSortByOption("_id ASC");
         BackendlessDataQuery queryPuzzle = new BackendlessDataQuery();
         queryPuzzle.setQueryOptions(queryOptions);
-        queryPuzzle.setPageSize(10);
+        queryPuzzle.setPageSize(20);
         queryPuzzle.setWhereClause("_id > " + id_puzzle);
         puzzles.findAsync(queryPuzzle, new DefaultCallback<BackendlessCollection<puzzles>>(Splash.this) {
             @Override
@@ -189,7 +190,7 @@ public class Splash extends AppCompatActivity {
         queryOptions.addSortByOption("_id ASC");
         BackendlessDataQuery query = new BackendlessDataQuery();
         query.setQueryOptions(queryOptions);
-        query.setPageSize(10);
+        query.setPageSize(20);
         query.setWhereClause("_id > " + id_riddle);
         riddles.findAsync(query, new DefaultCallback<BackendlessCollection<riddles>>(Splash.this) {
             @Override
@@ -207,8 +208,12 @@ public class Splash extends AppCompatActivity {
 
                 PrefUtils.saveToPrefs(Splash.this, "skip_update", "TRUE");
 
+                PrefUtils.saveToPrefs(Splash.this, "downloadOption", "1");
+
                 Intent mainActivity = new Intent(Splash.this, MainActivity.class);
                 startActivity(mainActivity);
+
+
 
             }
         });

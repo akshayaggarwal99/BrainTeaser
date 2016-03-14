@@ -13,33 +13,37 @@
         android:id="@+id/tv_check_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bravo! Right Answer"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="12dp"
+        android:text="Bravo! Right Answer"
         android:textColor="@android:color/holo_green_light"
         android:textSize="18sp" />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/tv_check_user"
-    android:layout_centerHorizontal="true"
-    android:weightSum="2">
-    <Button
-        android:id="@+id/okay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="8dp"
-        android:text="Okay" />
 
-    <Button
-        android:id="@+id/explain"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="@dimen/dp8"
-        android:text="Explanation" />
-</LinearLayout>
+        android:layout_below="@+id/tv_check_user"
+        android:layout_centerHorizontal="true"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/okay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="Okay"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:layout_weight="1"
+            android:text="Explanation"
+            android:textSize="12dp" />
+    </LinearLayout>
 
 
 </RelativeLayout>

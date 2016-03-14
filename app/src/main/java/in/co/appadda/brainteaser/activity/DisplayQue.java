@@ -32,6 +32,7 @@ public class DisplayQue extends AppCompatActivity {
         int set_no_aptitude = getIntent().getIntExtra("showAptitudeQue", 1);
         int set_no_logical = getIntent().getIntExtra("showLogicalQue", 1);
         int que_no_puzzle = getIntent().getIntExtra("que-no", 0);
+        int que_no_riddle = getIntent().getIntExtra("que_no", 0);
 
 
         switch (frag) {
@@ -42,7 +43,7 @@ public class DisplayQue extends AppCompatActivity {
                 puzzlefragmentTransaction.commit();
                 break;
             case "openRiddle":
-                RiddleFragment riddlefragment = new RiddleFragment();
+                Fragment riddlefragment = RiddleFragment.newInstance(que_no_riddle);
                 android.support.v4.app.FragmentTransaction riddlefragmentTransaction = getSupportFragmentManager().beginTransaction();
                 riddlefragmentTransaction.replace(R.id.activity_display_questions, riddlefragment);
                 riddlefragmentTransaction.commit();
