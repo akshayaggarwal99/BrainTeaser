@@ -24,7 +24,7 @@ public class PuzzleQuesGridActivity extends AppCompatActivity {
     int spanCount = 4;
     int spacing = 50;
     boolean includeEdge = true;
-    int totalPuzzleQue;
+    int totalPuzzleQue , totalRiddleQue;
     String fragName;
     int cancel;
 
@@ -54,12 +54,20 @@ public class PuzzleQuesGridActivity extends AppCompatActivity {
 
     private ArrayList<Integer> getDataSet() {
         DatabaseHandler db = new DatabaseHandler(this);
+        ArrayList results = new ArrayList<Integer>();
 
         int i;
         totalPuzzleQue = db.getPuzzleCount();
+        totalRiddleQue = db.getRiddleCount();
+        int j = 0;
 
-        ArrayList results = new ArrayList<Integer>();
-        for (int index = 0; index < totalPuzzleQue; index++) {
+        if (fragName.contentEquals("Puzzle")){
+            j = totalPuzzleQue;
+        }else if (fragName.contentEquals("Riddle")){
+            j = totalRiddleQue;
+        }
+
+        for (int index = 0; index < j; index++) {
             i = index + 1;
 
             results.add(index, i);
