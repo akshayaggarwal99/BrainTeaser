@@ -10,9 +10,9 @@
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="35dp"
         android:padding="10dp"
-        android:layout_gravity="center_horizontal"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="@dimen/dp4">
 
@@ -20,8 +20,8 @@
         <ImageView
             android:layout_width="108dp"
             android:layout_height="108dp"
-            android:layout_margin="@dimen/dp16"
             android:layout_gravity="center"
+            android:layout_margin="@dimen/dp16"
             android:src="@drawable/mind" />
 
 
@@ -40,9 +40,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp8"
-        android:textColor="#708090"
+        android:text="OpenSoftLabs is an educational application venture which believes in making world more open towards education. Brain Teaser is made for those who love to challenge things."
 
-        android:text="OpenSoftLabs is an educational application venture which believes in making world more open towards education.Brain Teaser is made for those who love to challenge things."
+        android:textColor="#708090"
         android:textSize="16sp"
 
         ></TextView>
@@ -51,19 +51,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp8"
-        android:textColor="#708090"
-
         android:text="Contact us"
+
+        android:textColor="#708090"
         android:textSize="28sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#708090"
-
         android:layout_margin="@dimen/dp8"
         android:text="Mail us at opensoftlabs@gmail.com"
+        android:textColor="#708090"
         android:textSize="16sp"
 
         ></TextView>

@@ -1,7 +1,7 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +21,7 @@ import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.adapter.QueSetAdapter;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import in.co.appadda.brainteaser.data.api.model.QuestionSets;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 /**
@@ -106,5 +107,10 @@ public class DisplayAptitudeSets extends AppCompatActivity {
             results.add(i, obj);
         }
         return results;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }

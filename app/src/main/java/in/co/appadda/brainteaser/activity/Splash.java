@@ -1,9 +1,8 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +24,7 @@ import in.co.appadda.brainteaser.data.api.model.aptitude;
 import in.co.appadda.brainteaser.data.api.model.logical;
 import in.co.appadda.brainteaser.data.api.model.puzzles;
 import in.co.appadda.brainteaser.data.api.model.riddles;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by dewangankisslove on 05-03-2016.
@@ -218,5 +218,10 @@ public class Splash extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }

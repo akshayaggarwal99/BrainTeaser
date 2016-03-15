@@ -1,5 +1,6 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,10 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import in.co.appadda.brainteaser.R;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+import in.co.appadda.brainteaser.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by dewangankisslove on 13-03-2016.
@@ -68,5 +70,10 @@ public class QuestionExplanation extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }

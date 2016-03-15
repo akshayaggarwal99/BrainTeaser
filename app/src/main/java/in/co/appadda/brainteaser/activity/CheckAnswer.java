@@ -1,5 +1,6 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CheckAnswer extends AppCompatActivity {
 
@@ -69,5 +71,10 @@ public class CheckAnswer extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }
