@@ -3,6 +3,7 @@ package in.co.appadda.brainteaser.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import com.google.android.gms.analytics.Tracker;
 import java.util.ArrayList;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
+import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.activity.QuestionExplanation;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
@@ -107,6 +109,12 @@ public class AptitudeFragment extends Fragment {
         forward = (ImageView) v.findViewById(R.id.iv_forward);
         backward = (ImageView) v.findViewById(R.id.iv_backward);
         explanation = (Button) v.findViewById(R.id.b_explanation);
+        MaterialRippleLayout.on(explanation)
+                .rippleOverlay(true)
+                .rippleColor(Color.parseColor("#35ADCF"))
+                .rippleAlpha(0.2f)
+                .rippleHover(true)
+                .create();
 
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,14 +185,14 @@ public class AptitudeFragment extends Fragment {
     private void initButtons() {
         backward.setEnabled(que_no != 0);
         forward.setEnabled(que_no != 19);
-        if (que_no == 0){
+        if (que_no == 0) {
             backward.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             backward.setVisibility(View.VISIBLE);
         }
-        if (que_no == 19){
+        if (que_no == 19) {
             forward.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             forward.setVisibility(View.VISIBLE);
         }
 
@@ -194,8 +202,8 @@ public class AptitudeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // [START screen_view_hit]
-        Log.i(TAG, "Setting screen name: " );
-        mTracker.setScreenName("aptitude_fragment" );
+        Log.i(TAG, "Setting screen name: ");
+        mTracker.setScreenName("aptitude_fragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         // [END screen_view_hit]
         adapter.notifyDataSetChanged();
@@ -269,7 +277,7 @@ public class AptitudeFragment extends Fragment {
 
                     }
                     if (que_no < 19) {
-                        PrefUtils.saveToPrefs(getActivity().getApplicationContext(), "aptitude_no_" + set_no + "_que", String.valueOf(que_no+1));
+                        PrefUtils.saveToPrefs(getActivity().getApplicationContext(), "aptitude_no_" + set_no + "_que", String.valueOf(que_no + 1));
                     }
                     if (que_no == 19) {
                         PrefUtils.saveToPrefs(getActivity().getApplicationContext(), "aptitude_no_" + set_no + "_que", "0");

@@ -1,9 +1,9 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +15,7 @@ import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 
+import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.ConnectionDetector;
@@ -25,6 +26,7 @@ import in.co.appadda.brainteaser.data.api.model.aptitude;
 import in.co.appadda.brainteaser.data.api.model.logical;
 import in.co.appadda.brainteaser.data.api.model.puzzles;
 import in.co.appadda.brainteaser.data.api.model.riddles;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by dewangankisslove on 05-03-2016.
@@ -66,8 +68,24 @@ public class Splash extends AppCompatActivity {
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
+        Backendless.Messaging.registerDevice( Defaults.gcmSenderID );
+
         skipUpdate = (Button) findViewById(R.id.splash_skip);
         clickToContinue = (Button) findViewById(R.id.splash_button);
+        MaterialRippleLayout.on(skipUpdate)
+                .rippleOverlay(true)
+                .rippleColor(Color.parseColor("#35ADCF"))
+                .rippleAlpha(0.2f)
+                .rippleHover(true)
+                .create();
+        MaterialRippleLayout.on(clickToContinue)
+                .rippleOverlay(true)
+                .rippleColor(Color.parseColor("#35ADCF"))
+                .rippleAlpha(0.2f)
+                .rippleHover(true)
+                .create();
+
+
         skip_update = PrefUtils.getFromPrefs(Splash.this, "skip_update", "FALSE");
         if (skip_update.contentEquals("TRUE")) {
             skipUpdate.setVisibility(View.VISIBLE);
@@ -88,7 +106,7 @@ public class Splash extends AppCompatActivity {
                 if (isInternetPresent) {
                     retrieveBasicAptitudeRecord();
                 } else {
-                    Toast.makeText(getBaseContext(), "Check Internet Connection !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), "Check Internet Connection!", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -218,5 +236,10 @@ public class Splash extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }

@@ -1,5 +1,6 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -9,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CheckAnswer extends AppCompatActivity {
 
@@ -32,6 +35,19 @@ public class CheckAnswer extends AppCompatActivity {
 
         db = new DatabaseHandler(this);
         cursor = db.getPuzzle(queNo);
+
+        MaterialRippleLayout.on(okay)
+                .rippleOverlay(true)
+                .rippleColor(Color.parseColor("#FFFFFF"))
+                .rippleAlpha(0.2f)
+                .rippleHover(true)
+                .create();
+        MaterialRippleLayout.on(explain)
+                .rippleOverlay(true)
+                .rippleColor(Color.parseColor("#FFFFFF"))
+                .rippleAlpha(0.2f)
+                .rippleHover(true)
+                .create();
 
         if (check.contentEquals("Bravo ! Right Answer")) {
             user_check.setTextColor(Color.parseColor("#0edd15"));
@@ -69,5 +85,10 @@ public class CheckAnswer extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }

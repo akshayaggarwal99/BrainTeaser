@@ -3,9 +3,11 @@ package in.co.appadda.brainteaser.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import in.co.appadda.brainteaser.AnalyticsApplication;
+import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.activity.QuestionExplanation;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
@@ -26,7 +33,7 @@ import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 /**
  * Created by dewangankisslove on 12-03-2016.
  */
-public class LogicalFragment extends Fragment{
+public class LogicalFragment extends Fragment {
 
     private ArrayList<OptionsItems> optionsItemsArrayList = new ArrayList<OptionsItems>();
     private OptionItemAdapter adapter;
@@ -39,6 +46,7 @@ public class LogicalFragment extends Fragment{
     int set_no;
     DatabaseHandler db;
     int set_que_no = 0;
+    private Tracker mTracker;
 
     public static LogicalFragment newInstance(int set_no) {
         LogicalFragment logicalFragment = new LogicalFragment();
@@ -52,6 +60,8 @@ public class LogicalFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
         set_no = getArguments().getInt("someInt");
 
     }
@@ -91,6 +101,13 @@ public class LogicalFragment extends Fragment{
         backward = (ImageView) v.findViewById(R.id.iv_backward);
         explanation = (Button) v.findViewById(R.id.b_explanation);
 
+        MaterialRippleLayout.on(explanation)
+                .rippleOverlay(true)
+                .rippleColor(Color.parseColor("#35ADCF"))
+                .rippleAlpha(0.2f)
+                .rippleHover(true)
+                .create();
+
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,14 +137,14 @@ public class LogicalFragment extends Fragment{
     private void initViews() {
         db = new DatabaseHandler(getActivity());
         int totalnoofLogicalSets;
-        totalnoofLogicalSets = db.getLogicalCount()/20;
-        for (int i = 1;i<= totalnoofLogicalSets;i++){
-            if (set_no == i){
-                set_que_no = que_no+ (20*(i-1));
+        totalnoofLogicalSets = db.getLogicalCount() / 20;
+        for (int i = 1; i <= totalnoofLogicalSets; i++) {
+            if (set_no == i) {
+                set_que_no = que_no + (20 * (i - 1));
             }
         }
 
-        cursor = db.getLogical(set_no,set_que_no+1);
+        cursor = db.getLogical(set_no, set_que_no + 1);
 
         StringBuilder sb = new StringBuilder();
         sb.append("");
@@ -160,14 +177,14 @@ public class LogicalFragment extends Fragment{
     private void initButtons() {
         backward.setEnabled(que_no != 0);
         forward.setEnabled(que_no != 19);
-        if (que_no == 0){
+        if (que_no == 0) {
             backward.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             backward.setVisibility(View.VISIBLE);
         }
-        if (que_no == 19){
+        if (que_no == 19) {
             forward.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             forward.setVisibility(View.VISIBLE);
         }
     }
@@ -175,6 +192,8 @@ public class LogicalFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
+        mTracker.setScreenName("logical_fragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         adapter.notifyDataSetChanged();
     }
 

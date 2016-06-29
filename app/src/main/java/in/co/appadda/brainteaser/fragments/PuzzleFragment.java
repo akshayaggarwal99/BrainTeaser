@@ -3,6 +3,7 @@ package in.co.appadda.brainteaser.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
+import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.activity.CheckAnswer;
 import in.co.appadda.brainteaser.activity.PuzzleQuesGridActivity;
@@ -109,6 +111,13 @@ public class PuzzleFragment extends Fragment {
         queNoContainer = (CardView) v.findViewById(R.id.que_no_puzzle);
         userAns = (EditText) v.findViewById(R.id.user_ans_puzzle);
         submitPuzzle = (Button) v.findViewById(R.id.submit_puzzle);
+
+        MaterialRippleLayout.on(submitPuzzle)
+                .rippleOverlay(true)
+                .rippleColor(Color.parseColor("#35ADCF"))
+                .rippleAlpha(0.2f)
+                .rippleHover(true)
+                .create();
 
         submitPuzzle.setOnClickListener(new View.OnClickListener() {
             @Override

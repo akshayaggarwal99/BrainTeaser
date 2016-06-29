@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF">
+
+    <LinearLayout
+        android:id="@+id/ll_regis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp4"
+        android:layout_marginTop="@dimen/dp16"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/messageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp4"
+            android:text="@string/default_registered_text"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@id/loginButton"
+        android:layout_width="@dimen/dp144"
+        android:layout_height="@dimen/dp48"
+        android:layout_below="@id/ll_regis"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:height="@dimen/dp40"
+        android:background="#3F51B5"
+        android:text="Sign in"
+        android:textColor="#FFF" />
+</RelativeLayout>

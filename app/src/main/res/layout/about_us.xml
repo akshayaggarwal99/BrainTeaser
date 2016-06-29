@@ -3,69 +3,114 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:orientation="vertical">
+    android:background="#FAFAFA"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="35dp"
-        android:padding="10dp"
-        android:layout_gravity="center_horizontal"
-        app:cardBackgroundColor="@color/colorPrimary"
-        app:cardCornerRadius="@dimen/dp4">
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.25">
 
-
-        <ImageView
-            android:layout_width="108dp"
-            android:layout_height="108dp"
-            android:layout_margin="@dimen/dp16"
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/mind" />
+            android:padding="10dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="@dimen/dp4">
 
 
-    </android.support.v7.widget.CardView>
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/dp16"
+                android:src="@drawable/mind" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp8"
-        android:text="About us"
-        android:textColor="#708090"
-        android:textSize="28sp"
-        android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp8"
-        android:textColor="#708090"
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 
-        android:text="OpenSoftLabs is an educational application venture which believes in making world more open towards education. Brain Teaser is made for those who love to challenge things."
-        android:textSize="16sp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
 
-        ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:text="About us"
+            android:textColor="#708090"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp8"
-        android:textColor="#708090"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:text="We are OpenSoftLab, a small elite team with a goal to create solutions that are exploratory, educational and inspirational. Being an educational venture, we believe in making the world more open towards education.\nBrain Teaser, a one of its kind application, is made for those who love to challenge things and aspire to create a dent in the universe."
+            android:textColor="#708090"
+            android:textSize="14sp"
 
-        android:text="Contact us"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+            ></TextView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#708090"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:text="Contact us"
 
-        android:layout_margin="@dimen/dp8"
-        android:text="Mail us at opensoftlabs@gmail.com"
-        android:textSize="16sp"
+            android:textColor="#708090"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-        ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:text="Mail us at opensoftlabs@gmail.com"
+            android:textColor="#708090"
+            android:textSize="14sp"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="12dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/facebook_logo" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_marginLeft="12dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/tweet" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package in.co.appadda.brainteaser.activity;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -9,23 +10,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
-import com.backendless.async.callback.BackendlessCallback;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.HitBuilders;
@@ -34,16 +27,10 @@ import com.google.android.gms.analytics.Tracker;
 import java.io.File;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
-import in.co.appadda.brainteaser.adapter.DatabaseHandler;
-import in.co.appadda.brainteaser.data.api.model.ConnectionDetector;
-import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
-import in.co.appadda.brainteaser.data.api.model.PrefUtils;
-import in.co.appadda.brainteaser.data.api.model.aptitude;
-import in.co.appadda.brainteaser.data.api.model.logical;
-import in.co.appadda.brainteaser.data.api.model.puzzles;
-import in.co.appadda.brainteaser.data.api.model.riddles;
-import in.co.appadda.brainteaser.fragments.HomeFragment;
 import in.co.appadda.brainteaser.R;
+import in.co.appadda.brainteaser.adapter.DatabaseHandler;
+import in.co.appadda.brainteaser.fragments.HomeFragment;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -227,7 +214,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent openRiddle = new Intent(MainActivity.this, DisplayQue.class);
                 openRiddle.putExtra("openFragment", "openRiddle");
                 startActivity(openRiddle);
-
+                break;
+            case R.id.card_leader:
+                Intent openLeader = new Intent(MainActivity.this, Compete.class);
+                startActivity(openLeader);
                 break;
         }
     }
@@ -262,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("CD23BA7D9F6BC822032F55C89322D663")
+                .addTestDevice("65B3B02302CD96F147516FC1A5E65FA1")
                 .build();
 
         mInterstitialAd.loadAd(adRequest);
@@ -338,5 +329,10 @@ public class MainActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }

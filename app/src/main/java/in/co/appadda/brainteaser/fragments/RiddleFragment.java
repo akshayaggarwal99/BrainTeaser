@@ -3,6 +3,7 @@ package in.co.appadda.brainteaser.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
+import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.activity.PuzzleQuesGridActivity;
 import in.co.appadda.brainteaser.activity.QuestionExplanation;
@@ -173,6 +175,8 @@ public class RiddleFragment extends Fragment {
         forward.setEnabled(que_no != totalRiddleQue - 1);
         if (que_no == 0) {
             backward.setVisibility(View.INVISIBLE);
+
+
         } else {
             backward.setVisibility(View.VISIBLE);
         }

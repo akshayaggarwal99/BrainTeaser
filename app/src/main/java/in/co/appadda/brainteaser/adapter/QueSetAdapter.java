@@ -1,6 +1,7 @@
 package in.co.appadda.brainteaser.adapter;
 
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.data.api.model.QuestionSets;
 
@@ -57,7 +59,13 @@ public class QueSetAdapter extends RecyclerView
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(layoutR, parent, false);
+        View view = MaterialRippleLayout.on(LayoutInflater.from(parent.getContext()).inflate(layoutR, parent, false))
+                .rippleOverlay(true)
+                .rippleAlpha(0.2f)
+                .rippleColor(Color.parseColor("#BDBDBD"))
+                .rippleHover(true)
+                .create();
+
 
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;

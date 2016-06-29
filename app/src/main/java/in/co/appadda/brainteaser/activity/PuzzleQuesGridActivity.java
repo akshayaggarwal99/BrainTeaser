@@ -1,8 +1,9 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,8 +15,7 @@ import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.adapter.GridSpacingItemDecoration;
 import in.co.appadda.brainteaser.adapter.QueSetGridAdapter;
-import in.co.appadda.brainteaser.data.api.model.PrefUtils;
-import in.co.appadda.brainteaser.fragments.PuzzleFragment;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PuzzleQuesGridActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -115,5 +115,10 @@ public class PuzzleQuesGridActivity extends AppCompatActivity {
             intent.putExtra("que_no", cancel);
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }

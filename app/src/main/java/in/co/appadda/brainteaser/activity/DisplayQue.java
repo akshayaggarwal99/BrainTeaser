@@ -1,19 +1,17 @@
 package in.co.appadda.brainteaser.activity;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import in.co.appadda.brainteaser.R;
-import in.co.appadda.brainteaser.adapter.ViewPagerAdapter;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import in.co.appadda.brainteaser.fragments.AptitudeFragment;
 import in.co.appadda.brainteaser.fragments.LogicalFragment;
 import in.co.appadda.brainteaser.fragments.PuzzleFragment;
 import in.co.appadda.brainteaser.fragments.RiddleFragment;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by dewangankisslove on 05-03-2016.
@@ -103,5 +101,10 @@ public class DisplayQue extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         PrefUtils.saveToPrefs(this,"DESTROY","D");
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 }

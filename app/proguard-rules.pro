@@ -15,5 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--dontwarn
+#-dontwarn
+#-keep class weborb.** {*;}
+-dontwarn com.backendless.**
+-dontwarn weborb.**
 -keep class weborb.** {*;}
+-keep class com.backendless.** {*;}

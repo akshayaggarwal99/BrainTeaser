@@ -19,6 +19,13 @@ public class DefaultCallback<T> extends BackendlessCallback<T> {
         progressDialog = ProgressDialog.show(context, "", "Loading...", true);
     }
 
+    public DefaultCallback( Context context, String message )
+    {
+        this.context = context;
+        progressDialog = ProgressDialog.show( context, "", message, true );
+    }
+
+
     @Override
     public void handleResponse(T response) {
         progressDialog.cancel();
@@ -27,6 +34,6 @@ public class DefaultCallback<T> extends BackendlessCallback<T> {
     @Override
     public void handleFault(BackendlessFault fault) {
         progressDialog.cancel();
-        Toast.makeText(context, "Network Problem !!", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, fault.toString(), Toast.LENGTH_LONG).show();
     }
 }

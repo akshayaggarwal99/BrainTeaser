@@ -43,15 +43,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/splash_button"
-        android:layout_marginBottom="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="124dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:background="#FFF"
         android:fontFamily="sans-serif"
         android:padding="8dp"
-        android:text="SKIP"
+        android:text="SKIP UPDATE"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </RelativeLayout>

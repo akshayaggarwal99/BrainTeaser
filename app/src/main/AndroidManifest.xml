@@ -4,6 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="in.co.appadda.brainteaser.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="in.co.appadda.brainteaser.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
     <application
         android:name=".AnalyticsApplication"
@@ -12,6 +20,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <receiver
+            android:name="com.backendless.push.BackendlessBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="in.co.appadda.brainteaser" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".activity.Splash"
             android:screenOrientation="portrait">
@@ -28,7 +48,8 @@
         <activity
             android:name=".activity.DisplayQue"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.DisplayAptitudeSets"
             android:label="Aptitude"
@@ -56,6 +77,44 @@
             android:label="Alert"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="Sign in"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.PasswordRecoveryRequestedActivity"
+            android:label="Password Recovery"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="Register"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.RestorePasswordActivity"
+            android:label="Password Recovery"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
+        <activity
+            android:name=".activity.Compete"
+            android:label="Compete"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.Leaderboard"
+            android:label="Leaderboard"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.Compete" />
+        </activity>
+        <activity
+            android:name=".activity.Topics"
+            android:label="Select Topics"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.Compete" />
+        </activity>
     </application>
 
 </manifest>
