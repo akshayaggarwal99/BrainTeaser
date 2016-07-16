@@ -14,11 +14,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.backendless.BackendlessCollection;
+import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.QueryOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.HitBuilders;
@@ -26,9 +29,18 @@ import com.google.android.gms.analytics.Tracker;
 
 import java.io.File;
 
+import hotchemi.android.rate.AppRate;
+import hotchemi.android.rate.OnClickButtonListener;
 import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
+import in.co.appadda.brainteaser.data.api.model.ConnectionDetector;
+import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
+import in.co.appadda.brainteaser.data.api.model.aptitude;
+import in.co.appadda.brainteaser.data.api.model.logical;
+import in.co.appadda.brainteaser.data.api.model.puzzles;
+import in.co.appadda.brainteaser.data.api.model.riddles;
 import in.co.appadda.brainteaser.fragments.HomeFragment;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -97,6 +109,23 @@ public class MainActivity extends AppCompatActivity {
         //Initializing NavigationView
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        AppRate.with(this)
+                .setInstallDays(0) // default 10, 0 means install day.
+                .setLaunchTimes(2) // default 10
+                .setRemindInterval(1) // default 1
+                .setShowLaterButton(true) // default true
+                .setDebug(false) // default false
+                .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
+                    @Override
+                    public void onClickButton(int which) {
+                        Log.d(MainActivity.class.getName(), Integer.toString(which));
+                    }
+                })
+                .monitor();
+
+        // Show a dialog if meets conditions
+        AppRate.showRateDialogIfMeetsConditions(this);
+
 
         HomeFragment homeFragment = new HomeFragment();
         android.support.v4.app.FragmentTransaction homefragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -127,6 +156,18 @@ public class MainActivity extends AppCompatActivity {
                         homefragmentTransaction.replace(R.id.nav_contentframe, homeFragment);
                         homefragmentTransaction.commit();
                         return true;
+                    case R.id.update:
+                        ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+
+                        Boolean isInternetPresent = cd.isConnectingToInternet();
+                        if (isInternetPresent) {
+                            PrefUtils.saveToPrefs(MainActivity.this, "skip_update", "TRUTH");
+                            retrieveBasicAptitudeRecord();
+                        } else {
+                            Toast.makeText(getBaseContext(), "Check Internet Connection!", Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+
                     case R.id.share:
                         shareapp();
                         return true;
@@ -330,6 +371,123 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
+    private void retrieveBasicAptitudeRecord() {
+        id_aptitude = Integer.parseInt(PrefUtils.getFromPrefs(MainActivity.this, "_id_aptitude", "0"));
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption("_id ASC");
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        query.setQueryOptions(queryOptions);
+        query.setPageSize(40);
+        query.setWhereClause("_id > " + id_aptitude);
+        aptitude.findAsync(query, new DefaultCallback<BackendlessCollection<aptitude>>(MainActivity.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<aptitude> response) {
+                id_aptitude = id_aptitude + response.getData().size();
+                StringBuilder sb = new StringBuilder();
+                sb.append("");
+                sb.append(id_aptitude);
+                String ID = sb.toString();
+                PrefUtils.saveToPrefs(MainActivity.this, "_id_aptitude", ID);
+
+                aptitudeCollection = response;
+
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                db.addAptitude();
+
+                retrieveBasicPuzzlesRecord();
+
+
+            }
+        });
+    }
+
+    private void retrieveBasicPuzzlesRecord() {
+        id_puzzle = Integer.parseInt(PrefUtils.getFromPrefs(MainActivity.this, "_id_puzzle", "0"));
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption("_id ASC");
+        BackendlessDataQuery queryPuzzle = new BackendlessDataQuery();
+        queryPuzzle.setQueryOptions(queryOptions);
+        queryPuzzle.setPageSize(20);
+        queryPuzzle.setWhereClause("_id > " + id_puzzle);
+        puzzles.findAsync(queryPuzzle, new DefaultCallback<BackendlessCollection<puzzles>>(MainActivity.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<puzzles> response) {
+                super.handleResponse(response);
+                id_puzzle = id_puzzle + response.getData().size();
+                StringBuilder sb = new StringBuilder();
+                sb.append("");
+                sb.append(id_puzzle);
+                String ID = sb.toString();
+                PrefUtils.saveToPrefs(MainActivity.this, "_id_puzzle", ID);
+                PuzzleCollection = response;
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                db.addPuzzles();
+
+                retrieveBasicLogicalRecord();
+            }
+        });
+    }
+
+    private void retrieveBasicLogicalRecord() {
+        id_logical = Integer.parseInt(PrefUtils.getFromPrefs(MainActivity.this, "_id_logical", "0"));
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption("_id ASC");
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        query.setQueryOptions(queryOptions);
+        query.setPageSize(40);
+        query.setWhereClause("_id > " + id_logical);
+        logical.findAsync(query, new DefaultCallback<BackendlessCollection<logical>>(MainActivity.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<logical> response) {
+                super.handleResponse(response);
+                id_logical = id_logical + response.getData().size();
+                Log.d("logical", "" + id_logical);
+                StringBuilder sb = new StringBuilder();
+                sb.append("");
+                sb.append(id_logical);
+                String ID = sb.toString();
+                PrefUtils.saveToPrefs(MainActivity.this, "_id_logical", ID);
+                LogicalCollection = response;
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                db.addLogical();
+
+//                PrefUtils.saveToPrefs(MainActivity.this, "skip_update", "TRUE");
+                retrieveBasicRiddleRecord();
+            }
+        });
+    }
+
+    private void retrieveBasicRiddleRecord() {
+        id_riddle = Integer.parseInt(PrefUtils.getFromPrefs(MainActivity.this, "_id_riddle", "0"));
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.addSortByOption("_id ASC");
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        query.setQueryOptions(queryOptions);
+        query.setPageSize(20);
+        query.setWhereClause("_id > " + id_riddle);
+        riddles.findAsync(query, new DefaultCallback<BackendlessCollection<riddles>>(MainActivity.this) {
+            @Override
+            public void handleResponse(BackendlessCollection<riddles> response) {
+                super.handleResponse(response);
+                id_riddle = id_riddle + response.getData().size();
+                StringBuilder sb = new StringBuilder();
+                sb.append("");
+                sb.append(id_riddle);
+                String ID = sb.toString();
+                PrefUtils.saveToPrefs(MainActivity.this, "_id_riddle", ID);
+                RiddleCollection = response;
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                db.addRiddle();
+
+                finish();
+                startActivity(getIntent());
+
+
+            }
+        });
+    }
+
 
     @Override
     protected void attachBaseContext(Context base) {

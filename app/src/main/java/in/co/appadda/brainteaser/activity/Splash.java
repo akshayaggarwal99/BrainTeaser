@@ -2,9 +2,13 @@ package in.co.appadda.brainteaser.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +18,9 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
@@ -68,49 +75,46 @@ public class Splash extends AppCompatActivity {
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
-        Backendless.Messaging.registerDevice( Defaults.gcmSenderID );
-
-        skipUpdate = (Button) findViewById(R.id.splash_skip);
-        clickToContinue = (Button) findViewById(R.id.splash_button);
-        MaterialRippleLayout.on(skipUpdate)
-                .rippleOverlay(true)
-                .rippleColor(Color.parseColor("#35ADCF"))
-                .rippleAlpha(0.2f)
-                .rippleHover(true)
-                .create();
-        MaterialRippleLayout.on(clickToContinue)
-                .rippleOverlay(true)
-                .rippleColor(Color.parseColor("#35ADCF"))
-                .rippleAlpha(0.2f)
-                .rippleHover(true)
-                .create();
-
+        Backendless.Messaging.registerDevice(Defaults.gcmSenderID);
 
         skip_update = PrefUtils.getFromPrefs(Splash.this, "skip_update", "FALSE");
-        if (skip_update.contentEquals("TRUE")) {
-            skipUpdate.setVisibility(View.VISIBLE);
-            skipUpdate.setOnClickListener(new View.OnClickListener() {
+        if (skip_update.contentEquals("TRUE") || skip_update.contentEquals("TRUTH")) {
+            Intent mainActivity = new Intent(Splash.this, MainActivity.class);
+            startActivity(mainActivity);
+        } else {
+
+            skipUpdate = (Button) findViewById(R.id.splash_skip);
+            clickToContinue = (Button) findViewById(R.id.splash_button);
+            MaterialRippleLayout.on(skipUpdate)
+                    .rippleOverlay(true)
+                    .rippleColor(Color.parseColor("#35ADCF"))
+                    .rippleAlpha(0.2f)
+                    .rippleHover(true)
+                    .create();
+            MaterialRippleLayout.on(clickToContinue)
+                    .rippleOverlay(true)
+                    .rippleColor(Color.parseColor("#35ADCF"))
+                    .rippleAlpha(0.2f)
+                    .rippleHover(true)
+                    .create();
+
+
+            clickToContinue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent mainActivity = new Intent(Splash.this, MainActivity.class);
-                    startActivity(mainActivity);
+                    ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+
+                    Boolean isInternetPresent = cd.isConnectingToInternet();
+                    if (isInternetPresent) {
+                        retrieveBasicAptitudeRecord();
+                    } else {
+                        Toast.makeText(getBaseContext(), "Check Internet Connection!", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
+
         }
-        clickToContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
-
-                Boolean isInternetPresent = cd.isConnectingToInternet();
-                if (isInternetPresent) {
-                    retrieveBasicAptitudeRecord();
-                } else {
-                    Toast.makeText(getBaseContext(), "Check Internet Connection!", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
 
     }
 

@@ -77,44 +77,6 @@
             android:label="Alert"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog"></activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:label="Sign in"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activity.PasswordRecoveryRequestedActivity"
-            android:label="Password Recovery"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Dialog"></activity>
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:label="Register"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activity.RestorePasswordActivity"
-            android:label="Password Recovery"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Dialog"></activity>
-        <activity
-            android:name=".activity.Compete"
-            android:label="Compete"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activity.Leaderboard"
-            android:label="Leaderboard"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.Compete" />
-        </activity>
-        <activity
-            android:name=".activity.Topics"
-            android:label="Select Topics"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.Compete" />
-        </activity>
     </application>
 
 </manifest>

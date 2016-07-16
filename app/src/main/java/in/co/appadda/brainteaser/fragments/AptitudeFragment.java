@@ -8,6 +8,7 @@ import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.MaterialRippleLayout;
@@ -43,13 +45,14 @@ public class AptitudeFragment extends Fragment {
 //    private String[] items;
 
     private ArrayList<OptionsItems> optionsItemsArrayList = new ArrayList<OptionsItems>();
+    CardView queNoContainer;
     private OptionItemAdapter adapter;
     ListView optionListView;
     TextView question, questionNo;
     ImageView forward, backward;
     Button explanation;
     int que_no = 0;
-    private Cursor cursor;
+    private List<String> cursor;
     int set_no;
     DatabaseHandler db;
     int set_que_no = 0;
@@ -103,6 +106,7 @@ public class AptitudeFragment extends Fragment {
     }
 
     private void initUI(View v) {
+        queNoContainer = (CardView) v.findViewById(R.id.card_view);
         optionListView = (ListView) v.findViewById(R.id.lv_options);
         question = (TextView) v.findViewById(R.id.tv_question);
         questionNo = (TextView) v.findViewById(R.id.tv_question_number);
@@ -154,15 +158,23 @@ public class AptitudeFragment extends Fragment {
 
         cursor = db.getAptitude(set_no, set_que_no + 1);
 
+        if (db.checkAptitudeStatus(set_que_no + 1, set_no)) {
+            queNoContainer.setCardBackgroundColor(Color.parseColor("#72CEE7"));
+            questionNo.setTextColor(Color.parseColor("#ffffff"));
+        } else {
+            queNoContainer.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            questionNo.setTextColor(Color.parseColor("#72CEE7"));
+        }
+
         StringBuilder sb = new StringBuilder();
         sb.append("");
         sb.append(que_no + 1);
         questionNo.setText(sb.toString());
 
-        question.setText(cursor.getString(1));
+        question.setText(cursor.get(0));
 
         String[] numbering = {"A)", "B)", "C)", "D)"};
-        String[] options = {cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5)};
+        String[] options = {cursor.get(1), cursor.get(2), cursor.get(3), cursor.get(4)};
         for (int i = 0; i < 4; i++) {
             optionsItemsArrayList.add(new OptionsItems(numbering[i], options[i]));
         }
@@ -172,7 +184,7 @@ public class AptitudeFragment extends Fragment {
         explanation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = cursor.getString(7);
+                String msg = cursor.get(6);
                 Intent explanation = new Intent(getActivity(), QuestionExplanation.class);
                 explanation.putExtra("explain", msg);
                 startActivity(explanation);
@@ -268,7 +280,7 @@ public class AptitudeFragment extends Fragment {
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (finalMyholder.option.getText().toString().contentEquals(cursor.getString(6))) {
+                    if (finalMyholder.option.getText().toString().contentEquals(cursor.get(5))) {
                         finalMyholder.right.setImageResource(R.drawable.check_right_animator);
                         ((Animatable) finalMyholder.right.getDrawable()).start();
                     } else {

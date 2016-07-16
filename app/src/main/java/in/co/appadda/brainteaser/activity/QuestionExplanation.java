@@ -13,7 +13,10 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.analytics.Tracker;
 
+import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -23,6 +26,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class QuestionExplanation extends AppCompatActivity {
 
+    private Tracker mTracker;
+    InterstitialAd mInterstitialAd;
     Button gotIt;
     String explain;
     TextView explanation;
@@ -32,6 +37,12 @@ public class QuestionExplanation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_que_explanation);
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-5317774062113347/4580027719");
+        requestNewInterstitial();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,5 +88,28 @@ public class QuestionExplanation extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("CD23BA7D9F6BC822032F55C89322D663")
+                .addTestDevice("65B3B02302CD96F147516FC1A5E65FA1")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }

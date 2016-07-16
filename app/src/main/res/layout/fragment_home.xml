@@ -33,6 +33,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="12dp"
                 android:onClick="cardClickHandler"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -96,6 +97,7 @@
                 android:layout_alignTop="@+id/card_aptitude"
                 android:layout_marginRight="20dp"
                 android:onClick="cardClickHandler"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -178,6 +180,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="12dp"
                 android:onClick="cardClickHandler"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -242,6 +245,7 @@
                 android:layout_alignTop="@+id/card_puzzle"
                 android:layout_marginRight="20dp"
                 android:onClick="cardClickHandler"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -309,7 +313,8 @@
             android:fontFamily="sans-serif"
             android:text="Be Competitive"
             android:textColor="#BDBDBD"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_leader"
@@ -318,6 +323,8 @@
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:onClick="cardClickHandler"
+            android:visibility="gone"
+            app:cardBackgroundColor="#FFFFFF"
             app:cardElevation="2dp">
 
             <LinearLayout
@@ -328,27 +335,26 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:background="#92B6B1">
+                    android:background="#E0CBA8">
                     <!--android:background="#E0CBA8">-->
 
                     <ImageView
                         android:layout_width="84dp"
                         android:layout_height="84dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dp16"
+                        android:layout_centerInParent="true"
                         android:src="@drawable/trophy" />
 
-                    <TextView
-                        android:id="@+id/tv_leader_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/dp4"
-                        android:layout_marginBottom="4dp"
-                        android:layout_centerHorizontal="true"
-                        android:text="Your Rank: 12/100"
-                        android:textColor="#FFF"
-                        android:textSize="16dp" />
+                    <!--<TextView-->
+                    <!--android:id="@+id/tv_leader_progress"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginBottom="4dp"-->
+                    <!--android:layout_marginLeft="@dimen/dp4"-->
+                    <!--android:text="Your Rank: 12/100"-->
+                    <!--android:textColor="#FFF"-->
+                    <!--android:textSize="16dp" />-->
 
                 </RelativeLayout>
 
@@ -359,7 +365,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="Compete"
-                    android:textColor="#92B6B1"
+                    android:textColor="#E0CBA8"
                     android:textSize="16sp" />
 
             </LinearLayout>

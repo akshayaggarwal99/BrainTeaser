@@ -32,16 +32,17 @@
                     android:id="@+id/image"
                     android:layout_width="116dp"
                     android:layout_height="84dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp" />
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:src="@drawable/person_icon" />
 
-                <ImageView
-                    android:id="@+id/image1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.0"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp" />
+                <!--<ImageView-->
+                <!--android:id="@+id/image1"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:alpha="0.0"-->
+                <!--android:paddingLeft="16dp"-->
+                <!--android:paddingRight="16dp" />-->
             </FrameLayout>
 
             <LinearLayout
@@ -55,57 +56,73 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:weightSum="1">
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:gravity="left|top"
+                        android:hint="Hi "
+                        android:textColor="#FFF"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:background="@null"
                         android:enabled="false"
                         android:gravity="left|top"
-                        android:hint="Your Name"
+                        android:hint="User"
                         android:maxLength="17"
                         android:textColor="#FFF"
                         android:textColorHint="#FFFFFF"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="abcdef@gmail.com"
-                        android:textColor="#FFFFFF"
-                        android:textSize="12dp" />
+                    <!--<TextView-->
+                    <!--android:id="@+id/number"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="abcdef@gmail.com"-->
+                    <!--android:textColor="#FFFFFF"-->
+                    <!--android:textSize="12dp" />-->
 
-                    <TextView
-                        android:id="@+id/logout"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.5"
-                        android:gravity="left|bottom"
-                        android:text="Log out"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14dp" />
+                    <!--<TextView-->
+                    <!--android:id="@+id/logout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0dp"-->
+                    <!--android:layout_weight="0.5"-->
+                    <!--android:gravity="left|bottom"-->
+                    <!--android:text="Log out"-->
+                    <!--android:textColor="#FFFFFF"-->
+                    <!--android:textSize="14dp" />-->
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/editname"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:orientation="vertical"
-                    android:weightSum="1">
+                <!--<LinearLayout-->
+                    <!--android:layout_marginTop="@dimen/dp4"-->
+                    <!--android:id="@+id/editname"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.2"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:weightSum="1">-->
 
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/edit_pencil_white" />
-                </LinearLayout>
+                    <!--<ImageView-->
+                        <!--android:layout_width="16dp"-->
+                        <!--android:layout_height="16dp"-->
+                        <!--android:layout_gravity="center_vertical"-->
+                        <!--android:layout_marginTop="4dp"-->
+                        <!--android:src="@drawable/edit_pencil_white" />-->
+                <!--</LinearLayout>-->
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

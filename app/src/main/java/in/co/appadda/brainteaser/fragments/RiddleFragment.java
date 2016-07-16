@@ -159,6 +159,14 @@ public class RiddleFragment extends Fragment {
 
         cursor = db.getRiddle(que_no + 1);
 
+        if (db.checkRiddleStatus(que_no + 1)) {
+            queNoContainer.setCardBackgroundColor(Color.parseColor("#72CEE7"));
+            questionNo.setTextColor(Color.parseColor("#ffffff"));
+        } else {
+            queNoContainer.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            questionNo.setTextColor(Color.parseColor("#72CEE7"));
+        }
+
         StringBuilder sb = new StringBuilder();
 
         sb.append("");
