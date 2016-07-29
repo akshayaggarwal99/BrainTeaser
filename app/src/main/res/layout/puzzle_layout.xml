@@ -3,7 +3,8 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/display_que_bg">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/iv_backward"
@@ -31,6 +32,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="5dp"
+        app:cardBackgroundColor="#FFF"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="4dp">
 
@@ -88,11 +90,13 @@
         android:layout_gravity="bottom"
         android:background="#F5F5F5"
         android:focusable="true"
+        android:weightSum="1"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/user_ans_puzzle"
-            android:layout_width="250dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.74"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:fontFamily="sans-serif"
@@ -105,7 +109,8 @@
 
         <Button
             android:id="@+id/submit_puzzle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"

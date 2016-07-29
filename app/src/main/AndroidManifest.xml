@@ -21,6 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <receiver
             android:name="com.backendless.push.BackendlessBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
@@ -59,6 +63,10 @@
             android:label="Logical"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.Feedback"
+            android:label="Feedback"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.AboutUsActivity"
             android:label="About Us"
             android:screenOrientation="portrait" />
@@ -66,6 +74,15 @@
             android:name=".activity.QuestionExplanation"
             android:label="Explanation"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.Contest"
+            android:label="Contest"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
+        </activity>
 
         <service android:name="com.backendless.AndroidService" />
 
@@ -77,6 +94,43 @@
             android:label="Alert"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Dialog"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="Sign in"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.Compete"
+            android:label="Compete"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.Leaderboard"
+            android:label="Your Rank"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.Topics"
+            android:label="Select a Topic"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.Assesment"
+            android:label="Assesment"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.ContestLeaderboard"
+            android:label="Performance Statistics"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.Contest" />
+        </activity>
+        <activity
+            android:name=".activity.AttemptedQueStatistics"
+            android:label="Performance Statistics"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.Leaderboard" />
+        </activity>
+
     </application>
 
 </manifest>

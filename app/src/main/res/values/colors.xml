@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#0E7E91</color>
     <color name="colorAccent">#EEE</color>
     <color name="background">#D0F1F6</color>
+    <color name="orange">#F17300</color>
 
     <color name="n_one">#F0B434</color>
     <color name="card_two">#8DBECE</color>
@@ -15,4 +16,14 @@
     <color name="card_one">#61B891</color>
     <color name="card_new">#3CDDC9</color>
     <color name="t_five">#ACCBD5</color>
+
+    <color name="color1">#548235</color>
+    <color name="color2">#c55a11</color>
+    <color name="color3">#bf9000</color>
+    <color name="color4">#95C674</color>
+    <color name="color5">#F1985C</color>
+    <color name="color6">#FED970</color>
+    <color name="color7">#70cdb2</color>
+    <color name="color8">#80deea</color>
+
 </resources>

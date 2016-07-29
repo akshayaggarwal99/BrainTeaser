@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import in.co.appadda.brainteaser.AnalyticsApplication;
 import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
+import in.co.appadda.brainteaser.adapter.GridSpacingItemDecoration;
 import in.co.appadda.brainteaser.adapter.QueSetAdapter;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import in.co.appadda.brainteaser.data.api.model.QuestionSets;
@@ -47,15 +48,13 @@ public class DisplayAptitudeSets extends AppCompatActivity {
         mTracker = application.getDefaultTracker();
 
 
-
         totalAptitudeQue = Integer.parseInt(PrefUtils.getFromPrefs(DisplayAptitudeSets.this, "_id_aptitude", "0"));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.queSetList);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 8, true));
 
 
     }
@@ -67,8 +66,8 @@ public class DisplayAptitudeSets extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         // [START screen_view_hit]
-        Log.i(TAG, "Setting screen name: " );
-        mTracker.setScreenName("Que-Sets"  );
+        Log.i(TAG, "Setting screen name: ");
+        mTracker.setScreenName("Que-Sets");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         // [END screen_view_hit]
         ((QueSetAdapter) mAdapter).setOnItemClickListener(new QueSetAdapter.MyClickListener() {

@@ -2,182 +2,167 @@ package in.co.appadda.brainteaser.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.backendless.exceptions.ExceptionMessage;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.backendless.Backendless;
-import com.backendless.BackendlessUser;
-
 import in.co.appadda.brainteaser.R;
-import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
+import in.co.appadda.brainteaser.data.api.model.ConnectionDetector;
 import in.co.appadda.brainteaser.data.api.model.Defaults;
-import in.co.appadda.brainteaser.data.api.model.SocialCallback;
+import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextView registerLink, restoreLink;
-    private EditText usernameField, passwordField;
-    private Button loginButton;
     private ImageView facebookButton;
-    private ImageView googleButton;
+    Boolean isInternetPresent = false;
+    CallbackManager callbackManager;
+    TextView privacyPolicy;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        initUI();
-
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 
-        Backendless.UserService.isValidLogin(new DefaultCallback<Boolean>(this) {
-            @Override
-            public void handleResponse(Boolean isValidLogin) {
-                if (isValidLogin && Backendless.UserService.CurrentUser() == null) {
-                    String currentUserId = Backendless.UserService.loggedInUser();
+        callbackManager = CallbackManager.Factory.create();
 
-                    if (currentUserId.contentEquals(Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID).trim())) {
-                        Backendless.UserService.findById(currentUserId, new DefaultCallback<BackendlessUser>(LoginActivity.this, "Logging in...") {
-                            @Override
-                            public void handleResponse(BackendlessUser currentUser) {
-                                super.handleResponse(currentUser);
-                                Backendless.UserService.setCurrentUser(currentUser);
-                                startActivity(new Intent(getBaseContext(), MainActivity.class));
-                                finish();
-                            }
-                        });
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        AccessToken accessToken = loginResult.getAccessToken();
+                        Bundle params = new Bundle();
+                        params.putString("fields", "id,email,picture.type(large)");
+                        Log.d("wtf", String.valueOf(accessToken));
+                        new GraphRequest(accessToken, "me", params, HttpMethod.GET,
+                                new GraphRequest.Callback() {
+                                    @Override
+                                    public void onCompleted(GraphResponse response) {
+                                        Log.d("wtf", "0");
+                                        if (response != null) {
+                                            try {
+                                                JSONObject data = response.getJSONObject();
+                                                if (data.has("picture")) {
+                                                    Log.d("wtf", "1");
+                                                    String profilePicUrl = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                                    // set profile image to imageview using Picasso or Native methods
+                                                    PrefUtils.saveToPrefs(getApplicationContext(), "userPic", profilePicUrl);
+                                                }
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                }).executeAsync();
                     }
-                }
 
-                super.handleResponse(isValidLogin);
-            }
-        });
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
+
+        ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+        isInternetPresent = cd.isConnectingToInternet();
+
+        initUI();
     }
 
     private void initUI() {
-        registerLink = (TextView) findViewById(R.id.registerLink);
-        restoreLink = (TextView) findViewById(R.id.restoreLink);
-        usernameField = (EditText) findViewById(R.id.usernameField);
-        passwordField = (EditText) findViewById(R.id.passwordField);
-        loginButton = (Button) findViewById(R.id.loginButton);
         facebookButton = (ImageView) findViewById(R.id.loginFacebookButton);
-        googleButton = (ImageView) findViewById(R.id.loginGoogleButton);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!usernameField.getText().toString().contentEquals("") && !passwordField.getText().toString().contentEquals("")) {
-                    onLoginButtonClicked();
-                } else if (usernameField.getText().toString().contentEquals("")) {
-                    Toast.makeText(getBaseContext(), "Username can't be left blank", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getBaseContext(), "Password can't be left blank", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        registerLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onRegisterLinkClicked();
-            }
-        });
-
-        restoreLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onRestoreLinkClicked();
-            }
-        });
+        privacyPolicy = (TextView) findViewById(R.id.tv_privacy_policy);
 
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onLoginWithFacebookButtonClicked();
+                if (checkinternetservice())
+                    onLoginWithFacebookButtonClicked();
+                else
+                    Toast.makeText(getApplicationContext(), "Please connect to the internet!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        googleButton.setOnClickListener(new View.OnClickListener() {
+        privacyPolicy.setText(Html.fromHtml("By signing up, I agree to <font color='#424242'>OpenSoftLab's<br> Privacy Policy."));
+        privacyPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onLoginWithGoogleButtonClicked();
+                String url = "http://www.opensoftlab.co.in/privacy";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
 
     }
-
-    public void onLoginButtonClicked() {
-        String identity = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID).trim();
-        String password = passwordField.getText().toString();
-
-        Backendless.UserService.login(identity, password, new DefaultCallback<BackendlessUser>(LoginActivity.this) {
-            public void handleResponse(BackendlessUser backendlessUser) {
-                super.handleResponse(backendlessUser);
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
-            }
-        }, true);
-    }
-
-    public void onRegisterLinkClicked() {
-        startActivity(new Intent(this, RegisterActivity.class));
-        finish();
-    }
-
-    public void onRestoreLinkClicked() {
-        startActivity(new Intent(this, RestorePasswordActivity.class));
-        finish();
-    }
-
     public void onLoginWithFacebookButtonClicked() {
         Map<String, String> facebookFieldsMapping = new HashMap<>();
-        facebookFieldsMapping.put("name", "name");
+        facebookFieldsMapping.put("name", "username");
         facebookFieldsMapping.put("gender", "gender");
         facebookFieldsMapping.put("email", "email");
 
         List<String> facebookPermissions = new ArrayList<>();
         facebookPermissions.add("email");
+        facebookPermissions.add("public_profile");
 
-        Backendless.UserService.loginWithFacebook(LoginActivity.this, null, facebookFieldsMapping, facebookPermissions, new SocialCallback<BackendlessUser>(LoginActivity.this) {
+
+        Backendless.UserService.loginWithFacebookSdk(LoginActivity.this, facebookFieldsMapping, facebookPermissions, callbackManager, new AsyncCallback<BackendlessUser>() {
             @Override
             public void handleResponse(BackendlessUser backendlessUser) {
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
+                PrefUtils.saveToPrefs(getApplicationContext(), "username", String.valueOf(backendlessUser.getProperty("username")));
+                Intent compete = new Intent(LoginActivity.this, Compete.class);
+                compete.putExtra("compete", "false");
+                startActivity(compete);
                 finish();
             }
-        });
-    }
 
-    public void onLoginWithGoogleButtonClicked() {
-        Map<String, String> googleFieldsMapping = new HashMap<>();
-        googleFieldsMapping.put("name", "name");
-        googleFieldsMapping.put("gender", "gender");
-        googleFieldsMapping.put("email", "email");
-
-        List<String> googlePermissions = new ArrayList<>();
-
-        Backendless.UserService.loginWithGooglePlus(LoginActivity.this, null, googleFieldsMapping, googlePermissions, new SocialCallback<BackendlessUser>(LoginActivity.this) {
             @Override
-            public void handleResponse(BackendlessUser backendlessUser) {
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
-                finish();
+            public void handleFault(BackendlessFault backendlessFault) {
+
             }
-        });
+        }, true);
+
     }
 
     @Override
@@ -185,4 +170,22 @@ public class LoginActivity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 
+    public boolean checkinternetservice() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 }

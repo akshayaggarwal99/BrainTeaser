@@ -5,10 +5,10 @@
     android:layout_width="78dp"
     android:layout_height="48dp"
     app:cardCornerRadius="@dimen/dp4"
-    app:cardElevation="2dp"
-    android:padding="@dimen/dp8"
     android:onClick="onPuzzleQueClick"
-    >
+    android:padding="@dimen/dp8"
+    app:cardBackgroundColor="#FFF"
+    app:cardElevation="2dp">
 
     <TextView
         android:id="@+id/que_no"

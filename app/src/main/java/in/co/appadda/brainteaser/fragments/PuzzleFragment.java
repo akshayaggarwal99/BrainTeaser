@@ -123,8 +123,6 @@ public class PuzzleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CheckAnswer.class);
-
-
                 if (userAns.getText().toString().contentEquals(db.getPuzzle(que_no + 1).getString(2))) {
                     intent.putExtra("userCheckStatus", "Bravo ! Right Answer");
                     db.addPuzzleStatusCount(que_no + 1);

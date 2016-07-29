@@ -165,10 +165,9 @@ public class LogicalFragment extends Fragment {
 
         question.setText(cursor.get(0));
 
-        String[] numbering = {"A)", "B)", "C)", "D)"};
         String[] options = {cursor.get(1), cursor.get(2), cursor.get(3), cursor.get(4)};
         for (int i = 0; i < 4; i++) {
-            optionsItemsArrayList.add(new OptionsItems(numbering[i], options[i]));
+            optionsItemsArrayList.add(new OptionsItems("0", options[i]));
         }
         adapter = new OptionItemAdapter(getActivity().getApplicationContext(), optionsItemsArrayList);
         optionListView.setAdapter(adapter);
@@ -220,13 +219,12 @@ public class LogicalFragment extends Fragment {
         }
 
         private class Myholder {
-            TextView number, option;
-            ImageView right;
+            TextView option;
+            CardView cardOption;
 
             Myholder(View view) {
-                number = (TextView) view.findViewById(R.id.tv_numbering);
                 option = (TextView) view.findViewById(R.id.tv_options);
-                right = (ImageView) view.findViewById(R.id.iv_right);
+                cardOption = (CardView) view.findViewById(R.id.card_option);
             }
         }
 
@@ -258,9 +256,7 @@ public class LogicalFragment extends Fragment {
                 myholder = (Myholder) row.getTag();
             }
             OptionsItems optionsItems = (OptionsItems) getItem(position);
-            myholder.number.setText(optionsItems.getNumber());
             myholder.option.setText(optionsItems.getOption());
-            myholder.right.setImageResource(optionsItems.getRight());
 
             final Myholder finalMyholder = myholder;
             final View finalRow = row;
@@ -269,11 +265,11 @@ public class LogicalFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (finalMyholder.option.getText().toString().contentEquals(cursor.get(5))) {
-                        finalMyholder.right.setImageResource(R.drawable.check_right_animator);
-                        ((Animatable) finalMyholder.right.getDrawable()).start();
+                        finalMyholder.cardOption.setCardBackgroundColor(Color.parseColor("#0A8754"));
+                        finalMyholder.option.setTextColor(Color.parseColor("#FFFFFF"));
                     } else {
-                        finalMyholder.right.setImageResource(R.drawable.check_wrong_animator);
-                        ((Animatable) finalMyholder.right.getDrawable()).start();
+                        finalMyholder.cardOption.setCardBackgroundColor(Color.parseColor("#ED6A5A"));
+                        finalMyholder.option.setTextColor(Color.parseColor("#FFFFFF"));
 
                     }
                     if (que_no < 19) {

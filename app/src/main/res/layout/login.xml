@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ECECEC"
+    android:background="@drawable/writes"
     android:orientation="vertical"
     android:weightSum="1">
 
     <LinearLayout
+        android:id="@+id/ll_middle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="64dp"
-        android:layout_weight="0.45"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:orientation="vertical"
+        android:paddingBottom="152dp"
         android:weightSum="1">
 
         <LinearLayout
@@ -26,8 +26,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Sign in with"
-                android:textColor="#A7A7A7"
-                android:textSize="28sp" />
+                android:textColor="#fff"
+                android:textSize="38sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -40,240 +41,143 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5">
+                android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/loginFacebookButton"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:layout_alignParentRight="true"
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
-                    android:background="#3C5A95"
-                    android:padding="32dp"
-                    android:src="@drawable/facebook" />
+                    app:cardBackgroundColor="#3b5998"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="4dp">
+
+                    <ImageView
+                        android:id="@+id/loginFacebookButton"
+                        android:layout_width="124dp"
+                        android:layout_height="124dp"
+                        android:padding="26dp"
+                        android:src="@drawable/facebook" />
+                </android.support.v7.widget.CardView>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5">
+            <!--<RelativeLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="0.5">-->
 
-                <ImageView
-                    android:id="@+id/loginGoogleButton"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
-                    android:background="#D34836"
-                    android:padding="24dp"
-                    android:src="@drawable/google_plus" />
-            </RelativeLayout>
+            <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--app:cardBackgroundColor="#dd4b39"-->
+            <!--app:cardCornerRadius="4dp"-->
+            <!--app:cardElevation="4dp">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/loginGoogleButton"-->
+            <!--android:layout_width="96dp"-->
+            <!--android:layout_height="96dp"-->
+            <!--android:padding="16dp"-->
+            <!--android:src="@drawable/google_plus" />-->
+            <!--</android.support.v7.widget.CardView>-->
+            <!--</RelativeLayout>-->
         </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:layout_marginLeft="@dimen/dp16"
-        android:layout_marginRight="@dimen/dp16"
-        android:background="@drawable/borderroundwhite" />
+    <TextView
+        android:id="@+id/tv_privacy_policy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_middle"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="By signing up, I agree to OpenSoftLab's\n Privacy Policy."
+        android:textColor="#fff"
+        android:textSize="14sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="@dimen/dp16"
-        android:layout_marginRight="@dimen/dp16"
-        android:layout_marginTop="16dp"
-        android:layout_weight="0.55"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/usernameField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/borderroundgrey"
-            android:hint="Username"
-            android:imeOptions="actionNext"
-            android:paddingBottom="12dp"
-            android:paddingLeft="12dp"
-            android:paddingTop="12dp"
-            android:textColor="#B8B8B8"
-            android:textColorHint="#B8B8B8"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/passwordField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/borderroundgrey"
-            android:hint="Password"
-            android:imeOptions="actionDone"
-            android:paddingBottom="12dp"
-            android:paddingLeft="12dp"
-            android:paddingTop="12dp"
-            android:textColor="#B8B8B8"
-            android:textColorHint="#B8B8B8"
-            android:textSize="18sp" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/loginButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="#B8B8B8"
-            android:padding="12dp"
-            android:text="Sign in"
-            android:textColor="#FFF" />
-
-        <TextView
-            android:id="@+id/restoreLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingTop="16dp"
-            android:text="Forgot your details?"
-            android:textColor="#9C9C9C"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/registerLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="@dimen/dp16"
-            android:text="Not a member? Sign up now."
-            android:textColor="#9C9C9C"
-            android:textSize="14sp" />
-    </LinearLayout>
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="6dp"-->
+    <!--android:layout_marginLeft="@dimen/dp16"-->
+    <!--android:layout_marginRight="@dimen/dp16"-->
+    <!--android:background="@drawable/borderroundwhite" />-->
 
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:paddingBottom="16dp"-->
-    <!--android:paddingTop="16dp"-->
-    <!--android:weightSum="2">-->
-
-    <!--<Button-->
-    <!--android:id="@+id/loginGoogleButton"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="@dimen/dp48"-->
-    <!--android:layout_marginRight="8dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:height="@dimen/dp40"-->
-    <!--android:background="#3F51B5"-->
-    <!--android:gravity="center"-->
-    <!--android:text="@string/google_button_text"-->
-    <!--android:textColor="#FFF" />-->
-
-    <!--<Button-->
-    <!--android:id="@+id/loginFacebookButton"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="@dimen/dp48"-->
-    <!--android:layout_marginLeft="8dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:height="@dimen/dp40"-->
-    <!--android:background="#3F51B5"-->
-    <!--android:gravity="center"-->
-    <!--android:text="@string/facebook_button_text"-->
-    <!--android:textColor="#FFF" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<TextView-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginTop="4dp"-->
-    <!--android:gravity="center"-->
-    <!--android:text="Or sign in with brain teaser account"-->
-    <!--android:textColor="#FFF"-->
-    <!--android:textSize="12sp" />-->
-
-    <!--&lt;!&ndash; Email Label &ndash;&gt;-->
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginBottom="8dp"-->
-    <!--android:layout_marginTop="8dp">-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_marginLeft="@dimen/dp16"-->
+    <!--android:layout_marginRight="@dimen/dp16"-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:layout_weight="0.55"-->
+    <!--android:orientation="vertical">-->
 
     <!--<EditText-->
-    <!--android:id="@+id/identityField"-->
+    <!--android:id="@+id/usernameField"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:hint="Email"-->
-    <!--android:inputType="textEmailAddress"-->
-    <!--android:textColor="#FFF" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--&lt;!&ndash; Password Label &ndash;&gt;-->
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginBottom="8dp"-->
-    <!--android:layout_marginTop="8dp">-->
+    <!--android:background="@drawable/borderroundgrey"-->
+    <!--android:hint="Username"-->
+    <!--android:imeOptions="actionNext"-->
+    <!--android:inputType="textCapWords"-->
+    <!--android:paddingBottom="12dp"-->
+    <!--android:paddingLeft="12dp"-->
+    <!--android:paddingTop="12dp"-->
+    <!--android:textColor="#B8B8B8"-->
+    <!--android:textColorHint="#B8B8B8"-->
+    <!--android:textSize="18sp" />-->
 
     <!--<EditText-->
     <!--android:id="@+id/passwordField"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:focusableInTouchMode="true"-->
+    <!--android:layout_marginTop="4dp"-->
+    <!--android:background="@drawable/borderroundgrey"-->
     <!--android:hint="Password"-->
+    <!--android:imeOptions="actionDone"-->
     <!--android:inputType="textPassword"-->
-    <!--android:textColor="#FFF" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
+    <!--android:paddingBottom="12dp"-->
+    <!--android:paddingLeft="12dp"-->
+    <!--android:paddingTop="12dp"-->
+    <!--android:textColor="#B8B8B8"-->
+    <!--android:textColorHint="#B8B8B8"-->
+    <!--android:textSize="18sp" />-->
 
-    <!--&lt;!&ndash; Signup Button &ndash;&gt;-->
     <!--<android.support.v7.widget.AppCompatButton-->
     <!--android:id="@+id/loginButton"-->
     <!--android:layout_width="fill_parent"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginBottom="24dp"-->
-    <!--android:layout_marginTop="24dp"-->
-    <!--android:background="#3F51B5"-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:background="#B8B8B8"-->
     <!--android:padding="12dp"-->
     <!--android:text="Sign in"-->
     <!--android:textColor="#FFF" />-->
 
-    <!--<CheckBox-->
-    <!--android:id="@+id/rememberLoginBox"-->
+    <!--<TextView-->
+    <!--android:id="@+id/restoreLink"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:layout_gravity="center"-->
     <!--android:gravity="center"-->
-    <!--android:text="@string/remember_login_text"-->
-    <!--android:textColor="#FFF" />-->
+    <!--android:paddingTop="16dp"-->
+    <!--android:text="Forgot your details?"-->
+    <!--android:textColor="#9C9C9C"-->
+    <!--android:textSize="14sp"-->
+    <!--android:visibility="gone" />-->
 
     <!--<TextView-->
     <!--android:id="@+id/registerLink"-->
     <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="@dimen/dp48"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:clickable="true"-->
-    <!--android:gravity="center"-->
-    <!--android:text="Not a member? Sign up now."-->
-    <!--android:textColor="#FFF"-->
-    <!--android:textSize="16sp" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/restoreLink"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="@dimen/dp48"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:clickable="true"-->
-    <!--android:gravity="center"-->
-    <!--android:text="Forget Password ?"-->
-    <!--android:textColor="#FFF"-->
-    <!--android:textSize="16sp" />-->
-
-    <!--<ProgressBar-->
-    <!--android:id="@+id/progressBar"-->
-    <!--style="?android:attr/progressBarStyleHorizontal"-->
-    <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="right" />-->
-</LinearLayout>
+    <!--android:layout_gravity="center"-->
+    <!--android:paddingBottom="@dimen/dp16"-->
+    <!--android:paddingTop="@dimen/dp16"-->
+    <!--android:text="Not a member? Sign up now."-->
+    <!--android:textColor="#9C9C9C"-->
+    <!--android:textSize="14sp" />-->
+    <!--</LinearLayout>-->
+
+</RelativeLayout>

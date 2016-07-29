@@ -37,7 +37,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private Context context;
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "brainteaser.db";
@@ -47,7 +47,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_LOGICAL = "logical";
     private static final String TABLE_PUZZLE = "puzzles";
     private static final String TABLE_RIDDLE = "riddles";
-    private static final String TABLE_LEADERBOARD = "leaderboard";
+    //private static final String TABLE_LEADERBOARD = "leaderboard";
+    private static final String TABLE_ALL_QUE = "allque";
+    private static final String TABLE_ATTEMPTED_QUE = "attempted";
+    private static final String TABLE_CONTEST_ATTEMPTED = "contestattempted";
+    private static final String TABLE_ALL_CONTEST_QUE = "contestque";
 
     // APTITUDE Table Columns names
     private static final String APTITUDE_ID = "_id";
@@ -83,20 +87,48 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String RIDDLE_ANSWER = "answer";
 
     // Leaderboard Table Columns names
-    private static final String LEADERBOARD_USER_FLAG = "country";
-    private static final String LEADERBOARD_USER_ID = "_id";
-    private static final String LEADERBOARD_USER_NAME = "name";
-    private static final String LEADERBOARD_USER_TOTAL_POINTS = "points";
-    private static final String LEADERBOARD_QUE_TYPE_INFO = "que_type_info";
-    private static final String LEADERBOARD_USER_TOTAL_ATTEMPTED_QUE = "attemp_que";
-    private static final String LEADERBOARD_USER_TOTAL_RIGHT_ANS = "right_answer";
+//    private static final String LEADERBOARD_USER_FLAG = "country";
+//    private static final String LEADERBOARD_USER_ID = "_id";
+//    private static final String LEADERBOARD_USER_NAME = "name";
+//    private static final String LEADERBOARD_USER_TOTAL_POINTS = "points";
+//    private static final String LEADERBOARD_QUE_TYPE_INFO = "que_type_info";
+//    private static final String LEADERBOARD_USER_TOTAL_ATTEMPTED_QUE = "attemp_que";
+//    private static final String LEADERBOARD_USER_TOTAL_RIGHT_ANS = "right_answer";
+
+    // All Que Table Columns names
+    private static final String ID = "_id";
+    private static final String QUE_ID = "que_id";
+    private static final String QUE = "que";
+    private static final String ANSWER = "answer";
+    private static final String EXPLANATION = "explanation";
+    private static final String OPTION_ONE = "option_one";
+    private static final String OPTION_TWO = "option_two";
+    private static final String OPTION_THREE = "option_three";
+    private static final String OPTION_FOUR = "option_four";
+    private static final String QUE_POINT = "que_point";
+    private static final String TOPIC = "topic";
+
+
+    // Attempted Table Columns names
+    private static final String ATTEMPTED_QUE_ID = "que_id";
+    private static final String ATTEMPTED_QUE_TYPE = "que_type";
+    private static final String ATTEMPTED_QUE_CHECKING = "que_checking";
+    private static final String ATTEMPTED_QUE_POINTS = "que_points";
+    private static final String USER_ID = "user_id";
+    private static final String USERNAME = "username";
+    private static final String ATTEMPTED_UNIQUE_KEY = "unique_key";
+    private static final String ATTEMPTED_DATE = "createdAt";
 
     private static final String CREATE_TABLE_APTITUDE = "CREATE TABLE " + TABLE_APTITUDE + "(" + APTITUDE_ID + " INTEGER PRIMARY KEY," + APTITUDE_QUESTIONS + " TEXT," + APTITUDE_OPTION_ONE + " TEXT," + APTITUDE_OPTION_TWO + " TEXT," + APTITUDE_OPTION_THREE + " TEXT," + APTITUDE_OPTION_FOUR + " TEXT," + APTITUDE_ANSWER + " TEXT," + APTITUDE_EXPLANATION + " TEXT, " + APTITUDE_SET_NO + " INT," + " status" + " INT" + ")";
     private static final String CREATE_TABLE_LOGICAL = "CREATE TABLE " + TABLE_LOGICAL + "(" + LOGICAL_ID + " INTEGER PRIMARY KEY," + LOGICAL_QUESTIONS + " TEXT," + LOGICAL_OPTION_ONE + " TEXT," + LOGICAL_OPTION_TWO + " TEXT," + LOGICAL_OPTION_THREE + " TEXT," + LOGICAL_OPTION_FOUR + " TEXT," + LOGICAL_ANSWER + " TEXT," + LOGICAL_EXPLANATION + " TEXT, " + LOGICAL_SET_NO + " INT," + " status" + " INT" + ")";
     private static final String CREATE_TABLE_PUZZLE = "CREATE TABLE " + TABLE_PUZZLE + "(" + PUZZLE_ID + " INTEGER PRIMARY KEY," + PUZZLE_QUESTIONS + " TEXT," + PUZZLE_ANSWER + " STRING," + PUZZLE_EXPLANATION + " TEXT, status" + " INT" + ")";
     private static final String CREATE_TABLE_RIDDLE = "CREATE TABLE " + TABLE_RIDDLE + "(" + RIDDLE_ID + " INTEGER PRIMARY KEY," + RIDDLE_QUESTIONS + " TEXT," + RIDDLE_ANSWER + " TEXT, status" + " INT" + ")";
 
-    private static final String CREATE_TABLE_LEADERBOARD = "CREATE TABLE " + TABLE_LEADERBOARD + "(" + LEADERBOARD_USER_ID + " TEXT," + LEADERBOARD_USER_NAME + " TEXT," + LEADERBOARD_USER_FLAG + " TEXT," + LEADERBOARD_QUE_TYPE_INFO + " TEXT," + LEADERBOARD_USER_TOTAL_ATTEMPTED_QUE + " TEXT," + LEADERBOARD_USER_TOTAL_RIGHT_ANS + " TEXT," + LEADERBOARD_USER_TOTAL_POINTS + " TEXT, status" + " INT" + ")";
+    //private static final String CREATE_TABLE_LEADERBOARD = "CREATE TABLE " + TABLE_LEADERBOARD + "(" + LEADERBOARD_USER_ID + " TEXT," + LEADERBOARD_USER_NAME + " TEXT," + LEADERBOARD_USER_FLAG + " TEXT," + LEADERBOARD_QUE_TYPE_INFO + " TEXT," + LEADERBOARD_USER_TOTAL_ATTEMPTED_QUE + " TEXT," + LEADERBOARD_USER_TOTAL_RIGHT_ANS + " TEXT," + LEADERBOARD_USER_TOTAL_POINTS + " TEXT, status" + " INT" + ")";
+    private static final String CREATE_TABLE_ALL_QUE = "CREATE TABLE " + TABLE_ALL_QUE + "(" + ID + " INTEGER PRIMARY KEY," + QUE_ID + " TEXT," + QUE + " TEXT," + ANSWER + " TEXT," + EXPLANATION + " TEXT," + OPTION_ONE + " TEXT," + OPTION_TWO + " TEXT," + OPTION_THREE + " TEXT," + OPTION_FOUR + " TEXT," + QUE_POINT + " INT," + TOPIC + " TEXT, status" + " TEXT" + ")";
+    private static final String CREATE_TABLE_ATTEMPTED = "CREATE TABLE " + TABLE_ATTEMPTED_QUE + "(" + ATTEMPTED_QUE_ID + " TEXT," + USER_ID + " TEXT," + ATTEMPTED_QUE_TYPE + " TEXT," + USERNAME + " TEXT," + ATTEMPTED_QUE_POINTS + " INT," + ATTEMPTED_QUE_CHECKING + " TEXT," + ATTEMPTED_DATE + " DATE," + ATTEMPTED_UNIQUE_KEY + " TEXT" + ")";
+    private static final String CREATE_TABLE_CONTEST_ATTEMPTED = "CREATE TABLE " + TABLE_CONTEST_ATTEMPTED + "(" + ATTEMPTED_QUE_ID + " TEXT," + USER_ID + " TEXT," + ATTEMPTED_QUE_TYPE + " TEXT," + USERNAME + " TEXT," + ATTEMPTED_QUE_POINTS + " INT," + ATTEMPTED_QUE_CHECKING + " TEXT," + ATTEMPTED_DATE + " DATE," + ATTEMPTED_UNIQUE_KEY + " TEXT" + ")";
+    private static final String CREATE_TABLE_ALL_CONTEST_QUE = "CREATE TABLE " + TABLE_ALL_CONTEST_QUE + "(" + ID + " INTEGER PRIMARY KEY," + QUE_ID + " TEXT," + QUE + " TEXT," + ANSWER + " TEXT," + OPTION_ONE + " TEXT," + OPTION_TWO + " TEXT," + OPTION_THREE + " TEXT," + OPTION_FOUR + " TEXT," + QUE_POINT + " INT, status" + " TEXT" + ")";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -110,26 +142,315 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_LOGICAL);
         db.execSQL(CREATE_TABLE_PUZZLE);
         db.execSQL(CREATE_TABLE_RIDDLE);
-        db.execSQL(CREATE_TABLE_LEADERBOARD);
+        //db.execSQL(CREATE_TABLE_LEADERBOARD);
+        db.execSQL(CREATE_TABLE_ALL_QUE);
+        db.execSQL(CREATE_TABLE_ATTEMPTED);
+        db.execSQL(CREATE_TABLE_ALL_CONTEST_QUE);
+        db.execSQL(CREATE_TABLE_CONTEST_ATTEMPTED);
     }
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_APTITUDE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGICAL);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PUZZLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RIDDLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LEADERBOARD);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_APTITUDE);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGICAL);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PUZZLE);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RIDDLE);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_LEADERBOARD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_QUE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ATTEMPTED_QUE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_QUE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ATTEMPTED_QUE);
 
         // Create tables again
-        onCreate(db);
+        //onCreate(db);
+        db.execSQL(CREATE_TABLE_ALL_QUE);
+        db.execSQL(CREATE_TABLE_ATTEMPTED);
+        db.execSQL(CREATE_TABLE_ALL_CONTEST_QUE);
+        db.execSQL(CREATE_TABLE_CONTEST_ATTEMPTED);
     }
 
     /**
      * All CRUD(Create, Read, Update, Delete) Operations
      */
+
+    //Adding data in allque table
+    public void addContestAttemptQue(String date, String uniqueKey, String queId, String userId, String name, int points, String check) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(ATTEMPTED_DATE, date);
+        values.put(ATTEMPTED_UNIQUE_KEY, uniqueKey);
+        values.put(ATTEMPTED_QUE_ID, queId);
+        values.put(USER_ID, userId);
+        values.put(USERNAME, name);
+        values.put(ATTEMPTED_QUE_POINTS, points);
+        values.put(ATTEMPTED_QUE_CHECKING, check);
+        db.insert(TABLE_CONTEST_ATTEMPTED, null, values);
+
+        db.close(); // Closing database connection
+    }
+
+    public ArrayList<String[]> getContestAttemptedQues() {
+        ArrayList<String[]> result = new ArrayList<String[]>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_CONTEST_ATTEMPTED, null, null, null, null, null, ATTEMPTED_DATE + " DESC");
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String[] object = new String[6];
+                    object[0] = cursor.getString(0); //queid
+                    object[1] = cursor.getString(1); //userId
+                    object[2] = cursor.getString(2); //username
+                    object[3] = String.valueOf(cursor.getInt(3)); //point
+                    object[4] = cursor.getString(4); //check
+                    object[5] = cursor.getString(5); //date
+                    result.add(object);
+
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    public boolean checkContestAttemptedQueStatus(String uniq) {
+        boolean result = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor;
+        cursor = db.query(TABLE_CONTEST_ATTEMPTED, null, ATTEMPTED_UNIQUE_KEY + "=?", new String[]{uniq}, null, null, null);
+        try {
+            if (cursor.moveToFirst()) {
+                result = true;
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    public void addContestAllQue(int Id, String queId, String que, String answer, int point, String optOne, String optTwo, String optThree, String optFour) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(ID, Id);
+        values.put(QUE_ID, queId);
+        values.put(QUE, que);
+        values.put(ANSWER, answer);
+        values.put(QUE_POINT, point);
+        values.put(OPTION_ONE, optOne);
+        values.put(OPTION_TWO, optTwo);
+        values.put(OPTION_THREE, optThree);
+        values.put(OPTION_FOUR, optFour);
+        db.insert(TABLE_ALL_QUE, null, values);
+
+        db.close(); // Closing database connection
+    }
+
+    public ArrayList<String[]> getContestAllQue() {
+        ArrayList<String[]> result = new ArrayList<String[]>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_ALL_CONTEST_QUE, null, null, null, null, null, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String[] object = new String[9];
+                    object[0] = String.valueOf(cursor.getInt(0)); //id
+                    object[1] = cursor.getString(1); //queId
+                    object[2] = cursor.getString(2); //que
+                    object[3] = cursor.getString(3); //ans
+                    object[4] = cursor.getString(4); //optOne
+                    object[5] = cursor.getString(5); //optTwo
+                    object[6] = cursor.getString(6); //optThree
+                    object[7] = cursor.getString(7); //optFour
+                    object[8] = String.valueOf(cursor.getInt(8)); //point
+                    result.add(object);
+
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    public void addContestAllQueStatus(String queID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("status", "1");
+        db.update(TABLE_ALL_CONTEST_QUE, values, "que_id = '" + queID + "'", null);
+    }
+
+    public boolean checkContestAllQueStatus() {
+        boolean result = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor;
+        cursor = db.query(TABLE_ALL_CONTEST_QUE, null, "status" + "=?", new String[]{"1"}, null, null, null);
+        try {
+            if (cursor.moveToFirst()) {
+                result = true;
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    public void removeContestAllQue() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_ALL_CONTEST_QUE, "status" + "=?", new String[]{"1"});
+    }
+
+    public void removeContestAttemptedQues() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CONTEST_ATTEMPTED, null, null);
+    }
+
+    public void addAttemptedQue(String date, String uniqueKey, String queId, String userId, String queType, String name, int points, String check) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(ATTEMPTED_DATE, date);
+        values.put(ATTEMPTED_UNIQUE_KEY, uniqueKey);
+        values.put(ATTEMPTED_QUE_ID, queId);
+        values.put(USER_ID, userId);
+        values.put(ATTEMPTED_QUE_TYPE, queType);
+        values.put(USERNAME, name);
+        values.put(ATTEMPTED_QUE_POINTS, points);
+        values.put(ATTEMPTED_QUE_CHECKING, check);
+        db.insert(TABLE_ATTEMPTED_QUE, null, values);
+
+        db.close(); // Closing database connection
+    }
+
+    public ArrayList<String[]> getAttemptedQues() {
+        ArrayList<String[]> result = new ArrayList<String[]>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_ATTEMPTED_QUE, null, null, null, null, null, ATTEMPTED_DATE + " DESC");
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String[] object = new String[7];
+                    object[0] = cursor.getString(0); //queid
+                    object[1] = cursor.getString(1); //userId
+                    object[2] = cursor.getString(2); //queType
+                    object[3] = cursor.getString(3); //username
+                    object[4] = String.valueOf(cursor.getInt(4)); //point
+                    object[5] = cursor.getString(5); //check
+                    object[6] = cursor.getString(6); //date
+                    result.add(object);
+
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    public boolean checkAttemptedQueStatus(String uniq) {
+        boolean result = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor;
+        cursor = db.query(TABLE_ATTEMPTED_QUE, null, ATTEMPTED_UNIQUE_KEY + "=?", new String[]{uniq}, null, null, null);
+        try {
+            if (cursor.moveToFirst()) {
+                result = true;
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    //Adding data in allque table
+    public void addAllQue(int Id, String queId, String que, String answer, String explain, String topic, int point, String optOne, String optTwo, String optThree, String optFour) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(ID, Id);
+        values.put(QUE_ID, queId);
+        values.put(QUE, que);
+        values.put(ANSWER, answer);
+        values.put(EXPLANATION, explain);
+        values.put(TOPIC, topic);
+        values.put(QUE_POINT, point);
+        values.put(OPTION_ONE, optOne);
+        values.put(OPTION_TWO, optTwo);
+        values.put(OPTION_THREE, optThree);
+        values.put(OPTION_FOUR, optFour);
+        db.insert(TABLE_ALL_QUE, null, values);
+
+        db.close(); // Closing database connection
+    }
+
+    public ArrayList<String[]> getAllQue(String topicName) {
+        ArrayList<String[]> result = new ArrayList<String[]>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_ALL_QUE, null, TOPIC + "=?", new String[]{topicName}, null, null, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    String[] object = new String[11];
+                    object[0] = String.valueOf(cursor.getInt(0)); //id
+                    object[1] = cursor.getString(1); //queId
+                    object[2] = cursor.getString(2); //que
+                    object[3] = cursor.getString(3); //ans
+                    object[4] = cursor.getString(4); //explana..
+                    object[5] = cursor.getString(5); //optOne
+                    object[6] = cursor.getString(6); //optTwo
+                    object[7] = cursor.getString(7); //optThree
+                    object[8] = cursor.getString(8); //optFour
+                    object[9] = String.valueOf(cursor.getInt(9)); //point
+                    object[10] = cursor.getString(10); //topic
+                    result.add(object);
+
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    public void addAllQueStatus(String queID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("status", "1");
+        db.update(TABLE_ALL_QUE, values, "que_id = '" + queID + "'", null);
+    }
+
+    public boolean checkAllQueStatus() {
+        boolean result = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor;
+        cursor = db.query(TABLE_ALL_QUE, null, "status" + "=?", new String[]{"1"}, null, null, null);
+        try {
+            if (cursor.moveToFirst()) {
+                result = true;
+            }
+        } finally {
+            cursor.close();
+        }
+        return result;
+    }
+
+    public void removeAllQue() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_ALL_QUE, "status" + "=?", new String[]{"1"});
+    }
+
+    public void removeAttemptedQues() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_ATTEMPTED_QUE, null, null);
+    }
+
 
     //Adding new aptitude
     public void addAptitude() {
@@ -671,60 +992,60 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.update(TABLE_RIDDLE, values, "_id = " + i, null);
     }
 
-    public void addLeaderboard(String userId, String username, String queTypeInfo, String totalAtmptQue, String totalRightAns, String totalPoints) {
+//    public void addLeaderboard(String userId, String username, String queTypeInfo, String totalAtmptQue, String totalRightAns, String totalPoints) {
+//
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        values.put(LEADERBOARD_USER_ID, userId);
+//        values.put(LEADERBOARD_USER_NAME, username);
+//        values.put(LEADERBOARD_QUE_TYPE_INFO, queTypeInfo);
+//        values.put(LEADERBOARD_USER_TOTAL_ATTEMPTED_QUE, totalAtmptQue);
+//        values.put(LEADERBOARD_USER_TOTAL_RIGHT_ANS, totalRightAns);
+//        values.put(LEADERBOARD_USER_TOTAL_POINTS, totalPoints);
+//        db.insert(TABLE_LEADERBOARD, null, values);
+//
+//        db.close(); // Closing database connection
+//    }
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
+//    public ArrayList<String[]> getLeaderboardInfo() {
+//        ArrayList<String[]> result = new ArrayList<String[]>();
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.query(TABLE_LEADERBOARD, null, null, null, null, null, null);
+//        if (cursor.moveToFirst()) {
+//            do {
+//                String[] object = new String[6];
+//                object[0] = cursor.getString(0);
+//                object[1] = cursor.getString(1);
+//                object[2] = cursor.getString(3);
+//                object[3] = cursor.getString(4);
+//                object[4] = cursor.getString(5);
+//                object[5] = cursor.getString(6);
+//                result.add(object);
+//
+//            } while (cursor.moveToNext());
+//        }
+//        return result;
+//    }
 
-        values.put(LEADERBOARD_USER_ID, userId);
-        values.put(LEADERBOARD_USER_NAME, username);
-        values.put(LEADERBOARD_QUE_TYPE_INFO, queTypeInfo);
-        values.put(LEADERBOARD_USER_TOTAL_ATTEMPTED_QUE, totalAtmptQue);
-        values.put(LEADERBOARD_USER_TOTAL_RIGHT_ANS, totalRightAns);
-        values.put(LEADERBOARD_USER_TOTAL_POINTS, totalPoints);
-        db.insert(TABLE_LEADERBOARD, null, values);
-
-        db.close(); // Closing database connection
-    }
-
-    public ArrayList<String[]> getLeaderboardInfo() {
-        ArrayList<String[]> result = new ArrayList<String[]>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_LEADERBOARD, null, null, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            do {
-                String[] object = new String[6];
-                object[0] = cursor.getString(0);
-                object[1] = cursor.getString(1);
-                object[2] = cursor.getString(3);
-                object[3] = cursor.getString(4);
-                object[4] = cursor.getString(5);
-                object[5] = cursor.getString(6);
-                result.add(object);
-
-            } while (cursor.moveToNext());
-        }
-        return result;
-    }
-
-    public boolean checkUserLeaderboard(String id) {
-        boolean result = false;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor;
-        cursor = db.query(TABLE_LEADERBOARD, null, LEADERBOARD_USER_ID + "=?", new String[]{id}, null, null, null);
-        try {
-            if (cursor.moveToFirst()) {
-                result = true;
-            }
-        } finally {
-            cursor.close();
-        }
-        return result;
-    }
-
-    public void removeUserLeaderboard(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_LEADERBOARD, LEADERBOARD_USER_ID + "=?", new String[]{id});
-    }
+//    public boolean checkUserLeaderboard(String id) {
+//        boolean result = false;
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor;
+//        cursor = db.query(TABLE_LEADERBOARD, null, LEADERBOARD_USER_ID + "=?", new String[]{id}, null, null, null);
+//        try {
+//            if (cursor.moveToFirst()) {
+//                result = true;
+//            }
+//        } finally {
+//            cursor.close();
+//        }
+//        return result;
+//    }
+//
+//    public void removeUserLeaderboard(String id) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        db.delete(TABLE_LEADERBOARD, LEADERBOARD_USER_ID + "=?", new String[]{id});
+//    }
 
 }

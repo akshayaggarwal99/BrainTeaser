@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_backward"-->
+    <!--android:layout_width="48dp"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_marginLeft="6dp"-->
+    <!--android:layout_marginTop="14dp"-->
+    <!--android:padding="12dp"-->
+    <!--android:src="@drawable/backward" />-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_forward"-->
+    <!--android:layout_width="48dp"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignTop="@+id/iv_backward"-->
+    <!--android:layout_marginRight="6dp"-->
+    <!--android:padding="12dp"-->
+    <!--android:src="@drawable/forward" />-->
+
+    <TextView
+        android:id="@+id/iv_forward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/card_view"
+        android:text="Next >"
+        android:textColor="#FFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_margin="8dp"
+        card_view:cardBackgroundColor="#FFF"
+        card_view:cardCornerRadius="27dp"
+        card_view:cardElevation="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_centerInParent="true"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="90"
+                android:progressDrawable="@drawable/circular_progress_bar" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_question_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="3 pts"
+            android:textColor="#35ADCF"
+            android:textSize="13sp" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="4dp"
+        android:visibility="gone"
+        card_view:cardBackgroundColor="#FFF"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="0dp">
+
+        <TextView
+            android:id="@+id/tv_total_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="+0 pts"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </android.support.v7.widget.CardView>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/card_view"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:gravity="center_horizontal"
+                android:text="abcdefghijklmnopqrstuvwxyz"
+                android:textColor="#FFF"
+                android:textSize="18sp" />
+
+
+            <ListView
+                android:id="@+id/lv_options"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_below="@id/tv_question"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/dp16"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_marginRight="@dimen/dp16"
+                android:layout_marginTop="28dp"
+                android:divider="@color/colorPrimary"
+                android:dividerHeight="@dimen/dp4"
+                android:padding="@dimen/dp4" />
+
+            <Button
+                android:id="@+id/b_explanation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lv_options"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:alpha="0"
+                android:background="#FFF"
+                android:enabled="false"
+                android:gravity="center"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:text="Explanation"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -4,6 +4,14 @@ import com.backendless.BackendlessUser;
 
 public class BrainTeaserUser extends BackendlessUser {
 
+    public String getEmail() {
+        return super.getEmail();
+    }
+
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+
     public String getPassword() {
         return super.getPassword();
     }

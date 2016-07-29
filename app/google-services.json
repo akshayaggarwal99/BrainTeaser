@@ -1,22 +1,22 @@
 {
   "project_info": {
-    "project_id": "brain-teaser-bd397",
     "project_number": "759594320544",
-    "name": "Brain Teaser"
+    "project_id": "brain-teaser-bd397"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:759594320544:android:add42dd5f6cbcc71",
-        "client_id": "android:in.co.appadda.brainteaser",
-        "client_type": 1,
         "android_client_info": {
-          "package_name": "in.co.appadda.brainteaser",
-          "certificate_hash": []
+          "package_name": "in.co.appadda.brainteaser"
         }
       },
       "oauth_client": [],
-      "api_key": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCTpG6wb0ZSJCzJB925Gs8SEG-Rs4xCw8"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 2,
@@ -24,16 +24,9 @@
             "tracking_id": "UA-75031919-1"
           }
         },
-        "cloud_messaging_service": {
-          "status": 1,
-          "apns_config": []
-        },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
-        },
-        "google_signin_service": {
-          "status": 1
         },
         "ads_service": {
           "status": 2,
@@ -43,6 +36,5 @@
       }
     }
   ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }
