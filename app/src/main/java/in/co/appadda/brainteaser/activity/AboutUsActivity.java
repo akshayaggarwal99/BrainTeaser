@@ -2,6 +2,7 @@ package in.co.appadda.brainteaser.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,20 +31,29 @@ public class AboutUsActivity extends AppCompatActivity {
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://www.facebook.com/BrainTeaserrr/";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+                String facebookUrl = "https://www.facebook.com/BrainTeaserrr/";
+                try {
+                    int versionCode = getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
+                    if (versionCode >= 3002850) {
+                        Uri uri = Uri.parse("fb://facewebmodal/f?href=" + facebookUrl);
+                        startActivity(new Intent(Intent.ACTION_VIEW, uri));;
+                    } else {
+                        // open the Facebook app using the old method (fb://profile/id or fb://page/id)
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/1700125963588421")));
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    // Facebook is not installed. Open the browser
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl)));
+                }
             }
         });
 
         twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://twitter.com/opensoftlabs";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+                Uri uri = Uri.parse("https://twitter.com/opensoftlabs"); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
 
