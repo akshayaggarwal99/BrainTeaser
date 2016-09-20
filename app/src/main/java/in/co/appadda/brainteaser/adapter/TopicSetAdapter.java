@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+
+import java.util.Random;
+
 import in.co.appadda.brainteaser.MaterialRippleLayout;
 import in.co.appadda.brainteaser.R;
 
@@ -20,6 +24,9 @@ public class TopicSetAdapter extends RecyclerView
         .DataObjectHolder> {
     private String[] topics;
     private static MyClickListener myClickListener;
+    int result;
+    static int fixed = 0;
+    Activity activity;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
@@ -47,6 +54,7 @@ public class TopicSetAdapter extends RecyclerView
 
     public TopicSetAdapter(Activity activity, String[] topics) {
         this.topics = topics;
+        this.activity = activity;
     }
 
     @Override
@@ -66,6 +74,27 @@ public class TopicSetAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.topicName.setText(topics[position]);
+        Random rn = new Random();
+        result = rn.nextInt(5) + 1;
+        while (result == fixed) {
+            result = rn.nextInt(5) + 1;
+        }
+        fixed = result;
+        TextDrawable ic2;
+        TextDrawable.IBuilder builder = TextDrawable.builder().beginConfig().endConfig().round();
+        if (result == 1) {
+            ic2 = builder.build(topics[position].toUpperCase().charAt(0) + "", activity.getResources().getColor(R.color.color4));
+        } else if (result == 2) {
+            ic2 = builder.build(topics[position].toUpperCase().charAt(0) + "", activity.getResources().getColor(R.color.color5));
+        } else if (result == 3) {
+            ic2 = builder.build(topics[position].toUpperCase().charAt(0) + "", activity.getResources().getColor(R.color.color6));
+        } else if (result == 4) {
+            ic2 = builder.build(topics[position].toUpperCase().charAt(0) + "", activity.getResources().getColor(R.color.color7));
+        } else {
+            ic2 = builder.build(topics[position].toUpperCase().charAt(0) + "", activity.getResources().getColor(R.color.color8));
+        }
+        holder.topicIcon.setImageDrawable(ic2);
+
     }
 
     @Override

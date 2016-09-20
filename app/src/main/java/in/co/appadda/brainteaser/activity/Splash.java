@@ -72,6 +72,9 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        DatabaseHandler db = new DatabaseHandler(this);
+        db.close();
+
         Backendless.setUrl(Defaults.SERVER_URL);
         Backendless.initApp(getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION);
 

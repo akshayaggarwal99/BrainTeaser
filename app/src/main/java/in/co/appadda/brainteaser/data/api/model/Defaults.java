@@ -5,5 +5,5 @@ public class Defaults {
     public static final String SECRET_KEY = "38EBDD6F-0ADD-84F4-FF9C-F4ABD97EDE00";
     public static final String VERSION = "v1";
     public static final String SERVER_URL = "https://api.backendless.com";
-    public static final String gcmSenderID = "515040822344";
+    public static final String gcmSenderID = "759594320544";
 }

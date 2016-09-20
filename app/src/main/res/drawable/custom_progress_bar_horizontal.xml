@@ -2,6 +2,6 @@
 <clip xmlns:android="http://schemas.android.com/apk/res/android">
     <shape>
         <corners android:radius="2dp"/>
-        <solid android:color="#FFF"/>
+        <solid android:color="@color/card_one"/>
     </shape>
 </clip>

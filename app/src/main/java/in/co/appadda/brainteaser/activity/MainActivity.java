@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,20 +19,49 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
+import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import hotchemi.android.rate.AppRate;
 import hotchemi.android.rate.OnClickButtonListener;
 import in.co.appadda.brainteaser.AnalyticsApplication;
@@ -36,6 +69,7 @@ import in.co.appadda.brainteaser.R;
 import in.co.appadda.brainteaser.adapter.DatabaseHandler;
 import in.co.appadda.brainteaser.data.api.model.ConnectionDetector;
 import in.co.appadda.brainteaser.data.api.model.DefaultCallback;
+import in.co.appadda.brainteaser.data.api.model.Defaults;
 import in.co.appadda.brainteaser.data.api.model.PrefUtils;
 import in.co.appadda.brainteaser.data.api.model.aptitude;
 import in.co.appadda.brainteaser.data.api.model.logical;
@@ -49,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     private Tracker mTracker;
+    EditText name_user;
+    LinearLayout editname;
+    boolean showAdd = true;
+    CircleImageView userImg;
 
     private static BackendlessCollection aptitudeCollection;
     private static BackendlessCollection LogicalCollection;
@@ -126,6 +164,92 @@ public class MainActivity extends AppCompatActivity {
         // Show a dialog if meets conditions
         AppRate.showRateDialogIfMeetsConditions(this);
 
+        View header = mNavigationView.getHeaderView(0);
+
+        userImg = (CircleImageView) header.findViewById(R.id.image);
+        editname = (LinearLayout) header.findViewById(R.id.editname);
+        name_user = (EditText) header.findViewById(R.id.name);
+        name_user.setSingleLine();
+        name_user.setText(PrefUtils.getFromPrefs(getApplicationContext(), "username", "Your Name"));
+        String currentUserId = null;
+        ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+        Boolean isInternetPresent = cd.isConnectingToInternet();
+        if (isInternetPresent) {
+            currentUserId = Backendless.UserService.loggedInUser();
+            Log.d("wtf", PrefUtils.getFromPrefs(getApplicationContext(), "userPic", "null"));
+            Picasso.with(getApplicationContext())
+                    .load(PrefUtils.getFromPrefs(getApplicationContext(), "userPic", "null"))
+                    .error(R.drawable.person_icon)
+                    .noFade()
+                    .into(userImg);
+        }
+
+        if (name_user.getText().toString().contentEquals("Your Name") || !isInternetPresent)
+            editname.setVisibility(View.GONE);
+        else
+            editname.setVisibility(View.VISIBLE);
+
+        if (currentUserId != null)
+            Backendless.UserService.findById(currentUserId, new AsyncCallback<BackendlessUser>() {
+                @Override
+                public void handleResponse(BackendlessUser backendlessUser) {
+                    String username = String.valueOf(backendlessUser.getProperty("username"));
+                    name_user.setText(username);
+                    PrefUtils.saveToPrefs(getApplicationContext(), "username", username);
+                    PrefUtils.saveToPrefs(getApplicationContext(), "userIdentity", backendlessUser.getEmail());
+                }
+
+                @Override
+                public void handleFault(BackendlessFault backendlessFault) {
+
+                }
+            });
+        else
+            name_user.setText(PrefUtils.getFromPrefs(getApplicationContext(), "username", "Your Name"));
+
+        editname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name_user.setEnabled(true);
+                name_user.requestFocus();
+                name_user.setSelection(0, name_user.getText().toString().length());
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            }
+        });
+        name_user.setSingleLine();
+        name_user.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        name_user.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    name_user.setEnabled(false);
+                    if (name_user.getText().toString().equals(""))
+                        name_user.setHint("Your Name");
+                    name_user.setSelection(name_user.getText().toString().length());
+                    if (name_user.getText().toString().contentEquals("Your Name")) {
+                        Toast.makeText(getApplicationContext(), "Try another name!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        BackendlessUser user = new BackendlessUser();
+                        user.setProperty("objectId", Backendless.UserService.loggedInUser());
+                        user.setProperty("username", name_user.getText().toString());
+                        Backendless.UserService.update(user, new AsyncCallback<BackendlessUser>() {
+                            @Override
+                            public void handleResponse(BackendlessUser backendlessUser) {
+                                Toast.makeText(getBaseContext(), "Your name has been updated", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void handleFault(BackendlessFault backendlessFault) {
+
+                            }
+                        });
+                    }
+                }
+                return false;
+            }
+        });
+
 
         HomeFragment homeFragment = new HomeFragment();
         android.support.v4.app.FragmentTransaction homefragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -172,14 +296,33 @@ public class MainActivity extends AppCompatActivity {
                         shareapp();
                         return true;
                     case R.id.rate:
-                        rate();
+                        if (checkinternetservice())
+                            rate();
+                        else {
+                            Toast.makeText(getBaseContext(), "Please connect to the Internet!", Toast.LENGTH_SHORT).show();
+                        }
                         return true;
                     case R.id.feedback:
-                        sendEmail();
+                        if (checkinternetservice())
+                            startActivity(new Intent(MainActivity.this, Feedback.class));
+                        else {
+                            Toast.makeText(getBaseContext(), "Please connect to the Internet!", Toast.LENGTH_SHORT).show();
+                        }
+
                         return true;
                     case R.id.about_us:
                         Intent i = new Intent(MainActivity.this, AboutUsActivity.class);
                         startActivity(i);
+                        return true;
+                    case R.id.join_fb:
+                        if (checkinternetservice()) {
+                            String url = "https://www.facebook.com/groups/brainteaserrr/";
+                            Intent grp = new Intent(Intent.ACTION_VIEW);
+                            grp.setData(Uri.parse(url));
+                            startActivity(grp);
+                        } else {
+                            Toast.makeText(getBaseContext(), "Please connect to the Internet!", Toast.LENGTH_SHORT).show();
+                        }
                         return true;
                     default:
                         Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -257,10 +400,52 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(openRiddle);
                 break;
             case R.id.card_leader:
-                Intent openLeader = new Intent(MainActivity.this, Compete.class);
-                startActivity(openLeader);
+                String currentUserId = null;
+                ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
+                Boolean isInternetPresent = cd.isConnectingToInternet();
+                if (isInternetPresent)
+                    currentUserId = Backendless.UserService.loggedInUser();
+                if (!name_user.getText().toString().contentEquals("Your Name") && currentUserId != null && isInternetPresent) {
+                    Intent compete = new Intent(MainActivity.this, Compete.class);
+                    PrefUtils.saveToPrefs(getApplicationContext(), "openCompete", "false");
+                    startActivity(compete);
+                    showAdd = false;
+                    finish();
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Action")
+                            .setAction("Compete_card")
+                            .build());
+
+                } else if (!isInternetPresent) {
+                    Toast.makeText(getApplicationContext(), "Please connect to the internet!", Toast.LENGTH_SHORT).show();
+                } else {
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Action")
+                            .setAction("Compete_card")
+                            .build());
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    showAdd = false;
+                    finish();
+                }
+
                 break;
+            case R.id.card_contest:
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Contest_card")
+                        .build());
+                startActivity(new Intent(MainActivity.this, Contest.class));
+                showAdd = false;
+                break;
+
         }
+    }
+
+    public boolean checkinternetservice() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
 
     @Override
@@ -272,7 +457,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mInterstitialAd.isLoaded()) {
+        if (mInterstitialAd.isLoaded() && showAdd == true) {
             mInterstitialAd.show();
         }
     }

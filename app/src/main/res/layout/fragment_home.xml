@@ -10,6 +10,73 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textview_leader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif"
+            android:text="Be Competitive"
+            android:textColor="#BDBDBD"
+            android:textSize="18sp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_leader"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:onClick="cardClickHandler"
+            app:cardBackgroundColor="#558C8C"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:background="#fff">
+                    <!--android:background="#E0CBA8">-->
+
+                    <ImageView
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/trophy_color" />
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/tv_leader_progress"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginBottom="4dp"-->
+                    <!--android:layout_marginLeft="@dimen/dp4"-->
+                    <!--android:text="Your Rank: 12/100"-->
+                    <!--android:textColor="#FFF"-->
+                    <!--android:textSize="16dp" />-->
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="Compete"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
             android:id="@+id/textview_prepare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +100,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="12dp"
                 android:onClick="cardClickHandler"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="@color/card_one"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -44,14 +111,14 @@
                     <RelativeLayout
                         android:layout_width="150dp"
                         android:layout_height="140dp"
-                        android:background="@color/card_one">
+                        android:background="#FFFFFF">
 
                         <ImageView
                             android:layout_width="72dp"
                             android:layout_height="72dp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp16"
-                            android:src="@drawable/aptitude" />
+                            android:src="@drawable/aptitude_que" />
 
                         <TextView
                             android:id="@+id/tv_aptitude_progress"
@@ -60,7 +127,7 @@
                             android:layout_above="@+id/progress_bar_aptitude"
                             android:layout_marginLeft="@dimen/dp4"
                             android:text="Completed: 25%"
-                            android:textColor="#FFF"
+                            android:textColor="@color/card_one"
                             android:textSize="10dp" />
 
                         <android.support.v4.widget.ContentLoadingProgressBar
@@ -81,7 +148,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="center"
                         android:text="Aptitude"
-                        android:textColor="@color/card_one"
+                        android:textColor="#fff"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -97,7 +164,7 @@
                 android:layout_alignTop="@+id/card_aptitude"
                 android:layout_marginRight="20dp"
                 android:onClick="cardClickHandler"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="@color/card_two"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -108,14 +175,14 @@
                     <RelativeLayout
                         android:layout_width="150dp"
                         android:layout_height="140dp"
-                        android:background="@color/card_two">
+                        android:background="#FFF">
 
                         <ImageView
                             android:layout_width="84dp"
                             android:layout_height="84dp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp16"
-                            android:src="@drawable/lightbulb" />
+                            android:src="@drawable/lightbulb_color" />
 
                         <TextView
                             android:id="@+id/tv_logical_progress"
@@ -124,7 +191,7 @@
                             android:layout_above="@+id/progress_bar_logical"
                             android:layout_marginLeft="@dimen/dp4"
                             android:text="Completed: 25%"
-                            android:textColor="#FFF"
+                            android:textColor="@color/card_two"
                             android:textSize="10dp" />
 
                         <android.support.v4.widget.ContentLoadingProgressBar
@@ -135,7 +202,7 @@
                             android:layout_alignParentBottom="true"
                             android:layout_margin="4dp"
                             android:progress="25"
-                            android:progressDrawable="@drawable/custom_progress_bar_horizontal" />
+                            android:progressDrawable="@drawable/custom_progressbar_bulb" />
                     </RelativeLayout>
 
                     <TextView
@@ -145,7 +212,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="center"
                         android:text="Logical"
-                        android:textColor="@color/card_two"
+                        android:textColor="#fff"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -180,7 +247,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="12dp"
                 android:onClick="cardClickHandler"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="#6E8898"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -191,7 +258,7 @@
                     <RelativeLayout
                         android:layout_width="150dp"
                         android:layout_height="140dp"
-                        android:background="#6E8898">
+                        android:background="#fff">
 
                         <ImageView
                             android:id="@+id/imageView"
@@ -199,7 +266,7 @@
                             android:layout_height="84dp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp16"
-                            android:src="@drawable/puzzles" />
+                            android:src="@drawable/puzzle_color" />
 
                         <TextView
                             android:id="@+id/tv_puzzle_progress"
@@ -208,7 +275,7 @@
                             android:layout_above="@+id/progress_bar_puzzle"
                             android:layout_marginLeft="@dimen/dp4"
                             android:text="Completed: 25%"
-                            android:textColor="#FFF"
+                            android:textColor="#6E8898"
                             android:textSize="10dp" />
 
                         <android.support.v4.widget.ContentLoadingProgressBar
@@ -219,7 +286,7 @@
                             android:layout_alignParentBottom="true"
                             android:layout_margin="4dp"
                             android:progress="25"
-                            android:progressDrawable="@drawable/custom_progress_bar_horizontal" />
+                            android:progressDrawable="@drawable/puzzle_progressbar" />
                     </RelativeLayout>
 
                     <TextView
@@ -229,7 +296,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="center"
                         android:text="Puzzle"
-                        android:textColor="#6E8898"
+                        android:textColor="#fff"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -245,7 +312,7 @@
                 android:layout_alignTop="@+id/card_puzzle"
                 android:layout_marginRight="20dp"
                 android:onClick="cardClickHandler"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="#85756E"
                 app:cardElevation="2dp">
 
                 <LinearLayout
@@ -256,14 +323,14 @@
                     <RelativeLayout
                         android:layout_width="150dp"
                         android:layout_height="140dp"
-                        android:background="#85756E">
+                        android:background="#fff">
 
                         <ImageView
                             android:layout_width="84dp"
                             android:layout_height="84dp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/dp16"
-                            android:src="@drawable/riddle" />
+                            android:src="@drawable/riddle_color" />
 
                         <TextView
                             android:id="@+id/tv_riddle_progress"
@@ -272,7 +339,7 @@
                             android:layout_above="@+id/progress_bar_riddle"
                             android:layout_marginLeft="@dimen/dp4"
                             android:text="Completed: 25%"
-                            android:textColor="#FFF"
+                            android:textColor="#85756E"
                             android:textSize="10dp" />
 
                         <android.support.v4.widget.ContentLoadingProgressBar
@@ -283,7 +350,7 @@
                             android:layout_alignParentBottom="true"
                             android:layout_margin="4dp"
                             android:progress="25"
-                            android:progressDrawable="@drawable/custom_progress_bar_horizontal" />
+                            android:progressDrawable="@drawable/riddle_progressbar" />
                     </RelativeLayout>
 
                     <TextView
@@ -293,7 +360,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="center"
                         android:text="Riddle"
-                        android:textColor="#85756E"
+                        android:textColor="#fff"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -304,27 +371,24 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/textview_leader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/card_aptitude"
+            android:layout_below="@id/card_leader"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:fontFamily="sans-serif"
-            android:text="Be Competitive"
+            android:text="Contest"
             android:textColor="#BDBDBD"
-            android:textSize="18sp"
-            android:visibility="gone" />
+            android:textSize="18sp" />
 
         <android.support.v7.widget.CardView
-            android:id="@+id/card_leader"
+            android:id="@+id/card_contest"
             android:layout_width="match_parent"
             android:layout_height="210dp"
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:onClick="cardClickHandler"
-            android:visibility="gone"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="#18A999"
             app:cardElevation="2dp">
 
             <LinearLayout
@@ -335,14 +399,14 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:background="#E0CBA8">
+                    android:background="#FFFFFF">
                     <!--android:background="#E0CBA8">-->
 
                     <ImageView
                         android:layout_width="84dp"
                         android:layout_height="84dp"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/trophy" />
+                        android:src="@drawable/exam" />
 
                     <!--<TextView-->
                     <!--android:id="@+id/tv_leader_progress"-->
@@ -364,8 +428,8 @@
                     android:layout_gravity="center"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
-                    android:text="Compete"
-                    android:textColor="#E0CBA8"
+                    android:text="Contest"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
             </LinearLayout>

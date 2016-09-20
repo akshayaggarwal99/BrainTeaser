@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/display_que_bg">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/iv_backward"
@@ -31,6 +32,7 @@
         android:layout_height="64dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="5dp"
+        app:cardBackgroundColor="#FFF"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="4dp">
 
@@ -51,10 +53,10 @@
         android:id="@+id/view_border"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="@dimen/dp4"
+        android:layout_below="@id/que_no_riddle"
         android:layout_marginBottom="@dimen/dp4"
-        android:background="#FFF"
-        android:layout_below="@id/que_no_riddle"></View>
+        android:layout_marginTop="@dimen/dp4"
+        android:background="#FFF"></View>
 
     <Button
         android:id="@+id/b_answer_riddle"
@@ -64,7 +66,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:paddingBottom="4dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
